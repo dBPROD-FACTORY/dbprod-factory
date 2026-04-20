@@ -1,0 +1,50 @@
+name: Optimize media
+
+# Auto-compress images committed via PagesCMS (or anyone else) so that
+# Cloudflare Pages' 25 MB/file limit is never hit and bundles stay light.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "public/media/**"
+
+concurrency:
+  group: optimize-media-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  optimize:
+    # Skip if this commit was itself made by this workflow, to avoid a loop.
+    if: ${{ !contains(github.event.head_commit.message, '[skip-optimize]') }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install sharp
+        run: npm install --no-save sharp@^0.33.5
+
+      - name: Optimize images
+        run: node scripts/optimize-media.mjs
+
+      - name: Commit optimized images
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git add public/media
+            git commit -m "chore(media): auto-compress uploaded assets [skip-optimize]"
+            git push
+          else
+            echo "No changes to commit."
+          fi
