@@ -87,13 +87,36 @@ export function StaticWave({ seed = 1, bars = 40, color = "currentColor", height
   );
 }
 
-export function AudioPlayer({ title, artist, duration = 180, seed = 1, compact = false }) {
+export function AudioPlayer({ title, artist, duration = 180, seed = 1, compact = false, url }) {
   const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const rafRef = useRef();
   const lastRef = useRef();
+  const audioRef = useRef(null);
 
   useEffect(() => {
+    if (!url) return;
+    const a = audioRef.current = new Audio(url);
+    a.preload = "metadata";
+    const onTime = () => setProgress(a.duration ? a.currentTime / a.duration : 0);
+    const onEnd = () => { setPlaying(false); setProgress(0); };
+    a.addEventListener("timeupdate", onTime);
+    a.addEventListener("ended", onEnd);
+    return () => {
+      a.removeEventListener("timeupdate", onTime);
+      a.removeEventListener("ended", onEnd);
+      a.pause();
+    };
+  }, [url]);
+
+  useEffect(() => {
+    if (url) {
+      if (audioRef.current) {
+        if (playing) audioRef.current.play().catch(() => setPlaying(false));
+        else audioRef.current.pause();
+      }
+      return;
+    }
     if (!playing) return;
     lastRef.current = performance.now();
     const tick = (now) => {
@@ -108,7 +131,7 @@ export function AudioPlayer({ title, artist, duration = 180, seed = 1, compact =
     };
     rafRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [playing, duration]);
+  }, [playing, duration, url]);
 
   const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
   const bars = 80;
@@ -166,7 +189,7 @@ export function AudioPlayer({ title, artist, duration = 180, seed = 1, compact =
         </div>
       </div>
       <div style={{ fontFamily: "var(--f-mono)", fontSize: 11, color: "var(--fg-dim)", letterSpacing: "0.08em", flexShrink: 0 }}>
-        {fmt(progress * duration)} / {fmt(duration)}
+        {fmt(progress * (audioRef.current?.duration || duration))} / {fmt(audioRef.current?.duration || duration)}
       </div>
     </div>
   );

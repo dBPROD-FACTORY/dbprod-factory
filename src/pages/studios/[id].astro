@@ -1,0 +1,61 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+import Panorama from "../../components/Panorama.jsx";
+
+export async function getStaticPaths() {
+  const studios = await getCollection("studios");
+  return studios.map(s => ({ params: { id: s.data.id.toLowerCase() }, props: { studio: s } }));
+}
+const { studio } = Astro.props;
+const d = studio.data;
+---
+<Base title={d.name}>
+  <section style="padding:160px 0 40px;">
+    <div class="container">
+      <a href="/studios" class="link-arrow" style="margin-bottom:40px;display:inline-flex;">← Tous les studios</a>
+
+      <div class="grid-responsive-2" style="display:grid;grid-template-columns:2fr 1fr;gap:60px;align-items:flex-end;margin-top:40px;margin-bottom:48px;">
+        <div>
+          <div class="eyebrow" style="margin-bottom:24px;">Studio {d.id}</div>
+          <h1 class="h-display" style="font-size:clamp(56px,10vw,144px);margin:0;line-height:0.9;">{d.name}</h1>
+        </div>
+        <p class="text-dim" style="font-size:16px;">{d.spec}</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <Panorama client:load src={d.panorama} height={640} interactive={true} autoSpeed={0.01} label={`Studio ${d.id}`} />
+      <p class="mono" style="margin-top:16px;text-align:center;">Auto-play 360° · bouge la souris ou glisse pour explorer</p>
+    </div>
+
+    <div class="container" style="margin-top:80px;">
+      <div class="grid-responsive-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+        <div class="card" style="padding:32px;">
+          <div class="mono" style="margin-bottom:12px;">Surface</div>
+          <div class="h-display" style="font-size:56px;">{d.surface || "—"}</div>
+        </div>
+        <div class="card" style="padding:32px;">
+          <div class="mono" style="margin-bottom:12px;">RT60</div>
+          <div class="h-display" style="font-size:56px;">{d.rt60 || "—"}</div>
+        </div>
+        <div class="card" style="padding:32px;">
+          <div class="mono" style="margin-bottom:12px;">Code</div>
+          <div class="h-display" style="font-size:56px;">Studio {d.id}</div>
+        </div>
+      </div>
+
+      <div style="margin-top:40px;">
+        <div class="mono" style="margin-bottom:16px;">Équipement</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          {d.equip.map(e => <span class="chip">{e}</span>)}
+        </div>
+      </div>
+
+      <div style="margin-top:60px;display:flex;gap:12px;">
+        <a href="/contact" class="btn btn-primary btn-arrow">Réserver ce studio</a>
+        <a href="/studios" class="btn btn-ghost btn-arrow">Autres studios</a>
+      </div>
+    </div>
+  </section>
+</Base>

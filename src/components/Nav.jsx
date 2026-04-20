@@ -14,6 +14,7 @@ export default function Nav({ currentPath = "/", brand = { name: "PROD·FACTORY"
   const items = [
     { href: "/services", label: "Services" },
     { href: "/portfolio", label: "Portfolio" },
+    { href: "/voix", label: "Voix" },
     { href: "/studios", label: "Studios" },
     { href: "/blog", label: "Journal" },
     { href: "/faq", label: "FAQ" },

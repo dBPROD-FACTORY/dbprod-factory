@@ -1,22 +1,26 @@
 ---
 import Base from "../../layouts/Base.astro";
 import { getCollection } from "astro:content";
-import PostCard from "../../components/PostCard.jsx";
+import BlogList from "../../components/BlogList.jsx";
 const posts = (await getCollection("posts")).sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+const postsData = posts.map(p => p.data);
+const featured = postsData.find(p => p.featured)?.id;
 ---
 <Base title="Journal">
   <section style="padding:160px 0 80px;">
     <div class="container">
-      <div class="eyebrow" style="margin-bottom:28px;">Journal</div>
-      <h1 class="h-display" style="font-size:clamp(64px,10vw,160px);margin:0 0 40px;">
-        Le <em style="font-style:italic;color:var(--accent);">journal</em>.
-      </h1>
-      <p class="text-dim" style="font-size:18px;max-width:680px;margin-bottom:80px;">
-        Techniques, coulisses, analyses. Nos réflexions sur le métier.
-      </p>
-      <div class="grid-responsive-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
-        {posts.map(p => <PostCard post={p.data} />)}
+      <div class="grid-responsive-2" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-bottom:80px;align-items:flex-end;">
+        <div>
+          <div class="eyebrow" style="margin-bottom:28px;">Journal · Ressources</div>
+          <h1 class="h-display" style="font-size:clamp(72px,12vw,180px);margin:0;line-height:0.9;">
+            Le <em style="font-style:italic;color:var(--accent);">journal</em>
+          </h1>
+        </div>
+        <p class="text-dim" style="font-size:16px;max-width:440px;">
+          Techniques, coulisses, opinions. Nos réflexions sur le doublage, la post-production et les métiers de la voix.
+        </p>
       </div>
+      <BlogList client:load posts={postsData} featuredId={featured} />
     </div>
   </section>
 </Base>

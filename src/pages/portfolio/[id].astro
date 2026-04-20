@@ -1,6 +1,7 @@
 ---
 import Base from "../../layouts/Base.astro";
 import { getCollection } from "astro:content";
+import VideoPlayer from "../../components/VideoPlayer.jsx";
 import { AudioPlayer, StaticWave } from "../../components/Waveform.jsx";
 import Icon from "../../components/Icon.jsx";
 
@@ -21,21 +22,39 @@ const { Content } = await project.render();
         <span class="chip">{d.kind}</span>
         <span class="chip">{d.year}</span>
         <span class="chip">{d.lang}</span>
+        {d.dur && <span class="chip">{d.dur}</span>}
       </div>
       <h1 class="h-display" style="font-size:clamp(64px,12vw,180px);margin:0 0 32px;">{d.title}</h1>
       <p class="text-dim" style="font-size:20px;max-width:760px;line-height:1.5;margin-bottom:48px;">{d.desc}</p>
 
-      <div class="media-ph" data-label={`${d.kind.toUpperCase()} · ${d.dur || ""}`} style="height:560px;border-radius:24px;position:relative;margin-bottom:60px;">
-        <div style={`position:absolute;inset:0;background:linear-gradient(135deg, color-mix(in oklab, var(--accent) ${15 + d.seed}%, transparent), transparent 60%);`}></div>
-        <div style="position:absolute;inset:0;display:grid;place-items:center;">
-          <div style="width:120px;height:120px;border-radius:50%;background:var(--accent);color:#0A0A0F;display:grid;place-items:center;">
-            <Icon name="play" size={36} stroke={2} />
+      {d.video_url ? (
+        <div style="border-radius:24px;overflow:hidden;border:1px solid var(--line);background:#000;aspect-ratio:16/9;margin-bottom:60px;">
+          <VideoPlayer client:load src={d.video_url} poster={d.poster} controls={true} />
+        </div>
+      ) : (
+        <div class="media-ph" data-label={`${d.kind.toUpperCase()} · ${d.dur || ""}`} style="height:560px;border-radius:24px;position:relative;margin-bottom:60px;">
+          <div style={`position:absolute;inset:0;background:linear-gradient(135deg, color-mix(in oklab, var(--accent) ${15 + d.seed}%, transparent), transparent 60%);`}></div>
+          <div style="position:absolute;inset:0;display:grid;place-items:center;">
+            <div style="width:120px;height:120px;border-radius:50%;background:var(--accent);color:#0A0A0F;display:grid;place-items:center;">
+              <Icon name="play" size={36} stroke={2} />
+            </div>
+          </div>
+          <div style="position:absolute;left:24px;right:24px;bottom:24px;opacity:0.7;">
+            <StaticWave seed={d.seed} bars={60} height={44} color="var(--accent)" />
           </div>
         </div>
-        <div style="position:absolute;left:24px;right:24px;bottom:24px;opacity:0.7;">
-          <StaticWave seed={d.seed} bars={60} height={44} color="var(--accent)" />
+      )}
+
+      {d.samples && d.samples.length > 0 && (
+        <div style="margin-bottom:60px;">
+          <div class="eyebrow" style="margin-bottom:24px;">Échantillons sonores</div>
+          <div style="display:grid;gap:12px;max-width:860px;">
+            {d.samples.map(s => (
+              <AudioPlayer client:visible title={s.title} artist={s.artist} duration={s.duration} seed={s.seed} url={s.url} />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       <div class="h-serif" style="font-size:22px;line-height:1.6;max-width:760px;">
         <Content />

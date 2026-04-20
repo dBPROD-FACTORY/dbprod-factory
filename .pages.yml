@@ -1,9 +1,19 @@
 # PagesCMS configuration — https://pagescms.org
-# Edit content via the visual editor at https://app.pagescms.org after connecting this repo.
 
 media:
   input: public/media
   output: /media
+  extensions:
+    - jpg
+    - jpeg
+    - png
+    - webp
+    - gif
+    - svg
+    - mp3
+    - wav
+    - m4a
+    - mp4
 
 content:
   - name: site
@@ -31,7 +41,7 @@ content:
           - { name: n, label: Nom (instagram/facebook/linkedin), type: string }
           - { name: u, label: URL, type: string }
       - name: clients
-        label: Clients (marquee)
+        label: Clients
         type: list
         fields:
           - { name: name, label: Nom, type: string }
@@ -62,7 +72,6 @@ content:
         fields:
           - { name: eyebrow, label: Eyebrow, type: string }
           - { name: onAir, label: On-Air, type: string }
-          - { name: headline, label: Titre (3 lignes), type: list, fields: [{name: line, type: string}] }
           - { name: italic, label: Mot en italique, type: string }
           - { name: intro, label: Intro, type: text }
           - { name: cta1, label: CTA primaire, type: string }
@@ -75,6 +84,7 @@ content:
           - { name: artist, label: Légende, type: string }
           - { name: duration, label: Durée (sec), type: number }
           - { name: seed, label: Seed, type: number }
+          - { name: url, label: URL audio (mp3/wav), type: string }
 
   - name: services
     label: Services
@@ -112,7 +122,7 @@ content:
     fields:
       - { name: id, label: ID, type: string }
       - { name: title, label: Titre, type: string }
-      - { name: kind, label: Type (Film/Série/Corporate/Projet), type: string }
+      - { name: kind, label: Type, type: string }
       - { name: year, label: Année, type: number }
       - { name: lang, label: Langues, type: string }
       - { name: tags, label: Tags, type: list, fields: [{name: tag, type: string}] }
@@ -120,11 +130,22 @@ content:
       - { name: seed, label: Seed (waveform), type: number }
       - { name: dur, label: Durée, type: string }
       - { name: featured, label: Mis en avant ?, type: boolean }
+      - { name: video_url, label: "URL vidéo (mp4 ou .m3u8 HLS)", type: string, description: "Collez ici un lien vers un .mp4 ou stream HLS (.m3u8). Affiché sur la page projet + preview au survol sur la home." }
+      - { name: poster, label: Image poster (optionnel), type: image }
+      - name: samples
+        label: Extraits sonores
+        type: list
+        fields:
+          - { name: title, label: Titre, type: string }
+          - { name: artist, label: Légende, type: string }
+          - { name: duration, label: Durée (sec), type: number }
+          - { name: seed, label: Seed, type: number }
+          - { name: url, label: URL audio, type: string }
       - { name: order, label: Ordre, type: number }
       - { name: body, label: Contenu détaillé, type: text }
 
   - name: posts
-    label: Journal (Blog)
+    label: Journal
     path: src/content/posts
     type: collection
     format: yaml-frontmatter
@@ -138,6 +159,8 @@ content:
       - { name: date, label: Date, type: string }
       - { name: excerpt, label: Extrait, type: text }
       - { name: read, label: Temps de lecture, type: string }
+      - { name: featured, label: À la une ?, type: boolean }
+      - { name: cover, label: Image de couverture, type: image }
       - { name: order, label: Ordre, type: number }
       - { name: body, label: Contenu, type: text }
 
@@ -156,7 +179,31 @@ content:
       - { name: equip, label: Équipement, type: list, fields: [{name: item, type: string}] }
       - { name: surface, label: Surface, type: string }
       - { name: rt60, label: RT60, type: string }
+      - { name: panorama, label: "Image panoramique 360° (équirectangulaire 2:1)", type: image, description: "Uploadez une image panoramique équirectangulaire (ratio 2:1) pour la vue 360° auto-play." }
+      - { name: photo, label: Photo (fallback), type: image }
       - { name: order, label: Ordre, type: number }
+
+  - name: voices
+    label: Banque de voix
+    path: src/content/voices
+    type: collection
+    format: yaml-frontmatter
+    view:
+      fields: [name, gender, register]
+      primary: name
+    fields:
+      - { name: id, label: ID (slug), type: string }
+      - { name: name, label: Nom du comédien, type: string }
+      - { name: gender, label: Genre, type: select, options: { values: [F, M] } }
+      - { name: languages, label: Langues, type: list, fields: [{name: lang, type: string}] }
+      - { name: register, label: Registre, type: string }
+      - { name: tags, label: Tags, type: list, fields: [{name: tag, type: string}] }
+      - { name: sample_url, label: URL audio d'extrait, type: string }
+      - { name: duration, label: Durée (sec), type: number }
+      - { name: seed, label: Seed (waveform), type: number }
+      - { name: photo, label: Photo, type: image }
+      - { name: order, label: Ordre, type: number }
+      - { name: body, label: Bio, type: text }
 
   - name: faq
     label: FAQ

@@ -1,10 +1,21 @@
 import React, { useState } from "react";
 import Icon from "./Icon.jsx";
 import { StaticWave } from "./Waveform.jsx";
+import { HoverVideo } from "./VideoPlayer.jsx";
 
 export default function ProjectCard({ project, size = "sm" }) {
   const [hover, setHover] = useState(false);
   const h = size === "lg" ? 520 : 360;
+
+  const fallback = (
+    <>
+      <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg, color-mix(in oklab, var(--accent) ${10 + (project.seed || 10)}%, transparent), transparent 60%)` }}/>
+      {project.poster && (
+        <img src={project.poster} alt={project.title} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.9 }} />
+      )}
+    </>
+  );
+
   return (
     <a
       href={`/portfolio/${project.id}`}
@@ -24,8 +35,9 @@ export default function ProjectCard({ project, size = "sm" }) {
       onMouseLeave={() => setHover(false)}
     >
       <div className="media-ph" data-label={`${(project.kind || "").toUpperCase()} · SHOWREEL`} style={{ height: h, position: "relative" }}>
-        <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg, color-mix(in oklab, var(--accent) ${10 + (project.seed || 10)}%, transparent), transparent 60%)` }}/>
-        <div style={{ position: "absolute", inset: 0, display: "grid", placeItems: "center" }}>
+        <HoverVideo src={project.video_url} poster={project.poster} fallback={fallback} />
+
+        <div style={{ position: "absolute", inset: 0, display: "grid", placeItems: "center", pointerEvents: "none" }}>
           <div style={{
             width: size === "lg" ? 96 : 64,
             height: size === "lg" ? 96 : 64,
@@ -37,11 +49,13 @@ export default function ProjectCard({ project, size = "sm" }) {
             border: "1px solid var(--line-2)",
             transition: "all 0.3s var(--ease)",
             transform: hover ? "scale(1.1)" : "scale(1)",
+            opacity: hover && project.video_url ? 0 : 1,
           }}>
             <Icon name="play" size={size === "lg" ? 26 : 20} stroke={2} />
           </div>
         </div>
-        <div style={{ position: "absolute", left: 20, right: 20, bottom: 20, opacity: 0.6 }}>
+
+        <div style={{ position: "absolute", left: 20, right: 20, bottom: 20, opacity: hover && project.video_url ? 0 : 0.6, transition: "opacity 0.3s", pointerEvents: "none" }}>
           <StaticWave seed={project.seed || 1} bars={40} height={32} color="var(--accent)" />
         </div>
         <span className="chip" style={{ position: "absolute", top: 16, left: 16, background: "color-mix(in oklab, var(--bg) 70%, transparent)", backdropFilter: "blur(8px)" }}>

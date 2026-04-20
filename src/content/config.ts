@@ -29,6 +29,15 @@ const projects = defineCollection({
     dur: z.string().optional(),
     featured: z.boolean().default(false),
     order: z.number().optional(),
+    video_url: z.string().optional(),
+    poster: z.string().optional(),
+    samples: z.array(z.object({
+      title: z.string(),
+      artist: z.string().optional(),
+      url: z.string().optional(),
+      duration: z.number().default(30),
+      seed: z.number().default(1),
+    })).default([]),
   }),
 });
 
@@ -41,6 +50,8 @@ const posts = defineCollection({
     date: z.string(),
     excerpt: z.string(),
     read: z.string(),
+    featured: z.boolean().default(false),
+    cover: z.string().optional(),
     order: z.number().optional(),
   }),
 });
@@ -54,6 +65,8 @@ const studios = defineCollection({
     equip: z.array(z.string()).default([]),
     surface: z.string().optional(),
     rt60: z.string().optional(),
+    panorama: z.string().optional(),
+    photo: z.string().optional(),
     order: z.number().optional(),
   }),
 });
@@ -67,4 +80,21 @@ const faq = defineCollection({
   }),
 });
 
-export const collections = { services, projects, posts, studios, faq };
+const voices = defineCollection({
+  type: "content",
+  schema: z.object({
+    id: z.string(),
+    name: z.string(),
+    gender: z.enum(["F", "M"]).optional(),
+    languages: z.array(z.string()).default([]),
+    register: z.string().optional(),
+    tags: z.array(z.string()).default([]),
+    sample_url: z.string().optional(),
+    duration: z.number().default(30),
+    seed: z.number().default(1),
+    photo: z.string().optional(),
+    order: z.number().optional(),
+  }),
+});
+
+export const collections = { services, projects, posts, studios, faq, voices };
