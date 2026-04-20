@@ -194,6 +194,7 @@ content:
       - { name: equip, label: Équipement, type: string, list: true }
       - { name: surface, label: Surface, type: string }
       - { name: rt60, label: RT60, type: string }
+      - { name: thumbnail, label: "Photo principale (carte)", type: image, description: "Image affichée sur la carte de la page Studios. Si vide, utilise automatiquement la première vue 360°." }
       - { name: panorama, label: "Image 360° (vue unique — équirectangulaire 2:1)", type: image, description: "Utilisé uniquement si la liste ci-dessous est vide." }
       - name: panoramas
         label: "Vues 360° multiples"

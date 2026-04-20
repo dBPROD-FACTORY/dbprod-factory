@@ -65,6 +65,7 @@ const studios = defineCollection({
     equip: z.array(z.string()).default([]),
     surface: z.string().optional(),
     rt60: z.string().optional(),
+    thumbnail: z.string().optional(),
     panorama: z.string().optional(),
     panoramas: z.array(z.object({
       label: z.string(),

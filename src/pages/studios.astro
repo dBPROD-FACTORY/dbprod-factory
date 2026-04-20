@@ -3,6 +3,14 @@ import Base from "../layouts/Base.astro";
 import { getCollection } from "astro:content";
 import { StaticWave } from "../components/Waveform.jsx";
 const studios = (await getCollection("studios")).sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+// Resolve card thumbnail: explicit thumbnail > first panorama > single panorama > photo
+function cardThumb(s: typeof studios[0]) {
+  return s.data.thumbnail
+    || s.data.panoramas?.[0]?.url
+    || s.data.panorama
+    || s.data.photo
+    || null;
+}
 ---
 <Base title="Studios">
   <section style="padding:160px 0 80px;">
@@ -23,8 +31,8 @@ const studios = (await getCollection("studios")).sort((a, b) => (a.data.order ??
         {studios.map((s, i) => (
           <a href={`/studios/${s.data.id.toLowerCase()}`} class="card" style="padding:0;overflow:hidden;text-decoration:none;color:var(--fg);display:block;">
             <div style="position:relative;height:320px;overflow:hidden;background:#0A0A0F;">
-              {s.data.panorama ? (
-                <img src={s.data.panorama} alt={s.data.name} style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;opacity:0.85;" />
+              {cardThumb(s) ? (
+                <img src={cardThumb(s)!} alt={s.data.name} style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;opacity:0.85;" />
               ) : (
                 <div class="media-ph" data-label={`STUDIO ${s.data.id} · ${s.data.surface || ""}`} style="position:absolute;inset:0;">
                   <div style={`position:absolute;inset:0;background:linear-gradient(145deg, color-mix(in oklab, var(--accent) ${8 + i * 4}%, transparent), transparent 60%);`}></div>
