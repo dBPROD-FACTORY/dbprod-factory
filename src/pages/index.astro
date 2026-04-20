@@ -121,7 +121,7 @@ const featuredData = featured.map(p => p.data);
       <div class="marquee" style="gap:80px;">
         {[...site.clients, ...site.clients].map((c, i) => (
           <span style={`font-family:var(--f-title);font-size:48px;font-style:${i % 2 ? "italic" : "normal"};letter-spacing:-0.02em;color:var(--fg-dim);white-space:nowrap;display:inline-flex;align-items:center;gap:80px;`}>
-            {c}
+            {c.name}
             <span style="width:8px;height:8px;background:var(--accent);border-radius:50%;"/>
           </span>
         ))}
