@@ -10,6 +10,5 @@ equip:
   - 8 micros simultanés
 surface: 34 m²
 rt60: 0.24s
-panorama: /media/studios/studio-b.jpeg
 order: 2
 ---
