@@ -1,0 +1,285 @@
+---
+// Internal media upload page — compresses images in-browser, commits to GitHub
+// Protected by UPLOAD_PASSWORD env var (set in Cloudflare Pages dashboard)
+---
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Upload média — dB PROD-FACTORY</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #08080d; --fg: #f0ede8; --accent: #a8e63d;
+      --card: #111118; --border: rgba(255,255,255,.08);
+      --radius: 12px; --mono: "DM Mono", monospace;
+    }
+    body { background: var(--bg); color: var(--fg); font-family: system-ui, sans-serif;
+           min-height: 100dvh; display: flex; align-items: center; justify-content: center;
+           padding: 24px; }
+    .box { width: 100%; max-width: 560px; }
+    h1 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+    .sub { font-size: 13px; color: #888; margin-bottom: 32px; }
+    label { display: block; font-size: 12px; font-weight: 600; letter-spacing: .08em;
+            text-transform: uppercase; color: #888; margin-bottom: 6px; }
+    input, select {
+      width: 100%; background: var(--card); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--fg); font-size: 14px;
+      padding: 10px 14px; outline: none; font-family: inherit;
+    }
+    input:focus, select:focus { border-color: var(--accent); }
+    select option { background: #1a1a24; }
+    .field { margin-bottom: 20px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .drop-zone {
+      border: 2px dashed var(--border); border-radius: var(--radius);
+      padding: 40px 20px; text-align: center; cursor: pointer;
+      transition: border-color .2s, background .2s; margin-bottom: 20px;
+      position: relative;
+    }
+    .drop-zone:hover, .drop-zone.drag { border-color: var(--accent); background: rgba(168,230,61,.04); }
+    .drop-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
+    .drop-label { font-size: 14px; color: #666; pointer-events: none; }
+    .drop-label strong { color: var(--accent); }
+    .preview { max-width: 100%; max-height: 200px; border-radius: 8px;
+               margin-top: 12px; display: none; }
+    .preview.show { display: block; margin: 12px auto 0; }
+    .info { font-size: 12px; color: #666; margin-top: 6px; font-family: var(--mono); }
+    button {
+      width: 100%; padding: 14px; border-radius: 8px; border: none; cursor: pointer;
+      background: var(--accent); color: #08080d; font-weight: 700; font-size: 15px;
+      transition: opacity .2s;
+    }
+    button:disabled { opacity: .4; cursor: not-allowed; }
+    .result {
+      margin-top: 24px; background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px; display: none;
+    }
+    .result.show { display: block; }
+    .result.ok { border-color: var(--accent); }
+    .result.err { border-color: #e63d3d; }
+    .result-path {
+      font-family: var(--mono); font-size: 13px; background: #0d0d14;
+      padding: 10px 14px; border-radius: 6px; color: var(--accent);
+      margin-top: 10px; word-break: break-all;
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    }
+    .copy-btn {
+      width: auto; padding: 6px 12px; font-size: 12px; border-radius: 6px;
+      flex-shrink: 0;
+    }
+    .progress { height: 3px; background: var(--border); border-radius: 99px;
+                margin-top: 16px; overflow: hidden; display: none; }
+    .progress.show { display: block; }
+    .progress-bar { height: 100%; background: var(--accent); width: 0%;
+                    transition: width .3s; border-radius: 99px; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Upload média</h1>
+    <p class="sub">Les images sont compressées automatiquement dans le navigateur avant envoi.</p>
+
+    <div class="drop-zone" id="dropZone">
+      <input type="file" id="fileInput" accept="image/*,audio/mpeg,audio/mp3" />
+      <div class="drop-label" id="dropLabel">
+        Glisser une image ici ou <strong>cliquer pour choisir</strong><br>
+        <span style="font-size:11px">JPG · PNG · WebP · MP3 — max 50 MB avant compression</span>
+      </div>
+      <img class="preview" id="preview" alt="preview" />
+      <div class="info" id="fileInfo"></div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label for="subfolder">Dossier</label>
+        <select id="subfolder">
+          <option value="studios">studios</option>
+          <option value="voices">voices</option>
+          <option value="posts">posts</option>
+          <option value="projects">projects</option>
+          <option value="samples">samples</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="slug">Nom du fichier (sans extension)</label>
+        <input type="text" id="slug" placeholder="studio-c-regie" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="password">Mot de passe</label>
+      <input type="password" id="password" placeholder="••••••••" />
+    </div>
+
+    <button id="uploadBtn" disabled>Choisir un fichier d'abord</button>
+
+    <div class="progress" id="progress">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="result" id="result">
+      <div id="resultMsg"></div>
+      <div class="result-path" id="resultPath" style="display:none">
+        <span id="pathText"></span>
+        <button class="copy-btn" id="copyBtn" onclick="copyPath()">Copier</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const MAX_WIDTH  = 2400;
+    const JPEG_QUAL  = 0.85;
+
+    let compressedBlob = null;
+    let originalName   = "";
+
+    const fileInput   = document.getElementById("fileInput");
+    const dropZone    = document.getElementById("dropZone");
+    const dropLabel   = document.getElementById("dropLabel");
+    const preview     = document.getElementById("preview");
+    const fileInfo    = document.getElementById("fileInfo");
+    const slugInput   = document.getElementById("slug");
+    const uploadBtn   = document.getElementById("uploadBtn");
+    const progress    = document.getElementById("progress");
+    const progressBar = document.getElementById("progressBar");
+    const result      = document.getElementById("result");
+
+    // Drag-and-drop visual
+    dropZone.addEventListener("dragover", e => { e.preventDefault(); dropZone.classList.add("drag"); });
+    dropZone.addEventListener("dragleave", () => dropZone.classList.remove("drag"));
+    dropZone.addEventListener("drop", e => { e.preventDefault(); dropZone.classList.remove("drag"); });
+
+    fileInput.addEventListener("change", async () => {
+      const file = fileInput.files[0];
+      if (!file) return;
+      await processFile(file);
+    });
+
+    async function processFile(file) {
+      originalName = file.name.replace(/\.[^.]+$/, "").replace(/[^a-z0-9]+/gi, "-").toLowerCase();
+      if (!slugInput.value) slugInput.value = originalName;
+
+      uploadBtn.disabled = true;
+      uploadBtn.textContent = "Compression en cours…";
+
+      const isAudio = file.type.startsWith("audio/");
+
+      if (isAudio) {
+        compressedBlob = file;
+        fileInfo.textContent = `Audio · ${fmt(file.size)} (pas de compression)`;
+        preview.classList.remove("show");
+        dropLabel.style.display = "none";
+      } else {
+        // Compress image via canvas
+        try {
+          compressedBlob = await compressImage(file);
+          const ratio = Math.round((1 - compressedBlob.size / file.size) * 100);
+          fileInfo.textContent = `${fmt(file.size)} → ${fmt(compressedBlob.size)}${ratio > 0 ? ` (−${ratio}%)` : ""}`;
+          const url = URL.createObjectURL(compressedBlob);
+          preview.src = url;
+          preview.classList.add("show");
+          dropLabel.style.display = "none";
+        } catch(e) {
+          compressedBlob = file;
+          fileInfo.textContent = `Compression échouée — envoi fichier original (${fmt(file.size)})`;
+        }
+      }
+
+      uploadBtn.disabled = false;
+      uploadBtn.textContent = "Uploader →";
+    }
+
+    function compressImage(file) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        const url = URL.createObjectURL(file);
+        img.onload = () => {
+          URL.revokeObjectURL(url);
+          let { width, height } = img;
+          if (width > MAX_WIDTH) { height = Math.round(height * MAX_WIDTH / width); width = MAX_WIDTH; }
+          const canvas = document.createElement("canvas");
+          canvas.width = width; canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, width, height);
+          const outType = file.type === "image/png" ? "image/png" : "image/jpeg";
+          canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error("toBlob failed")),
+                        outType, outType === "image/jpeg" ? JPEG_QUAL : undefined);
+        };
+        img.onerror = reject;
+        img.src = url;
+      });
+    }
+
+    uploadBtn.addEventListener("click", async () => {
+      if (!compressedBlob) return;
+      const slug = slugInput.value.trim();
+      const password = document.getElementById("password").value;
+      const subfolder = document.getElementById("subfolder").value;
+      if (!slug) { alert("Donnez un nom au fichier"); return; }
+      if (!password) { alert("Mot de passe requis"); return; }
+
+      uploadBtn.disabled = true;
+      uploadBtn.textContent = "Envoi en cours…";
+      progress.classList.add("show");
+      progressBar.style.width = "30%";
+      result.className = "result";
+      result.style.display = "none";
+
+      const fd = new FormData();
+      fd.append("file", compressedBlob, slug);
+      fd.append("subfolder", subfolder);
+      fd.append("slug", slug);
+      fd.append("password", password);
+
+      progressBar.style.width = "60%";
+
+      try {
+        const res  = await fetch("/api/upload", { method: "POST", body: fd });
+        const data = await res.json();
+        progressBar.style.width = "100%";
+
+        if (data.success) {
+          result.classList.add("show", "ok");
+          document.getElementById("resultMsg").textContent = "✓ Fichier uploadé avec succès !";
+          document.getElementById("resultPath").style.display = "flex";
+          document.getElementById("pathText").textContent = data.path;
+          uploadBtn.textContent = "Uploader un autre →";
+          uploadBtn.disabled = false;
+          compressedBlob = null;
+          preview.classList.remove("show");
+          dropLabel.style.display = "";
+          fileInfo.textContent = "";
+          slugInput.value = "";
+          fileInput.value = "";
+        } else {
+          throw new Error(data.error || "Erreur inconnue");
+        }
+      } catch(e) {
+        progressBar.style.width = "100%";
+        result.classList.add("show", "err");
+        document.getElementById("resultMsg").textContent = "Erreur : " + e.message;
+        document.getElementById("resultPath").style.display = "none";
+        uploadBtn.disabled = false;
+        uploadBtn.textContent = "Réessayer →";
+      }
+
+      setTimeout(() => { progress.classList.remove("show"); progressBar.style.width = "0%"; }, 800);
+    });
+
+    function copyPath() {
+      const text = document.getElementById("pathText").textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById("copyBtn");
+        btn.textContent = "Copié ✓";
+        setTimeout(() => btn.textContent = "Copier", 2000);
+      });
+    }
+
+    function fmt(n) {
+      return n > 1048576 ? (n/1048576).toFixed(1)+" MB" : Math.round(n/1024)+" KB";
+    }
+  </script>
+</body>
+</html>
