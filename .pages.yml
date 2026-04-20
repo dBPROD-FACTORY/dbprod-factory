@@ -142,7 +142,7 @@ content:
       - { name: dur, label: Durée, type: string }
       - { name: featured, label: Mis en avant ?, type: boolean }
       - { name: video_url, label: "URL vidéo (mp4 ou .m3u8 HLS)", type: string, description: "Collez ici un lien .mp4 ou stream HLS. Affiché sur la page projet + preview au survol sur la home." }
-      - { name: poster, label: "Chemin image poster (optionnel)", type: string, description: "Ex: /media/projects/mon-projet.jpg — utilisez npm run add-photo" }
+      - { name: poster, label: "Image poster (optionnel)", type: image, description: "Uploadez d'abord via dbprod-factory.pages.dev/upload (dossier projects), puis sélectionnez depuis la médiathèque." }
       - name: samples
         label: Extraits sonores
         type: object
@@ -175,7 +175,7 @@ content:
       - { name: excerpt, label: Extrait, type: text }
       - { name: read, label: Temps de lecture, type: string }
       - { name: featured, label: À la une ?, type: boolean }
-      - { name: cover, label: "Chemin image de couverture", type: string, description: "Ex: /media/posts/mon-article.jpg — utilisez npm run add-photo" }
+      - { name: cover, label: "Image de couverture", type: image, description: "Uploadez d'abord via dbprod-factory.pages.dev/upload (dossier posts), puis sélectionnez depuis la médiathèque." }
       - { name: order, label: Ordre, type: number }
       - { name: body, label: Contenu, type: text }
 
