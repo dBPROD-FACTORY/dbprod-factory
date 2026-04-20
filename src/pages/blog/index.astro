@@ -2,25 +2,43 @@
 import Base from "../../layouts/Base.astro";
 import { getCollection } from "astro:content";
 import BlogList from "../../components/BlogList.jsx";
-const posts = (await getCollection("posts")).sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+const posts = (await getCollection("posts"))
+  .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
 const postsData = posts.map(p => p.data);
-const featured = postsData.find(p => p.featured)?.id;
 ---
 <Base title="Journal">
-  <section style="padding:160px 0 80px;">
+  <section style="padding:140px 0 100px;">
     <div class="container">
-      <div class="grid-responsive-2" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-bottom:80px;align-items:flex-end;">
+
+      <!-- Header -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-bottom:72px;align-items:flex-end;" class="grid-responsive-2">
         <div>
-          <div class="eyebrow" style="margin-bottom:28px;">Journal · Ressources</div>
-          <h1 class="h-display" style="font-size:clamp(72px,12vw,180px);margin:0;line-height:0.9;">
-            Le <em style="font-style:italic;color:var(--accent);">journal</em>
+          <div class="eyebrow" style="margin-bottom:24px;">Journal · Ressources</div>
+          <h1 class="h-display" style="font-size:clamp(64px,10vw,160px);margin:0;line-height:0.9;">
+            Le <em style="color:var(--accent);">journal</em>
           </h1>
         </div>
-        <p class="text-dim" style="font-size:16px;max-width:440px;">
-          Techniques, coulisses, opinions. Nos réflexions sur le doublage, la post-production et les métiers de la voix.
-        </p>
+        <div style="display:flex;flex-direction:column;gap:20px;padding-bottom:8px;">
+          <p style="font-size:17px;color:var(--fg-dim);line-height:1.65;max-width:400px;margin:0;">
+            Techniques, coulisses, opinions. Nos réflexions sur le doublage, la post-production et les métiers de la voix.
+          </p>
+          <div style="display:flex;gap:20px;">
+            <div>
+              <div class="h-display" style="font-size:40px;margin:0;line-height:1;">{postsData.length}</div>
+              <div class="mono">Articles publiés</div>
+            </div>
+            <div style="width:1px;background:var(--line);"></div>
+            <div>
+              <div class="h-display" style="font-size:40px;margin:0;line-height:1;">{new Set(postsData.map(p => p.tag)).size}</div>
+              <div class="mono">Catégories</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <BlogList client:load posts={postsData} featuredId={featured} />
+
+      <hr class="divider" style="margin-bottom:48px;" />
+
+      <BlogList client:load posts={postsData} />
     </div>
   </section>
 </Base>
