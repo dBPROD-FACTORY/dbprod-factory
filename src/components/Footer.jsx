@@ -131,6 +131,7 @@ export default function Footer({ site, contact, social, footerCta }) {
             <a href="#" style={{ color: "var(--fg-dim)", textDecoration: "none" }}>Mentions légales</a>
             <a href="#" style={{ color: "var(--fg-dim)", textDecoration: "none" }}>CGV</a>
             <a href="#" style={{ color: "var(--fg-dim)", textDecoration: "none" }}>Confidentialité</a>
+            <a href="/upload" style={{ color: "var(--fg-mute)", textDecoration: "none", opacity: 0.4 }}>⬆ Upload</a>
             <span style={{ display: "inline-flex", gap: 6, alignItems: "center", color: "var(--fg-mute)" }}>
               <BarPulse count={3} color="var(--accent)" height={10} /> ON AIR
             </span>
