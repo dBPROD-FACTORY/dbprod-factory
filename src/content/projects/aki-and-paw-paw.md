@@ -3,7 +3,7 @@ id: aki-and-paw-paw
 title: Aki and Paw Paw
 kind: Série animée
 year: 2022
-lang: FR · AR
+lang: FR
 tags:
   - Doublage
   - Animation
