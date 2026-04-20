@@ -1,5 +1,8 @@
 # PagesCMS configuration — https://pagescms.org
 
+links:
+  - { label: "⬆ Upload média", href: "https://dbprod-factory.pages.dev/upload" }
+
 media:
   input: public/media
   output: /media
