@@ -1,92 +1,80 @@
 ---
 import Base from "../layouts/Base.astro";
 import GlobeWidget from "../components/GlobeWidget.jsx";
-import site from "../data/site.json";
+import { getCollection } from "astro:content";
 
-const clients = site.clients;
-const total = clients.length;
+const allClients = (await getCollection("clients"))
+  .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+const clientsData = allClients.map(c => c.data);
 ---
 <Base title="Nos Clients">
   <section style="padding:140px 0 0;">
     <div class="container">
-
-      <!-- Header -->
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-bottom:80px;align-items:flex-end;" class="grid-responsive-2">
         <div>
-          <div class="eyebrow" style="margin-bottom:24px;">Réseau international · {total} partenaires</div>
+          <div class="eyebrow" style="margin-bottom:24px;">Réseau · {clientsData.length} partenaires</div>
           <h1 class="h-display" style="font-size:clamp(56px,9vw,140px);margin:0;line-height:0.9;">
             Nos <em style="color:var(--accent);">clients</em>
           </h1>
         </div>
-        <div style="display:flex;flex-direction:column;gap:16px;padding-bottom:8px;">
-          <p style="font-size:17px;color:var(--fg-dim);line-height:1.65;max-width:420px;margin:0;">
-            De Casablanca au monde entier. dB PROD·FACTORY collabore avec des studios, plateformes et agences en France, aux États-Unis, en Afrique et au Moyen-Orient.
-          </p>
-        </div>
+        <p style="font-size:17px;color:var(--fg-dim);line-height:1.65;max-width:420px;margin:0;padding-bottom:8px;">
+          De Casablanca au monde entier. dB PROD·FACTORY collabore avec des studios, plateformes et agences en France, aux États-Unis, en Afrique et au Moyen-Orient.
+        </p>
       </div>
     </div>
   </section>
 
-  <!-- Globe + List -->
   <section style="padding:0 0 120px;">
     <div class="container">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;" class="globe-layout">
 
         <!-- Globe -->
-        <div style="position:relative;aspect-ratio:1;width:100%;max-width:600px;margin:0 auto;">
-          <GlobeWidget client:load clients={clients} />
+        <div style="position:relative;aspect-ratio:1;width:100%;max-width:580px;margin:0 auto;">
+          <GlobeWidget client:load clients={clientsData} />
         </div>
 
-        <!-- Client list -->
+        <!-- List -->
         <div>
           <div class="eyebrow" style="margin-bottom:32px;">Partenaires actifs</div>
-          <div style="display:flex;flex-direction:column;gap:0;">
-            {clients.map((c, i) => (
-              <div
-                style="display:flex;align-items:center;gap:20px;padding:20px 0;border-bottom:1px solid var(--line);transition:background 0.2s;"
-                class="client-row"
-              >
-                {/* Logo or initials */}
-                <div style={`
-                  width:48px;height:48px;border-radius:10px;flex-shrink:0;
-                  background:var(--bg-elev-2);border:1px solid var(--line);
-                  display:grid;place-items:center;overflow:hidden;
-                `}>
+          <div>
+            {clientsData.map(c => (
+              <div class="client-row" style="display:flex;align-items:center;gap:20px;padding:18px 0;border-bottom:1px solid var(--line);transition:padding 0.2s var(--ease);">
+                <div style="width:48px;height:48px;border-radius:10px;flex-shrink:0;background:var(--bg-elev-2);border:1px solid var(--line);display:grid;place-items:center;overflow:hidden;">
                   {c.logo
                     ? <img src={c.logo} alt={c.name} style="width:100%;height:100%;object-fit:contain;padding:6px;" />
-                    : <span style="font-family:var(--f-mono);font-size:13px;font-weight:700;color:var(--accent);">
-                        {c.name.slice(0,2).toUpperCase()}
-                      </span>
+                    : <span style="font-family:var(--f-mono);font-size:13px;font-weight:700;color:var(--accent);">{c.name.slice(0,2).toUpperCase()}</span>
                   }
                 </div>
                 <div style="flex:1;min-width:0;">
-                  <div style="font-weight:600;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{c.name}</div>
-                  <div class="mono" style="font-size:10px;margin-top:3px;">
-                    {[c.city, c.country].filter(Boolean).join(" · ")}
-                  </div>
+                  {c.website
+                    ? <a href={c.website} target="_blank" rel="noopener" style="font-weight:600;font-size:16px;color:var(--fg);text-decoration:none;display:block;">{c.name}</a>
+                    : <div style="font-weight:600;font-size:16px;">{c.name}</div>
+                  }
+                  {(c.city || c.country) && (
+                    <div class="mono" style="font-size:10px;margin-top:3px;">
+                      {[c.city, c.country].filter(Boolean).join(" · ")}
+                    </div>
+                  )}
                 </div>
-                <div style="width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);flex-shrink:0;" />
+                <div style="width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);flex-shrink:0;" />
               </div>
             ))}
           </div>
-
           <div style="margin-top:40px;">
-            <a href="/contact" class="btn btn-primary btn-arrow">
-              Devenir partenaire
-            </a>
+            <a href="/contact" class="btn btn-primary btn-arrow">Devenir partenaire</a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Stats bar -->
+  <!-- Stats -->
   <section style="border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:48px 0;">
     <div class="container">
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);" class="stats-grid">
         {[
           { v: "9+", l: "Années de production" },
-          { v: "5", l: "Pays couverts" },
+          { v: clientsData.length + "+", l: "Partenaires actifs" },
           { v: "100+", l: "Projets livrés" },
         ].map(s => (
           <div style="padding:32px 40px;background:var(--bg);text-align:center;">
@@ -100,8 +88,6 @@ const total = clients.length;
 </Base>
 
 <style>
-  @media (max-width: 900px) {
-    .globe-layout { grid-template-columns: 1fr !important; }
-  }
-  .client-row:hover { background: var(--bg-elev); padding-left: 12px !important; }
+  @media (max-width: 900px) { .globe-layout { grid-template-columns: 1fr !important; } }
+  .client-row:hover { padding-left: 8px !important; }
 </style>

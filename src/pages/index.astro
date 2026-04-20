@@ -12,6 +12,7 @@ import home from "../data/home.json";
 const services = (await getCollection("services")).sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
 const projects = (await getCollection("projects")).sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
 const posts = (await getCollection("posts")).sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+const clients = (await getCollection("clients")).sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
 const featured = projects.filter(p => p.data.featured).slice(0, 3);
 const featuredData = featured.map(p => p.data);
 ---
@@ -119,9 +120,9 @@ const featuredData = featured.map(p => p.data);
     </div>
     <div style="display:flex;overflow:hidden;">
       <div class="marquee" style="gap:80px;">
-        {[...site.clients, ...site.clients].map((c, i) => (
+        {[...clients, ...clients].map((c, i) => (
           <span style={`font-family:var(--f-title);font-size:48px;font-style:${i % 2 ? "italic" : "normal"};letter-spacing:-0.02em;color:var(--fg-dim);white-space:nowrap;display:inline-flex;align-items:center;gap:80px;`}>
-            {c.name}
+            {c.data.name}
             <span style="width:8px;height:8px;background:var(--accent);border-radius:50%;"/>
           </span>
         ))}

@@ -14,16 +14,6 @@
     { "n": "facebook", "u": "https://www.facebook.com/dbprodfactory/" },
     { "n": "linkedin", "u": "https://www.linkedin.com/company/db-prod-factory/" }
   ],
-  "clients": [
-    { "name": "Netflix MENA", "city": "Dubaï", "country": "UAE", "lat": 25.2, "lng": 55.27, "logo": null },
-    { "name": "Canal+ Afrique", "city": "Paris", "country": "France", "lat": 48.85, "lng": 2.35, "logo": null },
-    { "name": "Dhar Mann Studios", "city": "Los Angeles", "country": "USA", "lat": 34.05, "lng": -118.24, "logo": null },
-    { "name": "Ottolenghi", "city": "Londres", "country": "UK", "lat": 51.51, "lng": -0.12, "logo": null },
-    { "name": "Oblivius", "city": "Casablanca", "country": "Maroc", "lat": 33.59, "lng": -7.62, "logo": null },
-    { "name": "Prod Roll", "city": "Paris", "country": "France", "lat": 48.88, "lng": 2.30, "logo": null },
-    { "name": "Colibri Studio", "city": "Lyon", "country": "France", "lat": 45.75, "lng": 4.83, "logo": null },
-    { "name": "West Capital Partners", "city": "Paris", "country": "France", "lat": 48.87, "lng": 2.33, "logo": null }
-  ],
   "stats": [
     { "v": "200+", "l": "Heures de doublage livrées" },
     { "v": "100+", "l": "Projets réalisés" },

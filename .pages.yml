@@ -41,18 +41,6 @@ content:
         fields:
           - { name: n, label: "Nom (instagram/facebook/linkedin)", type: string }
           - { name: u, label: URL, type: string }
-      - name: clients
-        label: Clients (Globe)
-        type: object
-        list: true
-        fields:
-          - { name: name, label: Nom du client, type: string }
-          - { name: city, label: Ville, type: string }
-          - { name: country, label: Pays, type: string }
-          - { name: lat, label: "Latitude (ex: 48.85)", type: number }
-          - { name: lng, label: "Longitude (ex: 2.35)", type: number }
-          - { name: logo, label: Logo, type: image, description: "Uploadez via /upload puis sélectionnez. Format carré recommandé (PNG fond transparent).", required: false }
-          - { name: website, label: "Site web (optionnel)", type: string, required: false }
       - name: stats
         label: Statistiques
         type: object
@@ -265,3 +253,20 @@ content:
           - { name: q, label: Question, type: string }
           - { name: a, label: Réponse, type: text }
       - { name: order, label: Ordre, type: number }
+
+  - name: clients
+    label: Clients
+    path: src/content/clients
+    type: collection
+    format: yaml-frontmatter
+    view:
+      fields: [name, city, country]
+      primary: name
+    fields:
+      - { name: id, label: "Slug (identifiant)", type: string }
+      - { name: name, label: Nom du client, type: string }
+      - { name: city, label: "Ville", type: string, description: "Ex: Paris, Dubaï, Los Angeles — utilisé pour placer le point sur le globe." }
+      - { name: country, label: "Pays", type: string, description: "Ex: France, UAE, USA, Maroc" }
+      - { name: logo, label: Logo, type: image, description: "Uploadez via dbprod-factory.pages.dev/upload, format carré PNG fond transparent recommandé.", required: false }
+      - { name: website, label: "Site web (optionnel)", type: string, required: false }
+      - { name: order, label: Ordre d'affichage, type: number }

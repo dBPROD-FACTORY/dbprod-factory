@@ -102,4 +102,17 @@ const voices = defineCollection({
   }),
 });
 
-export const collections = { services, projects, posts, studios, faq, voices };
+const clients = defineCollection({
+  type: "content",
+  schema: z.object({
+    id: z.string(),
+    name: z.string(),
+    city: z.string().optional(),
+    country: z.string().optional(),
+    logo: z.string().optional(),
+    website: z.string().optional(),
+    order: z.number().optional(),
+  }),
+});
+
+export const collections = { services, projects, posts, studios, faq, voices, clients };
