@@ -4,7 +4,6 @@ name: Anna F.
 gender: F
 languages:
   - FR
-  - AR
 register: Timbre médium · chaud
 tags:
   - Chaleureuse
