@@ -1,28 +1,36 @@
-// Recursively compress images in public/media/ so that none exceeds
-// Cloudflare Pages' 25 MB per-file limit, and bundles stay small.
+// Recursively compress media files in public/media/ so nothing exceeds
+// Cloudflare Pages' 25 MB per-file limit and bundles stay small.
 //
-// Rules:
-//  - JPEG/JPG: re-encode at quality 82 (mozjpeg), strip metadata
-//  - PNG: quality 80, compressionLevel 9
-//  - WEBP: quality 82
+// Images (jpg/jpeg/png/webp):
+//  - jpg/jpeg: re-encode at quality 82 (mozjpeg), strip metadata
+//  - png: quality 80, compressionLevel 9
+//  - webp: quality 82
 //  - Any image wider than MAX_WIDTH is downscaled
-//  - Only rewrites files if the new version is actually smaller
-//  - Skips tiny files (< 200 KB) — not worth recompressing
+//
+// Audio (wav/m4a/flac → mp3):
+//  - Converts WAV/FLAC/M4A to MP3 at 192 kbps via ffmpeg
+//  - MP3 files > 10 MB are re-encoded at 128 kbps to stay lean
+//
+// Skips files < 200 KB. Only rewrites if smaller.
 
 import fs from "node:fs/promises";
 import path from "node:path";
+import { spawnSync } from "node:child_process";
 import sharp from "sharp";
 
 const ROOT = path.resolve("public/media");
 const MAX_WIDTH = 4096;
 const MIN_SIZE_BYTES = 200 * 1024;
+const MAX_AUDIO_MB = 10;
 
-const OPTS = {
+const IMG_OPTS = {
   jpg: { quality: 82, mozjpeg: true },
   jpeg: { quality: 82, mozjpeg: true },
   png: { quality: 80, compressionLevel: 9 },
   webp: { quality: 82 },
 };
+const IMG_EXT = new Set(Object.keys(IMG_OPTS));
+const AUDIO_EXT = new Set(["wav", "flac", "m4a", "aiff", "aif", "mp3"]);
 
 async function walk(dir) {
   const out = [];
@@ -37,13 +45,11 @@ async function walk(dir) {
   return out;
 }
 
-function extOf(p) {
-  return path.extname(p).toLowerCase().replace(".", "");
-}
+const extOf = (p) => path.extname(p).toLowerCase().replace(".", "");
+const mb = (n) => (n / 1024 / 1024).toFixed(2) + " MB";
 
-async function optimize(file) {
+async function optimizeImage(file) {
   const ext = extOf(file);
-  if (!(ext in OPTS)) return null;
   const stat = await fs.stat(file);
   if (stat.size < MIN_SIZE_BYTES) return null;
 
@@ -53,26 +59,61 @@ async function optimize(file) {
   if (meta.width && meta.width > MAX_WIDTH) {
     img = img.resize({ width: MAX_WIDTH, withoutEnlargement: true });
   }
-
-  const opts = OPTS[ext];
-  let pipeline;
-  if (ext === "png") pipeline = img.png(opts);
-  else if (ext === "webp") pipeline = img.webp(opts);
-  else pipeline = img.jpeg(opts);
-
+  const opts = IMG_OPTS[ext];
+  const pipeline = ext === "png" ? img.png(opts) : ext === "webp" ? img.webp(opts) : img.jpeg(opts);
   const out = await pipeline.toBuffer();
-  if (out.length >= stat.size) {
+  if (out.length >= stat.size) return { file, before: stat.size, after: stat.size, skipped: "no-gain" };
+  await fs.writeFile(file, out);
+  return { file, before: stat.size, after: out.length };
+}
+
+async function optimizeAudio(file) {
+  const ext = extOf(file);
+  const stat = await fs.stat(file);
+  if (stat.size < MIN_SIZE_BYTES) return null;
+
+  const isMp3 = ext === "mp3";
+  const overLimit = stat.size > MAX_AUDIO_MB * 1024 * 1024;
+
+  // MP3 within size budget → nothing to do.
+  if (isMp3 && !overLimit) return null;
+
+  const target = file.replace(/\.[^.]+$/, ".mp3");
+  const tmp = target + ".tmp.mp3";
+  const bitrate = overLimit ? "128k" : "192k";
+
+  const res = spawnSync("ffmpeg", [
+    "-y", "-i", file,
+    "-vn", "-ac", "2", "-ar", "44100",
+    "-codec:a", "libmp3lame", "-b:a", bitrate,
+    tmp,
+  ], { stdio: ["ignore", "ignore", "inherit"] });
+
+  if (res.status !== 0) {
+    try { await fs.unlink(tmp); } catch {}
+    throw new Error("ffmpeg failed");
+  }
+
+  const newStat = await fs.stat(tmp);
+  if (newStat.size >= stat.size && isMp3) {
+    await fs.unlink(tmp);
     return { file, before: stat.size, after: stat.size, skipped: "no-gain" };
   }
-  await fs.writeFile(file, out);
-  return { file, before: stat.size, after: out.length, skipped: null };
+
+  // Replace: remove original (if different ext), rename tmp → target
+  if (file !== target) await fs.unlink(file);
+  await fs.rename(tmp, target);
+  return { file, after_file: target, before: stat.size, after: newStat.size };
 }
 
 const files = await walk(ROOT);
 const results = [];
 for (const f of files) {
+  const ext = extOf(f);
   try {
-    const r = await optimize(f);
+    let r = null;
+    if (IMG_EXT.has(ext)) r = await optimizeImage(f);
+    else if (AUDIO_EXT.has(ext)) r = await optimizeAudio(f);
     if (r && !r.skipped) results.push(r);
     else if (r?.skipped) console.log(`- skip (${r.skipped}): ${path.relative(ROOT, f)}`);
   } catch (e) {
@@ -87,9 +128,11 @@ if (results.length === 0) {
 
 const totBefore = results.reduce((s, r) => s + r.before, 0);
 const totAfter = results.reduce((s, r) => s + r.after, 0);
-const mb = (n) => (n / 1024 / 1024).toFixed(2) + " MB";
 console.log(`\n✓ Optimized ${results.length} file(s):`);
 for (const r of results) {
-  console.log(`  ${path.relative(ROOT, r.file)} — ${mb(r.before)} → ${mb(r.after)}`);
+  const label = r.after_file && r.after_file !== r.file
+    ? `${path.relative(ROOT, r.file)} → ${path.relative(ROOT, r.after_file)}`
+    : path.relative(ROOT, r.file);
+  console.log(`  ${label} — ${mb(r.before)} → ${mb(r.after)}`);
 }
 console.log(`\nTotal: ${mb(totBefore)} → ${mb(totAfter)} (saved ${mb(totBefore - totAfter)})`);

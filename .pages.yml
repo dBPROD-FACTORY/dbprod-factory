@@ -87,7 +87,12 @@ content:
           - { name: artist, label: Légende, type: string }
           - { name: duration, label: Durée (sec), type: number }
           - { name: seed, label: Seed, type: number }
-          - { name: url, label: URL audio (mp3/wav), type: string }
+          - name: url
+            label: "Fichier audio"
+            type: file
+            options:
+              extensions: [mp3, wav, m4a]
+              path: public/media/samples
 
   - name: services
     label: Services
@@ -149,7 +154,12 @@ content:
           - { name: artist, label: Légende, type: string }
           - { name: duration, label: Durée (sec), type: number }
           - { name: seed, label: Seed, type: number }
-          - { name: url, label: URL audio, type: string }
+          - name: url
+            label: "Fichier audio"
+            type: file
+            options:
+              extensions: [mp3, wav, m4a]
+              path: public/media/samples
       - { name: order, label: Ordre, type: number }
       - { name: body, label: Contenu détaillé, type: text }
 
@@ -219,7 +229,13 @@ content:
       - { name: languages, label: Langues, type: string, list: true }
       - { name: register, label: Registre, type: string }
       - { name: tags, label: Tags, type: string, list: true }
-      - { name: sample_url, label: URL audio d'extrait, type: string }
+      - name: sample_url
+        label: "Extrait audio (mp3 / wav / m4a)"
+        type: file
+        description: "Uploadez un extrait de voix. Format conseillé : MP3 128-192kbps ou WAV. Sera compressé auto via GitHub Actions si nécessaire."
+        options:
+          extensions: [mp3, wav, m4a]
+          path: public/media/voices
       - { name: duration, label: Durée (sec), type: number }
       - { name: seed, label: Seed (waveform), type: number }
       - { name: photo, label: Photo, type: image }
