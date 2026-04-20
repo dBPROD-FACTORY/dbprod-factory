@@ -1,7 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
 import { getCollection } from "astro:content";
-import Panorama from "../components/Panorama.jsx";
 import { StaticWave } from "../components/Waveform.jsx";
 const studios = (await getCollection("studios")).sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
 ---
@@ -23,8 +22,16 @@ const studios = (await getCollection("studios")).sort((a, b) => (a.data.order ??
       <div class="grid-responsive-2" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
         {studios.map((s, i) => (
           <a href={`/studios/${s.data.id.toLowerCase()}`} class="card" style="padding:0;overflow:hidden;text-decoration:none;color:var(--fg);display:block;">
-            <div style="position:relative;">
-              <Panorama client:visible src={s.data.panorama} height={320} interactive={false} autoSpeed={0.015} label={s.data.name} />
+            <div style="position:relative;height:320px;overflow:hidden;background:#0A0A0F;">
+              {s.data.panorama ? (
+                <img src={s.data.panorama} alt={s.data.name} style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;opacity:0.85;" />
+              ) : (
+                <div class="media-ph" data-label={`STUDIO ${s.data.id} · ${s.data.surface || ""}`} style="position:absolute;inset:0;">
+                  <div style={`position:absolute;inset:0;background:linear-gradient(145deg, color-mix(in oklab, var(--accent) ${8 + i * 4}%, transparent), transparent 60%);`}></div>
+                </div>
+              )}
+              <div style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.6) 100%);pointer-events:none;"></div>
+              <span class="chip chip-accent" style="position:absolute;top:16px;right:16px;background:color-mix(in oklab, var(--bg) 70%, transparent);backdrop-filter:blur(8px);">360° · Visite disponible</span>
               <div style="position:absolute;top:20px;left:20px;right:20px;display:flex;justify-content:space-between;pointer-events:none;">
                 <span class="h-display" style="font-size:100px;line-height:1;color:#fff;opacity:0.28;mix-blend-mode:difference;">{s.data.id}</span>
                 <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">

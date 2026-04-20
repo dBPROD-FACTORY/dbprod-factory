@@ -1,89 +1,82 @@
 import React, { useEffect, useRef, useState } from "react";
 
-// Equirectangular panorama viewer.
-// - Auto-pans horizontally when idle
-// - Mouse X/Y controls look direction
-// - Drag to spin faster
-// Uses CSS background-position on a 2× duplicated image band for seamless loop.
-export default function Panorama({ src, height = 520, autoSpeed = 0.02, interactive = true, label }) {
+// Real 360° equirectangular viewer via Pannellum (WebGL/canvas).
+// Projects the distorted equirectangular image onto a sphere so the user sees
+// a natural view, and can drag/pan/zoom like Google Street View.
+// Pannellum is loaded from CDN on first use (no npm dep).
+
+let pannellumPromise = null;
+function loadPannellum() {
+  if (typeof window === "undefined") return Promise.reject(new Error("ssr"));
+  if (window.pannellum) return Promise.resolve(window.pannellum);
+  if (pannellumPromise) return pannellumPromise;
+  pannellumPromise = new Promise((resolve, reject) => {
+    const css = document.createElement("link");
+    css.rel = "stylesheet";
+    css.href = "https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css";
+    document.head.appendChild(css);
+    const script = document.createElement("script");
+    script.src = "https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js";
+    script.onload = () => resolve(window.pannellum);
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+  return pannellumPromise;
+}
+
+export default function Panorama({
+  src,
+  height = 520,
+  autoSpeed = 2,       // degrees per second; 0 disables auto-rotate
+  interactive = true,
+  label,
+  hfov = 110,
+}) {
   const hostRef = useRef(null);
-  const [yaw, setYaw] = useState(0); // 0..100 (%)
-  const [pitch, setPitch] = useState(50);
-  const [hovering, setHovering] = useState(false);
-  const [dragging, setDragging] = useState(false);
-  const dragStart = useRef({ x: 0, yaw: 0 });
-  const rafRef = useRef();
+  const viewerRef = useRef(null);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    let last = performance.now();
-    const tick = (now) => {
-      const dt = now - last; last = now;
-      if (!hovering && !dragging) {
-        setYaw(y => (y + autoSpeed * dt) % 100);
-      }
-      rafRef.current = requestAnimationFrame(tick);
-    };
-    rafRef.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(rafRef.current);
-  }, [hovering, dragging, autoSpeed]);
+    if (!src || !hostRef.current) return;
+    let disposed = false;
 
-  const onMove = (e) => {
-    if (!interactive || !hostRef.current) return;
-    const r = hostRef.current.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width;
-    const y = (e.clientY - r.top) / r.height;
-    if (dragging) {
-      const dx = e.clientX - dragStart.current.x;
-      setYaw((dragStart.current.yaw - (dx / r.width) * 100 + 1000) % 100);
-    } else {
-      setYaw(prev => {
-        const target = x * 100;
-        return prev + (target - prev) * 0.08;
+    loadPannellum().then((pannellum) => {
+      if (disposed || !hostRef.current) return;
+      hostRef.current.innerHTML = "";
+      viewerRef.current = pannellum.viewer(hostRef.current, {
+        type: "equirectangular",
+        panorama: src,
+        autoLoad: true,
+        autoRotate: autoSpeed,
+        autoRotateInactivityDelay: 1000,
+        showControls: false,
+        showZoomCtrl: false,
+        showFullscreenCtrl: false,
+        compass: false,
+        hfov,
+        minHfov: 60,
+        maxHfov: 130,
+        mouseZoom: interactive,
+        draggable: interactive,
+        keyboardZoom: false,
+        backgroundColor: [0.04, 0.04, 0.05],
       });
-      setPitch(40 + y * 20);
-    }
-  };
+      setReady(true);
+    }).catch((e) => console.error("[panorama] load failed", e));
 
-  const onDown = (e) => {
-    if (!interactive) return;
-    setDragging(true);
-    dragStart.current = { x: e.clientX, yaw };
-  };
-  const onUp = () => setDragging(false);
+    return () => {
+      disposed = true;
+      try { viewerRef.current && viewerRef.current.destroy(); } catch {}
+      viewerRef.current = null;
+    };
+  }, [src, autoSpeed, interactive, hfov]);
 
   return (
-    <div
-      ref={hostRef}
-      onMouseEnter={() => setHovering(true)}
-      onMouseLeave={() => { setHovering(false); setDragging(false); }}
-      onMouseMove={onMove}
-      onMouseDown={onDown}
-      onMouseUp={onUp}
-      style={{
-        position: "relative",
-        width: "100%",
-        height,
-        overflow: "hidden",
-        borderRadius: 20,
-        cursor: interactive ? (dragging ? "grabbing" : "grab") : "default",
-        background: "#0A0A0F",
-        border: "1px solid var(--line-2)",
-      }}
-    >
-      {src ? (
-        <div style={{
-          position: "absolute",
-          inset: 0,
-          backgroundImage: `url(${src})`,
-          backgroundRepeat: "repeat-x",
-          backgroundSize: "auto 140%",
-          backgroundPosition: `${yaw}% ${pitch}%`,
-          willChange: "background-position",
-          transition: dragging ? "none" : "background-position 0.12s linear",
-        }} />
-      ) : (
-        <div className="media-ph" data-label={label || "STUDIO PANORAMA"} style={{ position: "absolute", inset: 0 }}>
-          <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg, color-mix(in oklab, var(--accent) 15%, transparent), transparent 60%)` }}/>
+    <div style={{ position: "relative", width: "100%", height, borderRadius: 20, overflow: "hidden", background: "#0A0A0F", border: "1px solid var(--line-2)" }}>
+      <div ref={hostRef} style={{ position: "absolute", inset: 0 }} />
+      {!src && (
+        <div className="media-ph" data-label={label || "STUDIO — UPLOADEZ UN PANORAMA 360°"} style={{ position: "absolute", inset: 0 }}>
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, color-mix(in oklab, var(--accent) 15%, transparent), transparent 60%)" }}/>
         </div>
       )}
       <div style={{
@@ -91,9 +84,12 @@ export default function Panorama({ src, height = 520, autoSpeed = 0.02, interact
         fontFamily: "var(--f-mono)", fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase",
         color: "#fff", mixBlendMode: "difference",
         display: "flex", gap: 10, alignItems: "center",
+        background: "rgba(0,0,0,0.35)", padding: "6px 12px", borderRadius: 999,
+        backdropFilter: "blur(8px)",
+        pointerEvents: "none",
       }}>
         <span style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--accent)", animation: "wv 1s ease-in-out infinite alternate" }} />
-        360° · {label || "Vue studio"} — {interactive ? "glisser pour explorer" : "auto"}
+        360° · {label || "Vue studio"} {interactive ? "— glisser pour explorer" : ""}
       </div>
     </div>
   );

@@ -10,7 +10,11 @@ equip:
   - "Cabine traitée ±3dB"
 surface: "18 m²"
 rt60: "0.18s"
-panorama: "https://pannellum.org/images/alma.jpg"
+panoramas:
+  - label: "Régie"
+    url: "/media/studios/studio-a.jpeg"
+  - label: "Cabine"
+    url: "/media/studios/studio-a-2.jpeg"
 order: 1
 ---
 

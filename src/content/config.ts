@@ -66,6 +66,10 @@ const studios = defineCollection({
     surface: z.string().optional(),
     rt60: z.string().optional(),
     panorama: z.string().optional(),
+    panoramas: z.array(z.object({
+      label: z.string(),
+      url: z.string(),
+    })).default([]),
     photo: z.string().optional(),
     order: z.number().optional(),
   }),

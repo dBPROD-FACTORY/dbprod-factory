@@ -1,7 +1,7 @@
 ---
 import Base from "../../layouts/Base.astro";
 import { getCollection } from "astro:content";
-import Panorama from "../../components/Panorama.jsx";
+import PanoramaGallery from "../../components/PanoramaGallery.jsx";
 
 export async function getStaticPaths() {
   const studios = await getCollection("studios");
@@ -9,6 +9,9 @@ export async function getStaticPaths() {
 }
 const { studio } = Astro.props;
 const d = studio.data;
+const views = (d.panoramas && d.panoramas.length > 0)
+  ? d.panoramas
+  : (d.panorama ? [{ label: "Vue principale", url: d.panorama }] : []);
 ---
 <Base title={d.name}>
   <section style="padding:160px 0 40px;">
@@ -25,7 +28,7 @@ const d = studio.data;
     </div>
 
     <div class="container">
-      <Panorama client:load src={d.panorama} height={640} interactive={true} autoSpeed={0.01} label={`Studio ${d.id}`} />
+      <PanoramaGallery client:load views={views} height={640} label={`Studio ${d.id}`} />
       <p class="mono" style="margin-top:16px;text-align:center;">Auto-play 360° · bouge la souris ou glisse pour explorer</p>
     </div>
 

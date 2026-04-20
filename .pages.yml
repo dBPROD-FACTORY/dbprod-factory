@@ -179,7 +179,14 @@ content:
       - { name: equip, label: Équipement, type: list, fields: [{name: item, type: string}] }
       - { name: surface, label: Surface, type: string }
       - { name: rt60, label: RT60, type: string }
-      - { name: panorama, label: "Image panoramique 360° (équirectangulaire 2:1)", type: image, description: "Uploadez une image panoramique équirectangulaire (ratio 2:1) pour la vue 360° auto-play." }
+      - { name: panorama, label: "Image panoramique 360° (vue unique — équirectangulaire 2:1)", type: image, description: "Utilisé uniquement si la liste ci-dessous est vide. Image panoramique équirectangulaire (ratio 2:1)." }
+      - name: panoramas
+        label: "Vues 360° multiples (équirectangulaires 2:1)"
+        description: "Ajoutez plusieurs vues 360° pour ce studio. L'utilisateur pourra switcher entre elles."
+        type: list
+        fields:
+          - { name: label, label: "Nom de la vue (ex. Régie, Cabine)", type: string }
+          - { name: url, label: "Image panoramique", type: image }
       - { name: photo, label: Photo (fallback), type: image }
       - { name: order, label: Ordre, type: number }
 
