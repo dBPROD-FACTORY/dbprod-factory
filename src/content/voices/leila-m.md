@@ -9,7 +9,6 @@ tags:
   - Chaleureuse
   - Dramatique
   - Doublage
-sample_url: /media/voices/VOIX ANNA DEMO V2.mp3
 duration: 42
 seed: 7
 order: 1
