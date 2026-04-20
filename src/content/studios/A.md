@@ -14,6 +14,6 @@ panoramas:
   - label: Régie
     url: /media/studios/studio-a.jpeg
   - label: Cabine
-    url: /media/studios/2026-04-06 11-15-28.png
+    url: /media/studios/studio-a-cabine.png
 order: 1
 ---
