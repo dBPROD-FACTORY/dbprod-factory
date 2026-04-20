@@ -88,11 +88,9 @@ content:
           - { name: duration, label: Durée (sec), type: number }
           - { name: seed, label: Seed, type: number }
           - name: url
-            label: "Fichier audio"
-            type: file
-            options:
-              extensions: [mp3, wav, m4a]
-              path: public/media/samples
+            label: "Chemin fichier audio"
+            type: string
+            description: "Ex: /media/samples/nom.mp3 — déposez le fichier via git"
 
   - name: services
     label: Services
@@ -155,11 +153,9 @@ content:
           - { name: duration, label: Durée (sec), type: number }
           - { name: seed, label: Seed, type: number }
           - name: url
-            label: "Fichier audio"
-            type: file
-            options:
-              extensions: [mp3, wav, m4a]
-              path: public/media/samples
+            label: "Chemin fichier audio"
+            type: string
+            description: "Ex: /media/samples/nom.mp3 — déposez le fichier via git"
       - { name: order, label: Ordre, type: number }
       - { name: body, label: Contenu détaillé, type: text }
 
@@ -230,12 +226,9 @@ content:
       - { name: register, label: Registre, type: string }
       - { name: tags, label: Tags, type: string, list: true }
       - name: sample_url
-        label: "Extrait audio (mp3 / wav / m4a)"
-        type: file
-        description: "Uploadez un extrait de voix. Format conseillé : MP3 128-192kbps ou WAV. Sera compressé auto via GitHub Actions si nécessaire."
-        options:
-          extensions: [mp3, wav, m4a]
-          path: public/media/voices
+        label: "Chemin extrait audio"
+        type: string
+        description: "Lancez 'npm run add-voice' localement, puis collez ici le chemin affiché (ex: /media/voices/leila-m.mp3)"
       - { name: duration, label: Durée (sec), type: number }
       - { name: seed, label: Seed (waveform), type: number }
       - { name: photo, label: Photo, type: image }
