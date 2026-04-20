@@ -36,24 +36,26 @@ content:
           - { name: phone, label: Téléphone, type: string }
       - name: social
         label: Réseaux sociaux
-        type: list
+        type: object
+        list: true
         fields:
-          - { name: n, label: Nom (instagram/facebook/linkedin), type: string }
+          - { name: n, label: "Nom (instagram/facebook/linkedin)", type: string }
           - { name: u, label: URL, type: string }
       - name: clients
         label: Clients
-        type: list
-        fields:
-          - { name: name, label: Nom, type: string }
+        type: string
+        list: true
       - name: stats
         label: Statistiques
-        type: list
+        type: object
+        list: true
         fields:
           - { name: v, label: Valeur, type: string }
           - { name: l, label: Libellé, type: string }
       - name: testimonials
         label: Témoignages
-        type: list
+        type: object
+        list: true
         fields:
           - { name: q, label: Citation, type: text }
           - { name: n, label: Nom, type: string }
@@ -78,7 +80,8 @@ content:
           - { name: cta2, label: CTA secondaire, type: string }
       - name: samples
         label: Échantillons audio
-        type: list
+        type: object
+        list: true
         fields:
           - { name: title, label: Titre, type: string }
           - { name: artist, label: Légende, type: string }
@@ -98,13 +101,18 @@ content:
       - { name: id, label: ID (slug), type: string }
       - { name: num, label: Numéro, type: string }
       - { name: title, label: Titre, type: string }
-      - { name: icon, label: Icône, type: select, options: { values: [mic, headphones, eye, subtitles, translate, megaphone, building, phone, clapper, globe, drone, camera, film] } }
+      - name: icon
+        label: Icône
+        type: select
+        options:
+          values: [mic, headphones, eye, subtitles, translate, megaphone, building, phone, clapper, globe, drone, camera, film]
       - { name: tag, label: Tag (optionnel), type: string, required: false }
       - { name: short, label: Description courte, type: text }
       - { name: long, label: Description longue, type: text }
       - name: facts
         label: Fiche technique
-        type: list
+        type: object
+        list: true
         fields:
           - { name: k, label: Clé, type: string }
           - { name: v, label: Valeur, type: string }
@@ -125,16 +133,17 @@ content:
       - { name: kind, label: Type, type: string }
       - { name: year, label: Année, type: number }
       - { name: lang, label: Langues, type: string }
-      - { name: tags, label: Tags, type: list, fields: [{name: tag, type: string}] }
+      - { name: tags, label: Tags, type: string, list: true }
       - { name: desc, label: Description, type: text }
       - { name: seed, label: Seed (waveform), type: number }
       - { name: dur, label: Durée, type: string }
       - { name: featured, label: Mis en avant ?, type: boolean }
-      - { name: video_url, label: "URL vidéo (mp4 ou .m3u8 HLS)", type: string, description: "Collez ici un lien vers un .mp4 ou stream HLS (.m3u8). Affiché sur la page projet + preview au survol sur la home." }
+      - { name: video_url, label: "URL vidéo (mp4 ou .m3u8 HLS)", type: string, description: "Collez ici un lien .mp4 ou stream HLS. Affiché sur la page projet + preview au survol sur la home." }
       - { name: poster, label: Image poster (optionnel), type: image }
       - name: samples
         label: Extraits sonores
-        type: list
+        type: object
+        list: true
         fields:
           - { name: title, label: Titre, type: string }
           - { name: artist, label: Légende, type: string }
@@ -173,17 +182,18 @@ content:
       fields: [id, name]
       primary: name
     fields:
-      - { name: id, label: Identifiant (A/B/C/D), type: string }
+      - { name: id, label: "Identifiant (A/B/C/D)", type: string }
       - { name: name, label: Nom, type: string }
       - { name: spec, label: Spécialité, type: text }
-      - { name: equip, label: Équipement, type: list, fields: [{name: item, type: string}] }
+      - { name: equip, label: Équipement, type: string, list: true }
       - { name: surface, label: Surface, type: string }
       - { name: rt60, label: RT60, type: string }
-      - { name: panorama, label: "Image panoramique 360° (vue unique — équirectangulaire 2:1)", type: image, description: "Utilisé uniquement si la liste ci-dessous est vide. Image panoramique équirectangulaire (ratio 2:1)." }
+      - { name: panorama, label: "Image 360° (vue unique — équirectangulaire 2:1)", type: image, description: "Utilisé uniquement si la liste ci-dessous est vide." }
       - name: panoramas
-        label: "Vues 360° multiples (équirectangulaires 2:1)"
+        label: "Vues 360° multiples"
         description: "Ajoutez plusieurs vues 360° pour ce studio. L'utilisateur pourra switcher entre elles."
-        type: list
+        type: object
+        list: true
         fields:
           - { name: label, label: "Nom de la vue (ex. Régie, Cabine)", type: string }
           - { name: url, label: "Image panoramique", type: image }
@@ -201,10 +211,14 @@ content:
     fields:
       - { name: id, label: ID (slug), type: string }
       - { name: name, label: Nom du comédien, type: string }
-      - { name: gender, label: Genre, type: select, options: { values: [F, M] } }
-      - { name: languages, label: Langues, type: list, fields: [{name: lang, type: string}] }
+      - name: gender
+        label: Genre
+        type: select
+        options:
+          values: [F, M]
+      - { name: languages, label: Langues, type: string, list: true }
       - { name: register, label: Registre, type: string }
-      - { name: tags, label: Tags, type: list, fields: [{name: tag, type: string}] }
+      - { name: tags, label: Tags, type: string, list: true }
       - { name: sample_url, label: URL audio d'extrait, type: string }
       - { name: duration, label: Durée (sec), type: number }
       - { name: seed, label: Seed (waveform), type: number }
@@ -224,7 +238,8 @@ content:
       - { name: title, label: Catégorie, type: string }
       - name: items
         label: Questions/Réponses
-        type: list
+        type: object
+        list: true
         fields:
           - { name: q, label: Question, type: string }
           - { name: a, label: Réponse, type: text }
