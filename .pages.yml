@@ -142,7 +142,7 @@ content:
       - { name: dur, label: Durée, type: string }
       - { name: featured, label: Mis en avant ?, type: boolean }
       - { name: video_url, label: "URL vidéo (mp4 ou .m3u8 HLS)", type: string, description: "Collez ici un lien .mp4 ou stream HLS. Affiché sur la page projet + preview au survol sur la home." }
-      - { name: poster, label: Image poster (optionnel), type: image }
+      - { name: poster, label: "Chemin image poster (optionnel)", type: string, description: "Ex: /media/projects/mon-projet.jpg — utilisez npm run add-photo" }
       - name: samples
         label: Extraits sonores
         type: object
@@ -175,7 +175,7 @@ content:
       - { name: excerpt, label: Extrait, type: text }
       - { name: read, label: Temps de lecture, type: string }
       - { name: featured, label: À la une ?, type: boolean }
-      - { name: cover, label: Image de couverture, type: image }
+      - { name: cover, label: "Chemin image de couverture", type: string, description: "Ex: /media/posts/mon-article.jpg — utilisez npm run add-photo" }
       - { name: order, label: Ordre, type: number }
       - { name: body, label: Contenu, type: text }
 
@@ -194,8 +194,8 @@ content:
       - { name: equip, label: Équipement, type: string, list: true }
       - { name: surface, label: Surface, type: string }
       - { name: rt60, label: RT60, type: string }
-      - { name: thumbnail, label: "Photo principale (carte)", type: image, description: "Image affichée sur la carte de la page Studios. Si vide, utilise automatiquement la première vue 360°." }
-      - { name: panorama, label: "Image 360° (vue unique — équirectangulaire 2:1)", type: image, description: "Utilisé uniquement si la liste ci-dessous est vide." }
+      - { name: thumbnail, label: "Chemin photo principale (carte)", type: string, description: "Ex: /media/studios/studio-c.jpg — npm run add-photo studios/studio-c.jpg studios studio-c. Si vide, utilise la 1ère vue 360°." }
+      - { name: panorama, label: "Chemin image 360° (vue unique)", type: string, description: "Image équirectangulaire 2:1. Ex: /media/studios/studio-c-360.jpg — npm run add-photo" }
       - name: panoramas
         label: "Vues 360° multiples"
         description: "Ajoutez plusieurs vues 360° pour ce studio. L'utilisateur pourra switcher entre elles."
@@ -203,8 +203,8 @@ content:
         list: true
         fields:
           - { name: label, label: "Nom de la vue (ex. Régie, Cabine)", type: string }
-          - { name: url, label: "Image panoramique", type: image }
-      - { name: photo, label: Photo (fallback), type: image }
+          - { name: url, label: "Chemin image panoramique", type: string, description: "Ex: /media/studios/studio-c-regie.jpg" }
+      - { name: photo, label: "Chemin photo normale (fallback)", type: string, description: "Ex: /media/studios/studio-c-photo.jpg" }
       - { name: order, label: Ordre, type: number }
 
   - name: voices
@@ -232,7 +232,7 @@ content:
         description: "Lancez 'npm run add-voice' localement, puis collez ici le chemin affiché (ex: /media/voices/leila-m.mp3)"
       - { name: duration, label: Durée (sec), type: number }
       - { name: seed, label: Seed (waveform), type: number }
-      - { name: photo, label: Photo, type: image }
+      - { name: photo, label: "Chemin photo", type: string, description: "Ex: /media/voices/leila-m.jpg — npm run add-photo leila.jpg voices leila-m" }
       - { name: order, label: Ordre, type: number }
       - { name: body, label: Bio, type: text }
 
