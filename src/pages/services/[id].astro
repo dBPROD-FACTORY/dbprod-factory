@@ -1,0 +1,48 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+import Icon from "../../components/Icon.jsx";
+
+export async function getStaticPaths() {
+  const services = await getCollection("services");
+  return services.map(s => ({ params: { id: s.data.id }, props: { service: s } }));
+}
+const { service } = Astro.props;
+const { Content } = await service.render();
+const d = service.data;
+---
+<Base title={d.title}>
+  <section style="padding:160px 0 80px;">
+    <div class="container">
+      <a href="/services" class="link-arrow" style="margin-bottom:40px;display:inline-flex;">← Retour aux services</a>
+      <div style="display:flex;gap:28px;align-items:center;margin-top:24px;margin-bottom:40px;">
+        <div style="width:80px;height:80px;border-radius:20px;border:1px solid var(--line-2);display:grid;place-items:center;color:var(--accent);">
+          <Icon name={d.icon} size={36} stroke={1.5} />
+        </div>
+        <div>
+          <div class="mono" style="margin-bottom:8px;">Service · {d.num}</div>
+          <h1 class="h-display" style="font-size:clamp(56px,9vw,128px);margin:0;">{d.title}</h1>
+        </div>
+      </div>
+      <p class="text-dim" style="font-size:20px;max-width:760px;line-height:1.5;margin-bottom:80px;">{d.short}</p>
+
+      <div class="grid-responsive-2" style="display:grid;grid-template-columns:2fr 1fr;gap:60px;align-items:flex-start;">
+        <div class="h-serif" style="font-size:22px;line-height:1.5;">
+          <Content />
+        </div>
+        <aside style="border:1px solid var(--line);border-radius:20px;padding:28px;background:var(--bg-elev);">
+          <div class="mono" style="margin-bottom:20px;">Fiche technique</div>
+          <dl style="margin:0;display:grid;gap:16px;">
+            {(d.facts || []).map(f => (
+              <div style="display:flex;justify-content:space-between;gap:16px;padding-bottom:12px;border-bottom:1px solid var(--line);">
+                <dt class="mono" style="font-size:10px;">{f.k}</dt>
+                <dd style="margin:0;font-size:13px;text-align:right;">{f.v}</dd>
+              </div>
+            ))}
+          </dl>
+          <a href="/contact" class="btn btn-primary btn-arrow" style="margin-top:24px;width:100%;justify-content:center;">Demander un devis</a>
+        </aside>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,17 @@
+---
+import Base from "../layouts/Base.astro";
+import { getCollection } from "astro:content";
+import FAQAccordion from "../components/FAQAccordion.jsx";
+const groups = (await getCollection("faq")).sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0)).map(g => g.data);
+---
+<Base title="FAQ">
+  <section style="padding:160px 0 80px;">
+    <div class="container-narrow">
+      <div class="eyebrow" style="margin-bottom:28px;">FAQ</div>
+      <h1 class="h-display" style="font-size:clamp(56px,9vw,128px);margin:0 0 60px;">
+        Les <em style="font-style:italic;color:var(--accent);">réponses</em>.
+      </h1>
+      <FAQAccordion client:load groups={groups} />
+    </div>
+  </section>
+</Base>

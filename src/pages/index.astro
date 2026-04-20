@@ -1,0 +1,175 @@
+---
+import Base from "../layouts/Base.astro";
+import { getCollection } from "astro:content";
+import HeroHome from "../components/HeroHome.jsx";
+import ProjectCard from "../components/ProjectCard.jsx";
+import PostCard from "../components/PostCard.jsx";
+import Icon from "../components/Icon.jsx";
+import { AudioPlayer, StaticWave } from "../components/Waveform.jsx";
+import site from "../data/site.json";
+import home from "../data/home.json";
+
+const services = (await getCollection("services")).sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+const projects = (await getCollection("projects")).sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+const posts = (await getCollection("posts")).sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+const featured = projects.filter(p => p.data.featured).slice(0, 3);
+const featuredData = featured.map(p => p.data);
+---
+
+<Base title="dB PROD·FACTORY" description={site.description}>
+  <HeroHome client:load hero={home.hero} projects={featuredData} />
+
+  {/* STATS */}
+  <section style="padding:80px 0;border-bottom:1px solid var(--line);">
+    <div class="container">
+      <div class="stats-grid" style="display:grid;grid-template-columns:repeat(6,1fr);gap:0;">
+        {site.stats.map((s, i) => (
+          <div style={`padding:20px 24px;border-left:${i === 0 ? "none" : "1px solid var(--line)"};`}>
+            <div class="h-display" style="font-size:72px;margin-bottom:4px;">{s.v}</div>
+            <div class="mono" style="font-size:10px;">{s.l}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* SERVICES */}
+  <section style="padding:140px 0;position:relative;">
+    <div class="container">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:80px;flex-wrap:wrap;gap:40px;">
+        <div>
+          <div class="eyebrow" style="margin-bottom:28px;">(01) Services</div>
+          <h2 class="h-display" style="font-size:clamp(52px,7vw,104px);margin:0;max-width:900px;">
+            12 disciplines.<br/><em style="font-style:italic;color:var(--accent);">Un même</em> studio.
+          </h2>
+        </div>
+        <a href="/services" class="btn btn-ghost btn-arrow">Tous les services</a>
+      </div>
+
+      <div style="border:1px solid var(--line);border-radius:24px;overflow:hidden;background:var(--bg-elev);">
+        {services.slice(0, 8).map((s, i) => (
+          <a href={`/services/${s.data.id}`}
+             style={`display:grid;grid-template-columns:80px 1fr 2fr 1fr auto;gap:24px;align-items:center;padding:28px 32px;border-top:${i === 0 ? "none" : "1px solid var(--line)"};color:var(--fg);text-decoration:none;transition:background 0.3s var(--ease);position:relative;overflow:hidden;`}>
+            <span class="mono" style="font-size:12px;">{s.data.num}</span>
+            <div style="display:flex;align-items:center;gap:16px;">
+              <div style="width:44px;height:44px;border-radius:10px;border:1px solid var(--line-2);display:grid;place-items:center;color:var(--accent);">
+                <Icon name={s.data.icon} size={20} stroke={1.5} />
+              </div>
+              <span class="h-serif" style="font-size:28px;">{s.data.title}</span>
+            </div>
+            <span class="text-dim" style="font-size:14px;">{s.data.short}</span>
+            <div>{s.data.tag && <span class="chip chip-accent">{s.data.tag}</span>}</div>
+            <Icon name="arrowUpRight" size={20} stroke={1.5} />
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* FEATURED PROJECTS */}
+  <section style="padding:0 0 140px;">
+    <div class="container">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:60px;flex-wrap:wrap;gap:40px;">
+        <div>
+          <div class="eyebrow" style="margin-bottom:28px;">(02) Portfolio</div>
+          <h2 class="h-display" style="font-size:clamp(52px,7vw,104px);margin:0;">
+            Œuvres <em style="font-style:italic;color:var(--accent);">récentes</em>.
+          </h2>
+        </div>
+        <a href="/portfolio" class="btn btn-ghost btn-arrow">Tout le portfolio</a>
+      </div>
+
+      <div class="grid-responsive-3" style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px;">
+        {featured.map((p, i) => (
+          <ProjectCard client:visible project={p.data} size={i === 0 ? "lg" : "sm"} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* SAMPLES */}
+  <section style="padding:100px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-elev);position:relative;overflow:hidden;">
+    <div class="container">
+      <div class="grid-responsive-2" style="display:grid;grid-template-columns:1fr 2fr;gap:60px;align-items:center;">
+        <div>
+          <div class="eyebrow" style="margin-bottom:24px;">(03) Échantillons</div>
+          <h3 class="h-display" style="font-size:72px;margin:0;line-height:0.9;margin-bottom:24px;">
+            Écoutez le <em style="font-style:italic;color:var(--accent);">grain</em>.
+          </h3>
+          <p class="text-dim" style="font-size:15px;max-width:400px;margin-bottom:28px;">
+            Quelques extraits récents — voix, ambiance, mixage. Casting disponible sur demande.
+          </p>
+          <a href="/portfolio" class="link-arrow">
+            Banque de voix complète <Icon name="arrow" size={16} stroke={1.5} />
+          </a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          {home.samples.map(s => (
+            <AudioPlayer client:visible title={s.title} artist={s.artist} duration={s.duration} seed={s.seed} />
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* CLIENTS MARQUEE */}
+  <section style="padding:80px 0;overflow:hidden;">
+    <div class="container" style="margin-bottom:40px;">
+      <div class="eyebrow">(04) Ils nous font confiance</div>
+    </div>
+    <div style="display:flex;overflow:hidden;">
+      <div class="marquee" style="gap:80px;">
+        {[...site.clients, ...site.clients].map((c, i) => (
+          <span style={`font-family:var(--f-title);font-size:48px;font-style:${i % 2 ? "italic" : "normal"};letter-spacing:-0.02em;color:var(--fg-dim);white-space:nowrap;display:inline-flex;align-items:center;gap:80px;`}>
+            {c}
+            <span style="width:8px;height:8px;background:var(--accent);border-radius:50%;"/>
+          </span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* TESTIMONIALS */}
+  <section style="padding:100px 0;">
+    <div class="container">
+      <div class="eyebrow" style="margin-bottom:40px;">(05) Témoignages</div>
+      <div class="grid-responsive-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+        {site.testimonials.map(t => (
+          <div class="card" style="padding:32px;">
+            <div style="display:flex;gap:4px;margin-bottom:20px;color:var(--accent);">
+              {[0,1,2,3,4].map(j => <Icon name="star" size={14} stroke={1} style={{ fill: "var(--accent)" }} />)}
+            </div>
+            <p class="h-serif" style="font-size:20px;line-height:1.35;margin:0;margin-bottom:28px;">"{t.q}"</p>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="font-size:14px;font-weight:500;">{t.n}</div>
+                <div class="mono" style="font-size:10px;margin-top:4px;">{t.r}</div>
+              </div>
+              <div style="width:120px;">
+                <StaticWave seed={t.seed} bars={20} height={24} color="var(--accent)" />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* BLOG */}
+  <section style="padding:80px 0;">
+    <div class="container">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:60px;">
+        <div>
+          <div class="eyebrow" style="margin-bottom:28px;">(06) Journal</div>
+          <h2 class="h-display" style="font-size:clamp(52px,6vw,88px);margin:0;">Derniers articles</h2>
+        </div>
+        <a href="/blog" class="btn btn-ghost btn-arrow">Tous les articles</a>
+      </div>
+      <div class="grid-responsive-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+        {posts.slice(0, 3).map(p => (
+          <PostCard post={p.data} />
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

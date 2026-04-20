@@ -1,0 +1,65 @@
+---
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.jsx";
+import site from "../data/site.json";
+---
+<Base title="Contact">
+  <section style="padding:160px 0 80px;">
+    <div class="container">
+      <div class="eyebrow" style="margin-bottom:28px;">Contact</div>
+      <h1 class="h-display" style="font-size:clamp(64px,11vw,180px);margin:0 0 40px;">
+        <em style="font-style:italic;color:var(--accent);">Parlons</em> projet.
+      </h1>
+
+      <div class="grid-responsive-2" style="display:grid;grid-template-columns:2fr 1fr;gap:80px;align-items:flex-start;margin-top:80px;">
+        <form name="contact" method="POST" data-netlify="true" style="display:grid;gap:32px;">
+          <input type="hidden" name="form-name" value="contact" />
+          <div class="grid-responsive-2" style="display:grid;grid-template-columns:1fr 1fr;gap:32px;">
+            <div class="field">
+              <label>Nom</label>
+              <input name="name" type="text" required />
+            </div>
+            <div class="field">
+              <label>Email</label>
+              <input name="email" type="email" required />
+            </div>
+          </div>
+          <div class="field">
+            <label>Type de projet</label>
+            <select name="type">
+              <option>Doublage</option>
+              <option>Voice-Over</option>
+              <option>Post-Production</option>
+              <option>Spot publicitaire</option>
+              <option>Corporate</option>
+              <option>Autre</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Message</label>
+            <textarea name="message" rows={6} required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-arrow" style="justify-self:flex-start;">Envoyer le brief</button>
+        </form>
+
+        <aside style="border:1px solid var(--line);border-radius:20px;padding:32px;background:var(--bg-elev);">
+          <div class="mono" style="margin-bottom:20px;">Coordonnées</div>
+          <div style="display:grid;gap:20px;">
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <Icon name="mapPin" size={18} stroke={1.5} style={{ color: "var(--accent)", marginTop: 2 }} />
+              <div>{site.contact.address}</div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:center;">
+              <Icon name="mail" size={18} stroke={1.5} style={{ color: "var(--accent)" }} />
+              <a href={`mailto:${site.contact.email}`} style="color:var(--fg);text-decoration:none;">{site.contact.email}</a>
+            </div>
+            <div style="display:flex;gap:12px;align-items:center;">
+              <Icon name="phone" size={18} stroke={1.5} style={{ color: "var(--accent)" }} />
+              <a href={`tel:${site.contact.phone}`} style="color:var(--fg);text-decoration:none;">{site.contact.phone}</a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</Base>

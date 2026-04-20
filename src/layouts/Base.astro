@@ -1,0 +1,46 @@
+---
+import "../styles/global.css";
+import Nav from "../components/Nav.jsx";
+import Footer from "../components/Footer.jsx";
+import ThemeToggle from "../components/ThemeToggle.jsx";
+import site from "../data/site.json";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title = "dB PROD·FACTORY", description = site.description } = Astro.props;
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+---
+
+<!doctype html>
+<html lang="fr" data-theme="dark" data-typo="serif">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title} — Studio de doublage & post-production · Casablanca</title>
+  <meta name="description" content={description} />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Geist:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script is:inline>
+    (function () {
+      try {
+        const t = localStorage.getItem("dbprod-theme");
+        if (t) document.documentElement.dataset.theme = t;
+      } catch {}
+    })();
+  </script>
+</head>
+<body class="noise">
+  <Nav client:load currentPath={path} brand={{ name: site.brand, subline: site.subline }} />
+
+  <main class="page-enter">
+    <slot />
+  </main>
+
+  <Footer client:visible site={site} contact={site.contact} social={site.social} />
+  <ThemeToggle client:load />
+</body>
+</html>

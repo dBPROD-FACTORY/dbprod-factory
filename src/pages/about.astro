@@ -1,0 +1,31 @@
+---
+import Base from "../layouts/Base.astro";
+import site from "../data/site.json";
+---
+<Base title="À propos">
+  <section style="padding:160px 0 80px;">
+    <div class="container">
+      <div class="eyebrow" style="margin-bottom:28px;">À propos</div>
+      <h1 class="h-display" style="font-size:clamp(64px,11vw,180px);margin:0 0 60px;max-width:1200px;">
+        Un studio <em style="font-style:italic;color:var(--accent);">intégré</em><br/>au carrefour des mondes.
+      </h1>
+      <div class="grid-responsive-2" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:flex-start;">
+        <p class="h-serif" style="font-size:24px;line-height:1.5;margin:0;">
+          Fondé en 2016 à Casablanca, dB PROD·FACTORY est né d'une conviction : produire du contenu audio de qualité broadcast depuis le Maroc, avec des standards européens et l'agilité du Sud.
+        </p>
+        <p class="text-dim" style="font-size:16px;line-height:1.6;margin:0;">
+          10 ans plus tard, nous avons livré plus de 192 heures de production — doublage, voice-over, post-production — pour des clients en France, au Maghreb, au Moyen-Orient et au-delà. Notre équipe combine comédiens, ingénieurs du son, adaptateurs, directeurs artistiques, tous sélectionnés pour leur exigence.
+        </p>
+      </div>
+
+      <div class="stats-grid" style="display:grid;grid-template-columns:repeat(6,1fr);gap:0;margin-top:120px;border-top:1px solid var(--line);">
+        {site.stats.map((s, i) => (
+          <div style={`padding:40px 24px;border-left:${i === 0 ? "none" : "1px solid var(--line)"};`}>
+            <div class="h-display" style="font-size:64px;margin-bottom:8px;">{s.v}</div>
+            <div class="mono" style="font-size:10px;">{s.l}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

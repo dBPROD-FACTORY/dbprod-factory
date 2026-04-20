@@ -1,0 +1,31 @@
+{
+  "brand": "PROD·FACTORY",
+  "brandShort": "dB",
+  "tagline": "EST. 2016 · CASABLANCA",
+  "description": "Studio de doublage, voice-over et post-production audio basé à Casablanca. Au carrefour de l'Europe, l'Afrique et du Moyen-Orient.",
+  "subline": "CASABLANCA ·MA",
+  "contact": {
+    "address": "7 Avenue 2 Mars, Casablanca, Maroc",
+    "email": "contact@dbprod-factory.com",
+    "phone": "+212 669 809 234"
+  },
+  "social": [
+    { "n": "instagram", "u": "https://instagram.com/" },
+    { "n": "facebook", "u": "https://facebook.com/" },
+    { "n": "linkedin", "u": "https://linkedin.com/" }
+  ],
+  "clients": ["Oblivius", "Prod Roll", "BestEasy", "Colibri Studio", "My Vox Lab", "West Capital Partners", "Netflix MENA", "Canal+ Afrique"],
+  "stats": [
+    { "v": "192+", "l": "Heures livrées" },
+    { "v": "48+", "l": "Films par an" },
+    { "v": "144+", "l": "Épisodes par an" },
+    { "v": "10+", "l": "Années d'expérience" },
+    { "v": "150+", "l": "Voix castées" },
+    { "v": "4", "l": "Studios traités" }
+  ],
+  "testimonials": [
+    { "q": "Une équipe hyper réactive, qualité broadcast dès le premier take. On ne bosse plus qu'avec eux sur le marché MENA.", "n": "Sarah M.", "r": "Producteur, Paris", "seed": 3 },
+    { "q": "La direction artistique fait toute la différence — dialogue naturel, casting impeccable, rendu cinéma.", "n": "Ahmed K.", "r": "Réalisateur, Casablanca", "seed": 7 },
+    { "q": "Livraisons tenues au jour près, tarifs compétitifs, et un niveau technique qu'on trouvait uniquement en Europe.", "n": "Nadia L.", "r": "Productrice exécutive, Dubaï", "seed": 11 }
+  ]
+}
