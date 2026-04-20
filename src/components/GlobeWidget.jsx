@@ -175,7 +175,7 @@ function makeArc(from, to, steps = 80) {
 // ── Load land data from world-atlas (Natural Earth 110m) ─────────────────────
 async function loadLandDots() {
   try {
-    const cached = sessionStorage.getItem("globe-land-v3");
+    const cached = sessionStorage.getItem("globe-land-v4");
     if (cached) return JSON.parse(cached);
 
     const topo = await fetch(
@@ -199,45 +199,58 @@ async function loadLandDots() {
     cx.fillStyle = "#000"; cx.fillRect(0, 0, W, H);
     cx.fillStyle = "#fff";
 
-    const drawRing = (ringArcs) => {
+    // Draw a polygon (array of rings — outer + optional holes)
+    // All rings in one beginPath so evenodd rule handles holes correctly
+    const drawPolygon = (polygon) => {
       cx.beginPath();
-      for (const idx of ringArcs) {
-        const rev = idx < 0;
-        const arc = arcs[rev ? ~idx : idx];
-        const pts = rev ? [...arc].reverse() : arc;
-        pts.forEach(([lng, lat], i) => {
-          const px = (lng + 180) * (W / 360);
-          const py = (90 - lat) * (H / 180);
-          i === 0 ? cx.moveTo(px, py) : cx.lineTo(px, py);
-        });
+      for (const ringArcs of polygon) {
+        let first = true;
+        for (const idx of ringArcs) {
+          const rev = idx < 0;
+          const arc = arcs[rev ? ~idx : idx];
+          const pts = rev ? [...arc].reverse() : arc;
+          for (const [lng, lat] of pts) {
+            const px = (lng + 180) * (W / 360);
+            const py = (90 - lat) * (H / 180);
+            // moveTo only for the very first point of the whole polygon ring
+            first ? cx.moveTo(px, py) : cx.lineTo(px, py);
+            first = false;
+          }
+        }
+        cx.closePath(); // close each ring separately within the same path
       }
-      cx.closePath();
       cx.fill("evenodd");
     };
 
     const drawGeom = (g) => {
-      if (g.type === "Polygon") g.arcs.forEach(drawRing);
-      else if (g.type === "MultiPolygon") g.arcs.forEach(p => p.forEach(drawRing));
-      else if (g.type === "GeometryCollection") g.geometries.forEach(drawGeom);
+      if (g.type === "Polygon") {
+        drawPolygon(g.arcs); // arcs = [outerRing, ...holes]
+      } else if (g.type === "MultiPolygon") {
+        g.arcs.forEach(polygon => drawPolygon(polygon));
+      } else if (g.type === "GeometryCollection") {
+        g.geometries.forEach(drawGeom);
+      }
     };
     drawGeom(topo.objects.land);
 
-    // Sample every 3 pixels (~1.5°) for dot positions
+    // Sample at 2px intervals (0.5° resolution) for dense accurate dots
     const img = cx.getImageData(0, 0, W, H).data;
     const dots = [];
-    const step = 4;
-    for (let py = step; py < H - step; py += step) {
-      for (let px = step; px < W - step; px += step) {
+    const step = 3;
+    for (let py = 1; py < H - 1; py += step) {
+      for (let px = 1; px < W - 1; px += step) {
         if (img[(py * W + px) * 4] > 128) {
           dots.push([90 - py * (180 / H), px * (360 / W) - 180]);
         }
       }
     }
 
-    sessionStorage.setItem("globe-land-v3", JSON.stringify(dots));
+    // v4 — bump version to clear old buggy cache
+    sessionStorage.setItem("globe-land-v4", JSON.stringify(dots));
     return dots;
-  } catch {
-    return []; // globe renders without land if fetch fails
+  } catch (e) {
+    console.warn("Globe: failed to load land data", e);
+    return [];
   }
 }
 
