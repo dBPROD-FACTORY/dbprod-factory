@@ -194,17 +194,17 @@ content:
       - { name: equip, label: Équipement, type: string, list: true }
       - { name: surface, label: Surface, type: string }
       - { name: rt60, label: RT60, type: string }
-      - { name: thumbnail, label: "Chemin photo principale (carte)", type: string, description: "Ex: /media/studios/studio-c.jpg — npm run add-photo studios/studio-c.jpg studios studio-c. Si vide, utilise la 1ère vue 360°." }
-      - { name: panorama, label: "Chemin image 360° (vue unique)", type: string, description: "Image équirectangulaire 2:1. Ex: /media/studios/studio-c-360.jpg — npm run add-photo" }
+      - { name: thumbnail, label: "Photo principale (carte)", type: image, description: "Uploadez d'abord via dbprod-factory.pages.dev/upload, puis sélectionnez depuis la médiathèque. Si vide, utilise la 1ère vue 360°." }
+      - { name: panorama, label: "Image 360° (vue unique — équirectangulaire 2:1)", type: image, description: "Uploadez d'abord via /upload, puis sélectionnez depuis la médiathèque." }
       - name: panoramas
         label: "Vues 360° multiples"
-        description: "Ajoutez plusieurs vues 360° pour ce studio. L'utilisateur pourra switcher entre elles."
+        description: "Ajoutez plusieurs vues 360°. Uploadez d'abord via dbprod-factory.pages.dev/upload"
         type: object
         list: true
         fields:
           - { name: label, label: "Nom de la vue (ex. Régie, Cabine)", type: string }
-          - { name: url, label: "Chemin image panoramique", type: string, description: "Ex: /media/studios/studio-c-regie.jpg" }
-      - { name: photo, label: "Chemin photo normale (fallback)", type: string, description: "Ex: /media/studios/studio-c-photo.jpg" }
+          - { name: url, label: "Image panoramique", type: image }
+      - { name: photo, label: "Photo normale (fallback)", type: image }
       - { name: order, label: Ordre, type: number }
 
   - name: voices
@@ -227,12 +227,15 @@ content:
       - { name: register, label: Registre, type: string }
       - { name: tags, label: Tags, type: string, list: true }
       - name: sample_url
-        label: "Chemin extrait audio"
-        type: string
-        description: "Lancez 'npm run add-voice' localement, puis collez ici le chemin affiché (ex: /media/voices/leila-m.mp3)"
+        label: "Extrait audio (mp3)"
+        type: file
+        description: "Uploadez d'abord via dbprod-factory.pages.dev/upload (dossier voices), puis sélectionnez depuis la médiathèque."
+        options:
+          extensions: [mp3, wav, m4a]
+          path: public/media/voices
       - { name: duration, label: Durée (sec), type: number }
       - { name: seed, label: Seed (waveform), type: number }
-      - { name: photo, label: "Chemin photo", type: string, description: "Ex: /media/voices/leila-m.jpg — npm run add-photo leila.jpg voices leila-m" }
+      - { name: photo, label: "Photo", type: image, description: "Uploadez d'abord via dbprod-factory.pages.dev/upload (dossier voices), puis sélectionnez." }
       - { name: order, label: Ordre, type: number }
       - { name: body, label: Bio, type: text }
 
