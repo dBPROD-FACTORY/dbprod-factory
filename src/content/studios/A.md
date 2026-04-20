@@ -10,10 +10,11 @@ equip:
   - Cabine traitée ±3dB
 surface: 18 m²
 rt60: 0.18s
+thumbnail: /media/studios/studio-a-regie.jpg
 panoramas:
   - label: Régie
     url: /media/studios/studio-a.jpeg
   - label: Cabine
-    url: /media/studios/studio-a-cabine.png
+    url: /media/studios/studio-a-cabine.jpg
 order: 1
 ---
