@@ -33,17 +33,21 @@ export default function Nav({ currentPath = "/", brand = { name: "PROD·FACTORY"
       <header style={{
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 200,
         padding: scrolled ? "10px 0" : "18px 0",
-        background: scrolled || open ? "color-mix(in oklab, var(--bg) 90%, transparent)" : "transparent",
-        backdropFilter: scrolled || open ? "blur(14px)" : "none",
+        background: scrolled || open ? "color-mix(in oklab, var(--bg) 92%, transparent)" : "transparent",
+        backdropFilter: scrolled || open ? "blur(20px)" : "none",
+        WebkitBackdropFilter: scrolled || open ? "blur(20px)" : "none",
         borderBottom: scrolled ? "1px solid var(--line)" : "1px solid transparent",
-        transition: "all 0.35s var(--ease)",
+        transition: "padding 0.35s var(--ease), background 0.35s var(--ease), border-color 0.35s var(--ease)",
       }}>
-        <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
+        <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
 
           {/* Logo */}
-          <a href="/" onClick={() => setOpen(false)} style={{ textDecoration: "none", color: "var(--fg)", display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
+          <a href="/" onClick={() => setOpen(false)} style={{
+            textDecoration: "none", color: "var(--fg)",
+            display: "flex", alignItems: "center", gap: 10, flexShrink: 0,
+          }}>
             <div style={{
-              width: 32, height: 32, borderRadius: 8,
+              width: 32, height: 32, borderRadius: 8, flexShrink: 0,
               background: "var(--accent)", display: "grid", placeItems: "center",
               color: "#0A0A0F", fontFamily: "var(--f-mono)", fontWeight: 700, fontSize: 14,
             }}>dB</div>
@@ -54,7 +58,10 @@ export default function Nav({ currentPath = "/", brand = { name: "PROD·FACTORY"
           </a>
 
           {/* Desktop nav */}
-          <nav className="desktop-nav" style={{ display: "flex", gap: 2, alignItems: "center", background: "var(--bg-elev)", border: "1px solid var(--line)", borderRadius: 999, padding: 4 }}>
+          <nav className="desktop-nav" style={{
+            display: "flex", gap: 2, alignItems: "center",
+            background: "var(--bg-elev)", border: "1px solid var(--line)", borderRadius: 999, padding: 4,
+          }}>
             {items.map(it => (
               <a key={it.href} href={it.href} style={{
                 padding: "8px 14px", borderRadius: 999, fontSize: 13, fontWeight: 500,
@@ -65,54 +72,42 @@ export default function Nav({ currentPath = "/", brand = { name: "PROD·FACTORY"
             ))}
           </nav>
 
-          {/* Right side */}
+          {/* Right */}
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <a href="/contact" className="btn btn-primary btn-arrow desktop-nav" style={{ padding: "10px 18px" }}>
               Devis gratuit
             </a>
-            {/* Hamburger */}
+
+            {/* Hamburger — mobile only */}
             <button
               onClick={() => setOpen(o => !o)}
-              aria-label="Menu"
-              style={{
-                display: "none", width: 40, height: 40, borderRadius: 8,
-                border: "1px solid var(--line-2)", background: "var(--bg-elev)",
-                cursor: "pointer", flexDirection: "column", alignItems: "center",
-                justifyContent: "center", gap: 5, padding: 0,
-              }}
+              aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+              aria-expanded={open}
               className="hamburger-btn"
             >
-              <span style={{
-                display: "block", width: 18, height: 1.5, borderRadius: 2,
-                background: "var(--fg)", transition: "all 0.3s var(--ease)",
-                transform: open ? "rotate(45deg) translate(2px, 5px)" : "none",
-              }} />
-              <span style={{
-                display: "block", width: 18, height: 1.5, borderRadius: 2,
-                background: "var(--fg)", transition: "all 0.3s var(--ease)",
-                opacity: open ? 0 : 1, transform: open ? "translateX(-6px)" : "none",
-              }} />
-              <span style={{
-                display: "block", width: 18, height: 1.5, borderRadius: 2,
-                background: "var(--fg)", transition: "all 0.3s var(--ease)",
-                transform: open ? "rotate(-45deg) translate(2px, -5px)" : "none",
-              }} />
+              <span className={`hb-line hb-top ${open ? "open" : ""}`} />
+              <span className={`hb-line hb-mid ${open ? "open" : ""}`} />
+              <span className={`hb-line hb-bot ${open ? "open" : ""}`} />
             </button>
           </div>
         </div>
       </header>
 
       {/* Mobile overlay */}
-      <div style={{
-        position: "fixed", inset: 0, zIndex: 199,
-        background: "var(--bg)",
-        display: "flex", flexDirection: "column",
-        padding: "100px 32px 48px",
-        transform: open ? "translateX(0)" : "translateX(100%)",
-        transition: "transform 0.4s var(--ease-out)",
-        overflowY: "auto",
-      }}>
-        <nav style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1 }}>
+      <div
+        className="mobile-nav-overlay"
+        aria-hidden={!open}
+        style={{
+          position: "fixed", inset: 0, zIndex: 199,
+          background: "var(--bg)",
+          display: "flex", flexDirection: "column",
+          transform: open ? "translateX(0)" : "translateX(100%)",
+          transition: "transform 0.4s var(--ease-out)",
+          overflowY: "auto",
+          overflowX: "hidden",
+        }}
+      >
+        <nav style={{ display: "flex", flexDirection: "column", flex: 1, justifyContent: "center", gap: 0 }}>
           {items.map((it, i) => (
             <a
               key={it.href}
@@ -120,38 +115,81 @@ export default function Nav({ currentPath = "/", brand = { name: "PROD·FACTORY"
               onClick={() => setOpen(false)}
               style={{
                 display: "flex", alignItems: "center", justifyContent: "space-between",
-                padding: "18px 0",
+                padding: "20px 0",
                 borderBottom: "1px solid var(--line)",
                 textDecoration: "none",
                 color: isActive(it.href) ? "var(--accent)" : "var(--fg)",
                 fontFamily: "var(--f-display)",
-                fontSize: "clamp(28px, 8vw, 48px)",
+                fontSize: "clamp(32px, 9vw, 52px)",
                 fontWeight: 300,
                 letterSpacing: "-0.03em",
-                transition: "color 0.2s, padding 0.2s",
-                animation: open ? `mobileNavIn 0.4s ${i * 0.05}s both` : "none",
+                opacity: open ? 1 : 0,
+                transform: open ? "translateX(0)" : "translateX(24px)",
+                transition: `opacity 0.35s ${i * 0.04}s, transform 0.35s ${i * 0.04}s var(--ease-out)`,
               }}
             >
               {it.label}
-              <span style={{ fontSize: "0.5em", color: "var(--fg-mute)" }}>→</span>
+              <span style={{ fontSize: "0.45em", color: "var(--fg-mute)" }}>→</span>
             </a>
           ))}
         </nav>
-        <div style={{ display: "flex", flexDirection: "column", gap: 16, paddingTop: 32 }}>
-          <a href="/contact" onClick={() => setOpen(false)} className="btn btn-primary" style={{ textAlign: "center", justifyContent: "center", fontSize: 16, padding: "16px 24px" }}>
+
+        <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 12 }}>
+          <a
+            href="/contact"
+            onClick={() => setOpen(false)}
+            className="btn btn-primary"
+            style={{ textAlign: "center", justifyContent: "center", fontSize: 16, padding: "16px 24px", borderRadius: 999 }}
+          >
             Demander un devis gratuit
           </a>
-          <div className="mono" style={{ textAlign: "center", fontSize: 10 }}>+212 669 809 234 · contact@dbprod-factory.com</div>
+          <div className="mono" style={{ textAlign: "center", fontSize: 10, color: "var(--fg-mute)" }}>
+            +212 669 809 234 · contact@dbprod-factory.com
+          </div>
         </div>
       </div>
 
       <style>{`
-        @media (max-width: 900px) {
-          .hamburger-btn { display: flex !important; }
+        /* Hamburger button — visible only on mobile */
+        .hamburger-btn {
+          display: none;
+          width: 40px;
+          height: 40px;
+          border-radius: 10px;
+          border: 1px solid var(--line-2);
+          background: var(--bg-elev);
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 5px;
+          padding: 0;
+          /* iOS reset — critical */
+          -webkit-appearance: none;
+          appearance: none;
+          outline: none;
+          -webkit-tap-highlight-color: transparent;
+          box-shadow: none;
         }
-        @keyframes mobileNavIn {
+        .hb-line {
+          display: block;
+          width: 18px;
+          height: 1.5px;
+          border-radius: 2px;
+          background: var(--fg);
+          transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+          transform-origin: center;
+        }
+        .hb-top.open  { transform: translateY(6.5px) rotate(45deg); }
+        .hb-mid.open  { opacity: 0; transform: scaleX(0); }
+        .hb-bot.open  { transform: translateY(-6.5px) rotate(-45deg); }
+
+        @media (max-width: 900px) {
+          .hamburger-btn { display: flex; }
+        }
+
+        @keyframes mobileIn {
           from { opacity: 0; transform: translateX(20px); }
-          to { opacity: 1; transform: none; }
+          to   { opacity: 1; transform: none; }
         }
       `}</style>
     </>

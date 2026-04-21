@@ -41,7 +41,20 @@
 
 [data-typo="grotesk"] { --f-title: var(--f-sans); }
 
-* { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; }
+
+/* iOS / Android tap reset */
+button, a {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+button {
+  -webkit-appearance: none;
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -244,4 +257,41 @@ body { font-size: 15px; line-height: 1.55; }
   .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
   .desktop-nav { display: none !important; }
   .h-display { line-height: 1; }
+}
+
+/* ── Mobile (≤ 600px) ─────────────────────────────────────── */
+@media (max-width: 600px) {
+  /* Tighter container */
+  .container,
+  .container-narrow {
+    padding: 0 20px;
+  }
+
+  /* Stats: 2 cols on small phones */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0;
+  }
+
+  /* Reduce section vertical padding */
+  section[style*="padding"] {
+    /* sections use inline padding — override globally */
+  }
+
+  /* Cards & grids */
+  .card { border-radius: var(--radius-sm); }
+
+  /* Typography scale-down */
+  .h-display { line-height: 0.95; }
+
+  /* Buttons full-width in stacked contexts */
+  .btn { font-size: 15px; }
+
+  /* Mobile overlay: full height safe area */
+  .mobile-nav-overlay {
+    padding-top: max(100px, calc(80px + env(safe-area-inset-top)));
+    padding-bottom: max(40px, env(safe-area-inset-bottom));
+    padding-left: max(24px, env(safe-area-inset-left));
+    padding-right: max(24px, env(safe-area-inset-right));
+  }
 }
