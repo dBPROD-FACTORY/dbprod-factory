@@ -153,7 +153,9 @@ function rotatePoint(p, rY, rX) {
   // X-axis (tilt)
   const y2 = p.y * Math.cos(rX) - z1 * Math.sin(rX);
   const z2 = p.y * Math.sin(rX) + z1 * Math.cos(rX);
-  return { x: x1, y: y2, z: z2 };
+  // Flip x so east appears on the right (standard map orientation) —
+  // this un-mirrors the globe so continents face the correct way.
+  return { x: -x1, y: y2, z: z2 };
 }
 
 function slerp(a, b, t) {
@@ -245,7 +247,7 @@ function buildFallbackDots(step = 2) {
 // ── Load land data from world-atlas (Natural Earth 110m) ─────────────────────
 async function loadLandDots() {
   try {
-    const cached = sessionStorage.getItem("globe-land-v6");
+    const cached = sessionStorage.getItem("globe-land-v7");
     if (cached) { const d = JSON.parse(cached); if (d.length > 100) return d; }
 
     const topo = await fetch(
@@ -323,12 +325,12 @@ async function loadLandDots() {
     }
 
     if (dots.length < 300) throw new Error(`sparse result: only ${dots.length} dots`);
-    sessionStorage.setItem("globe-land-v6", JSON.stringify(dots));
+    sessionStorage.setItem("globe-land-v7", JSON.stringify(dots));
     return dots;
   } catch (e) {
     console.warn("Globe: topojson approach failed, using geographic fallback:", e.message);
     const fb = buildFallbackDots(2); // 2° resolution for good density
-    try { sessionStorage.setItem("globe-land-v6", JSON.stringify(fb)); } catch {}
+    try { sessionStorage.setItem("globe-land-v7", JSON.stringify(fb)); } catch {}
     return fb;
   }
 }
@@ -340,7 +342,7 @@ export default function GlobeWidget({ clients = [] }) {
   const [loaded, setLoaded] = useState(false);
 
   const state = useRef({
-    rotY: 0.55, rotX: 0,          // rotX=0 → équateur horizontal (symétrie horizontale)
+    rotY: -1.44, rotX: 0,         // centers Casablanca; rotX=0 → horizontal equator
     autoRotate: true,
     mouseDown: false, dragged: false,
     lastMouse: { x: 0, y: 0 },
@@ -587,8 +589,9 @@ export default function GlobeWidget({ clients = [] }) {
       const dx = e.clientX - state.current.lastMouse.x;
       const dy = e.clientY - state.current.lastMouse.y;
       if (Math.hypot(dx, dy) > 3) state.current.dragged = true;
-      // ── FIX: negate both axes so drag direction matches surface movement ──
-      state.current.rotY -= dx * 0.007;
+      // Horizontal: drag right → surface moves right (grab-and-drag convention, x is mirrored)
+      // Vertical:   drag down  → see more of the south (kept as user confirmed correct)
+      state.current.rotY += dx * 0.007;
       state.current.rotX = Math.max(-0.65, Math.min(0.65, state.current.rotX - dy * 0.005));
       state.current.lastMouse = { x: e.clientX, y: e.clientY };
     }
@@ -607,7 +610,7 @@ export default function GlobeWidget({ clients = [] }) {
     function onTouchMove(e) {
       if (!state.current.mouseDown) return;
       const t = e.touches[0];
-      state.current.rotY -= (t.clientX - state.current.lastMouse.x) * 0.007;
+      state.current.rotY += (t.clientX - state.current.lastMouse.x) * 0.007;
       state.current.rotX = Math.max(-0.65, Math.min(0.65, state.current.rotX - (t.clientY - state.current.lastMouse.y) * 0.005));
       state.current.lastMouse = { x: t.clientX, y: t.clientY };
       state.current.dragged = true;
