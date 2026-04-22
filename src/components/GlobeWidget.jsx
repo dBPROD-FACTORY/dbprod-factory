@@ -385,6 +385,11 @@ export default function GlobeWidget({ clients = [] }) {
       const r = canvas.getBoundingClientRect();
       canvas.width = r.width * dpr;
       canvas.height = r.height * dpr;
+      // Setting canvas.width resets the transform — re-apply dpr scale so we
+      // can keep drawing in logical CSS pixels and the full buffer is used
+      // (otherwise the rendering fills only 1/dpr of the visible canvas).
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
     }
     resize();
     const ro = new ResizeObserver(resize);
