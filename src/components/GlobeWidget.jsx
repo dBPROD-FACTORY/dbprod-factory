@@ -172,46 +172,69 @@ function makeArc(from, to, steps = 80) {
   return pts;
 }
 
-// ── Fallback land approximation (geographic bounding-box model) ──────────────
-function isApproxLand(lat, lng) {
-  if (lat <= -60) return true; // Antarctica
+// ── Fallback land data: approximate continent outlines (offline-safe) ────────
+// Each polygon is an array of [lng, lat] points — rough coastlines of the
+// major landmasses. Resolved against via ray-casting point-in-polygon.
+const LAND_POLYGONS = [
   // Africa
-  if (lat > -36 && lat < 38 && lng > -18 && lng < 52) {
-    if (lat > 30 && lng < -5) return false;
-    return true;
+  [[-17,14],[-17,21],[-12,28],[-7,33],[0,33],[10,33],[18,31],[25,32],[32,31],
+   [35,23],[37,15],[43,12],[51,12],[52,7],[44,-10],[40,-15],[35,-24],[30,-29],
+   [22,-34],[18,-35],[13,-15],[10,-5],[7,4],[2,6],[-4,5],[-8,7],[-13,10],[-16,14]],
+  // Europe
+  [[-9,36],[-9,43],[-5,44],[-1,49],[-5,58],[5,58],[8,64],[15,68],[25,70],[35,70],
+   [40,65],[55,60],[55,55],[48,45],[42,45],[35,42],[30,35],[26,37],[20,38],
+   [10,37],[0,36],[-9,36]],
+  // Asia (inc. Middle East, India, SE Asia mainland, Siberia)
+  [[30,35],[40,41],[48,41],[55,45],[60,48],[55,55],[35,55],[35,69],[60,70],
+   [75,74],[100,76],[130,73],[150,72],[170,68],[170,55],[160,52],[145,44],
+   [130,40],[122,35],[120,23],[110,18],[105,8],[102,5],[105,1],[100,-2],
+   [95,-3],[95,5],[92,21],[85,10],[80,6],[77,8],[73,15],[70,23],[60,25],
+   [55,17],[50,14],[45,14],[45,20],[42,30],[38,33],[35,37],[30,35]],
+  // North America (Alaska → Central America → East Coast → Arctic)
+  [[-168,65],[-160,70],[-150,71],[-135,69],[-128,54],[-124,42],[-117,32],[-110,22],
+   [-100,18],[-90,15],[-83,8],[-78,8],[-75,11],[-64,19],[-75,22],[-81,31],
+   [-75,36],[-65,44],[-60,47],[-55,52],[-63,60],[-77,63],[-90,66],[-82,73],
+   [-95,78],[-115,74],[-130,71],[-140,70],[-155,72],[-168,65]],
+  // South America
+  [[-78,12],[-72,12],[-62,8],[-50,4],[-38,-5],[-38,-23],[-52,-34],[-58,-40],
+   [-65,-52],[-72,-54],[-72,-40],[-76,-20],[-80,-8],[-80,0],[-78,12]],
+  // Australia
+  [[113,-22],[115,-32],[130,-34],[146,-39],[151,-34],[153,-26],[146,-18],
+   [140,-12],[130,-12],[120,-17],[113,-22]],
+  // Greenland
+  [[-55,60],[-42,60],[-22,70],[-17,80],[-30,83],[-55,80],[-65,75],[-55,60]],
+];
+
+function pointInPoly(lng, lat, poly) {
+  let inside = false;
+  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+    const xi = poly[i][0], yi = poly[i][1];
+    const xj = poly[j][0], yj = poly[j][1];
+    if (((yi > lat) !== (yj > lat)) &&
+        (lng < (xj - xi) * (lat - yi) / (yj - yi) + xi)) inside = !inside;
   }
-  if (lat > 12 && lat < 32 && lng > 34 && lng < 60) return true; // Arabia
-  // Europe (incl. Türkiye)
-  if (lat > 35 && lat < 72 && lng > -12 && lng < 45) {
-    if (lat > 63 && lng < 0) return false;
-    return true;
-  }
+  return inside;
+}
+
+function isApproxLand(lat, lng) {
+  if (lat < -60) return true; // Antarctica
+  // Small / irregular land masses not worth a full polygon
   if (lat > 63 && lat < 67 && lng > -25 && lng < -13) return true; // Iceland
-  if (lat > 59 && lat < 84 && lng > -74 && lng < -17) return true; // Greenland
-  // Russia + North Asia
-  if (lat > 45 && lat < 78 && lng > 30 && lng < 170) return true;
-  // Central / South / East Asia
-  if (lat > 5 && lat < 45 && lng > 60 && lng < 125) return true;
-  if (lat > 30 && lat < 46 && lng > 124 && lng < 148) return true; // Japan + Korea
-  // SE Asia (mainland + islands)
-  if (lat > -10 && lat < 28 && lng > 95 && lng < 142) return true;
-  if (lat > 5 && lat < 20 && lng > 117 && lng < 127) return true; // Philippines
-  // Oceania
-  if (lat > -45 && lat < -10 && lng > 112 && lng < 155) return true; // Australia
-  if (lat > -47 && lat < -33 && lng > 166 && lng < 178) return true; // New Zealand
+  if (lat > 49 && lat < 61 && lng > -9 && lng < 3) return true;    // British Isles
   if (lat > -26 && lat < -11 && lng > 43 && lng < 51) return true; // Madagascar
-  // North America (excl. Hudson Bay)
-  if (lat > 24 && lat < 74 && lng > -170 && lng < -52) {
-    if (lat > 51 && lat < 66 && lng > -98 && lng < -78) return false;
-    return true;
-  }
-  if (lat > 8 && lat < 24 && lng > -118 && lng < -77) return true; // Mexico / C.Am
-  if (lat > -56 && lat < 13 && lng > -82 && lng < -34) return true; // South America
-  if (lat > 49 && lat < 61 && lng > -9 && lng < 3) return true; // British Isles
+  if (lat > 5 && lat < 10 && lng > 79 && lng < 82) return true;    // Sri Lanka
+  if (lat > 30 && lat < 46 && lng > 128 && lng < 146) return true; // Japan
+  if (lat > 5 && lat < 20 && lng > 117 && lng < 127) return true;  // Philippines
+  if (lat > -10 && lat < 6 && lng > 109 && lng < 120) return true; // Borneo
+  if (lat > -9 && lat < 6 && lng > 95 && lng < 107) return true;   // Sumatra
+  if (lat > -9 && lat < -5 && lng > 105 && lng < 118) return true; // Java
+  if (lat > -47 && lat < -33 && lng > 166 && lng < 178) return true;// NZ
+  // Main continents via ray-casting PIP
+  for (const poly of LAND_POLYGONS) if (pointInPoly(lng, lat, poly)) return true;
   return false;
 }
 
-function buildFallbackDots(step = 3) {
+function buildFallbackDots(step = 2) {
   const dots = [];
   for (let lat = -87; lat <= 87; lat += step)
     for (let lng = -180; lng < 180; lng += step)
@@ -222,7 +245,7 @@ function buildFallbackDots(step = 3) {
 // ── Load land data from world-atlas (Natural Earth 110m) ─────────────────────
 async function loadLandDots() {
   try {
-    const cached = sessionStorage.getItem("globe-land-v5");
+    const cached = sessionStorage.getItem("globe-land-v6");
     if (cached) { const d = JSON.parse(cached); if (d.length > 100) return d; }
 
     const topo = await fetch(
@@ -300,12 +323,12 @@ async function loadLandDots() {
     }
 
     if (dots.length < 300) throw new Error(`sparse result: only ${dots.length} dots`);
-    sessionStorage.setItem("globe-land-v5", JSON.stringify(dots));
+    sessionStorage.setItem("globe-land-v6", JSON.stringify(dots));
     return dots;
   } catch (e) {
     console.warn("Globe: topojson approach failed, using geographic fallback:", e.message);
     const fb = buildFallbackDots(2); // 2° resolution for good density
-    try { sessionStorage.setItem("globe-land-v5", JSON.stringify(fb)); } catch {}
+    try { sessionStorage.setItem("globe-land-v6", JSON.stringify(fb)); } catch {}
     return fb;
   }
 }
@@ -317,7 +340,7 @@ export default function GlobeWidget({ clients = [] }) {
   const [loaded, setLoaded] = useState(false);
 
   const state = useRef({
-    rotY: 0.55, rotX: 0.22,
+    rotY: 0.55, rotX: 0,          // rotX=0 → équateur horizontal (symétrie horizontale)
     autoRotate: true,
     mouseDown: false, dragged: false,
     lastMouse: { x: 0, y: 0 },
