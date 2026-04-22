@@ -21,16 +21,21 @@ export default function ThemeToggle() {
     <button
       onClick={toggle}
       aria-label="Changer le thème"
+      id="theme-toggle"
       style={{
-        position: "fixed", right: 20, top: 20, zIndex: 101,
-        width: 44, height: 44, borderRadius: "50%",
+        position: "fixed", right: 20, top: 14,
+        zIndex: 201, /* above nav (200) and overlay (199) */
+        width: 40, height: 40, borderRadius: "50%",
         background: "var(--bg-elev)", border: "1px solid var(--line-2)",
         display: "grid", placeItems: "center", cursor: "pointer",
         color: "var(--fg)", backdropFilter: "blur(12px)",
-        transition: "all 0.3s var(--ease)",
+        WebkitBackdropFilter: "blur(12px)",
+        transition: "background 0.3s var(--ease), border-color 0.3s var(--ease)",
+        WebkitAppearance: "none", appearance: "none", outline: "none",
+        WebkitTapHighlightColor: "transparent",
       }}
     >
-      <Icon name={theme === "dark" ? "sun" : "moon"} size={18} stroke={1.5} />
+      <Icon name={theme === "dark" ? "sun" : "moon"} size={16} stroke={1.5} />
     </button>
   );
 }

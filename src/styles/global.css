@@ -55,19 +55,27 @@ button {
   cursor: pointer;
 }
 
-html, body {
-  margin: 0;
-  padding: 0;
+html {
+  margin: 0; padding: 0;
+  /* overflow-x only on body — html overflow-x:hidden breaks position:fixed on iOS */
+}
+body {
+  margin: 0; padding: 0;
   background: var(--bg);
   color: var(--fg);
   font-family: var(--f-sans);
   font-feature-settings: "ss01", "cv11";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow-x: clip; /* 'clip' doesn't create scroll container, safer than hidden */
   transition: background 0.4s var(--ease), color 0.4s var(--ease);
+  font-size: 15px;
+  line-height: 1.55;
 }
-body { font-size: 15px; line-height: 1.55; }
+/* Prevent sections/wrappers from overflowing horizontally */
+.container, .container-narrow {
+  max-width: min(1440px, 100%);
+}
 ::selection { background: var(--accent); color: #000; }
 
 .h-display {
@@ -257,6 +265,15 @@ body { font-size: 15px; line-height: 1.55; }
   .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
   .desktop-nav { display: none !important; }
   .h-display { line-height: 1; }
+}
+
+/* ── Tablet & mobile : theme toggle moves to bottom-right ── */
+@media (max-width: 900px) {
+  #theme-toggle {
+    top: auto !important;
+    bottom: 24px !important;
+    right: 20px !important;
+  }
 }
 
 /* ── Mobile (≤ 600px) ─────────────────────────────────────── */
