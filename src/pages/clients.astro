@@ -87,7 +87,9 @@ const clientsData = allClients.map(c => c.data);
   </section>
 </Base>
 
-<style>
-  @media (max-width: 900px) { .globe-layout { grid-template-columns: 1fr !important; } }
+<style is:global>
+  @media (max-width: 900px) {
+    .globe-layout { grid-template-columns: 1fr !important; }
+  }
   .client-row:hover { padding-left: 8px !important; }
 </style>

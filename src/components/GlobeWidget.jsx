@@ -594,10 +594,9 @@ export default function GlobeWidget({ clients = [] }) {
       const dx = e.clientX - state.current.lastMouse.x;
       const dy = e.clientY - state.current.lastMouse.y;
       if (Math.hypot(dx, dy) > 3) state.current.dragged = true;
-      // Horizontal: drag right → surface moves right (grab-and-drag feel)
-      // Vertical:   drag down  → see more of the south (user confirmed correct)
+      // Both axes use grab-and-drag: drag right → surface right, drag down → surface down.
       state.current.rotY -= dx * 0.007;
-      state.current.rotX = Math.max(-0.65, Math.min(0.65, state.current.rotX - dy * 0.005));
+      state.current.rotX = Math.max(-0.65, Math.min(0.65, state.current.rotX + dy * 0.005));
       state.current.lastMouse = { x: e.clientX, y: e.clientY };
     }
     function onMouseUp() { state.current.mouseDown = false; }
@@ -616,7 +615,7 @@ export default function GlobeWidget({ clients = [] }) {
       if (!state.current.mouseDown) return;
       const t = e.touches[0];
       state.current.rotY -= (t.clientX - state.current.lastMouse.x) * 0.007;
-      state.current.rotX = Math.max(-0.65, Math.min(0.65, state.current.rotX - (t.clientY - state.current.lastMouse.y) * 0.005));
+      state.current.rotX = Math.max(-0.65, Math.min(0.65, state.current.rotX + (t.clientY - state.current.lastMouse.y) * 0.005));
       state.current.lastMouse = { x: t.clientX, y: t.clientY };
       state.current.dragged = true;
       e.preventDefault();
