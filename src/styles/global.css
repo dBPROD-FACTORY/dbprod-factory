@@ -276,6 +276,27 @@ body {
   }
 }
 
+/* ── Services / Portfolio row hover ─────────────────────────────────────── */
+.svc-row:hover { background: var(--bg-elev-2) !important; }
+.port-row:hover { background: var(--bg-elev) !important; }
+
+/* ── Services / Portfolio table rows — responsive ────────────────────────── */
+@media (max-width: 700px) {
+  .svc-row {
+    grid-template-columns: auto 1fr auto !important;
+    gap: 12px !important;
+    padding: 20px 16px !important;
+  }
+  .svc-num, .svc-desc, .svc-tag { display: none !important; }
+
+  .port-row {
+    grid-template-columns: auto 1fr auto !important;
+    gap: 12px !important;
+    padding: 20px 16px !important;
+  }
+  .port-year, .port-kind, .port-lang, .port-tags { display: none !important; }
+}
+
 /* ── Mobile (≤ 600px) ─────────────────────────────────────── */
 @media (max-width: 600px) {
   /* Tighter container */

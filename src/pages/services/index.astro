@@ -18,16 +18,16 @@ const services = (await getCollection("services")).sort((a, b) => (a.data.order 
     <div class="container">
       <div style="border:1px solid var(--line);border-radius:24px;overflow:hidden;background:var(--bg-elev);">
         {services.map((s, i) => (
-          <a href={`/services/${s.data.id}`} style={`display:grid;grid-template-columns:80px 1fr 2fr 1fr auto;gap:24px;align-items:center;padding:28px 32px;border-top:${i === 0 ? "none" : "1px solid var(--line)"};color:var(--fg);text-decoration:none;`}>
-            <span class="mono" style="font-size:12px;">{s.data.num}</span>
+          <a href={`/services/${s.data.id}`} class="svc-row" style={`display:grid;grid-template-columns:80px 1fr 2fr 1fr auto;gap:24px;align-items:center;padding:28px 32px;border-top:${i === 0 ? "none" : "1px solid var(--line)"};color:var(--fg);text-decoration:none;transition:background 0.25s var(--ease);`}>
+            <span class="svc-num mono" style="font-size:12px;">{s.data.num}</span>
             <div style="display:flex;align-items:center;gap:16px;">
-              <div style="width:44px;height:44px;border-radius:10px;border:1px solid var(--line-2);display:grid;place-items:center;color:var(--accent);">
+              <div style="width:44px;height:44px;border-radius:10px;border:1px solid var(--line-2);display:grid;place-items:center;color:var(--accent);flex-shrink:0;">
                 <Icon name={s.data.icon} size={20} stroke={1.5} />
               </div>
-              <span class="h-serif" style="font-size:28px;">{s.data.title}</span>
+              <span class="h-serif" style="font-size:clamp(18px,2.5vw,28px);">{s.data.title}</span>
             </div>
-            <span class="text-dim" style="font-size:14px;">{s.data.short}</span>
-            <div>{s.data.tag && <span class="chip chip-accent">{s.data.tag}</span>}</div>
+            <span class="svc-desc text-dim" style="font-size:14px;">{s.data.short}</span>
+            <div class="svc-tag">{s.data.tag && <span class="chip chip-accent">{s.data.tag}</span>}</div>
             <Icon name="arrowUpRight" size={20} stroke={1.5} />
           </a>
         ))}

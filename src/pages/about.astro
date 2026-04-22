@@ -1,31 +1,181 @@
 ---
 import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.jsx";
 import site from "../data/site.json";
 ---
 <Base title="À propos">
+
+  <!-- ── HERO ───────────────────────────────────────────────────── -->
   <section style="padding:160px 0 80px;">
     <div class="container">
-      <div class="eyebrow" style="margin-bottom:28px;">À propos</div>
-      <h1 class="h-display" style="font-size:clamp(64px,11vw,180px);margin:0 0 60px;max-width:1200px;">
+      <div class="eyebrow" style="margin-bottom:28px;">À propos · Est. 2016</div>
+      <h1 class="h-display" style="font-size:clamp(56px,10vw,160px);margin:0 0 60px;max-width:1200px;line-height:0.9;">
         Un studio <em style="font-style:italic;color:var(--accent);">intégré</em><br/>au carrefour des mondes.
       </h1>
       <div class="grid-responsive-2" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:flex-start;">
-        <p class="h-serif" style="font-size:24px;line-height:1.5;margin:0;">
+        <p class="h-serif" style="font-size:22px;line-height:1.55;margin:0;">
           Fondé en 2016 à Casablanca, dB PROD·FACTORY est né d'une conviction : produire du contenu audio de qualité broadcast depuis le Maroc, avec des standards européens et l'agilité du Sud.
         </p>
-        <p class="text-dim" style="font-size:16px;line-height:1.6;margin:0;">
-          10 ans plus tard, nous avons livré plus de 192 heures de production — doublage, voice-over, post-production — pour des clients en France, au Maghreb, au Moyen-Orient et au-delà. Notre équipe combine comédiens, ingénieurs du son, adaptateurs, directeurs artistiques, tous sélectionnés pour leur exigence.
+        <p class="text-dim" style="font-size:16px;line-height:1.7;margin:0;">
+          Dix ans plus tard, nous avons livré plus de 200 heures de production — doublage, voice-over, post-production — pour des clients en France, au Maghreb, au Moyen-Orient et aux États-Unis. Notre équipe combine comédiens, ingénieurs du son, adaptateurs et directeurs artistiques, tous sélectionnés pour leur exigence.
         </p>
       </div>
+    </div>
+  </section>
 
-      <div class="stats-grid" style="display:grid;grid-template-columns:repeat(6,1fr);gap:0;margin-top:120px;border-top:1px solid var(--line);">
+  <!-- ── STATS ──────────────────────────────────────────────────── -->
+  <section style="border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+    <div class="container">
+      <div class="stats-grid" style="display:grid;grid-template-columns:repeat(6,1fr);gap:0;">
         {site.stats.map((s, i) => (
           <div style={`padding:40px 24px;border-left:${i === 0 ? "none" : "1px solid var(--line)"};`}>
-            <div class="h-display" style="font-size:64px;margin-bottom:8px;">{s.v}</div>
+            <div class="h-display" style="font-size:clamp(40px,4.5vw,64px);margin-bottom:8px;">{s.v}</div>
             <div class="mono" style="font-size:10px;">{s.l}</div>
           </div>
         ))}
       </div>
     </div>
   </section>
+
+  <!-- ── NOTRE ADN (VALEURS) ────────────────────────────────────── -->
+  <section style="padding:120px 0;background:var(--bg-elev);">
+    <div class="container">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:80px;flex-wrap:wrap;gap:32px;">
+        <div>
+          <div class="eyebrow" style="margin-bottom:24px;">(01) Notre ADN</div>
+          <h2 class="h-display" style="font-size:clamp(48px,6vw,96px);margin:0;">
+            Trois piliers,<br/><em style="font-style:italic;color:var(--accent);">une exigence</em>.
+          </h2>
+        </div>
+        <p class="text-dim" style="font-size:16px;max-width:400px;line-height:1.65;margin:0;padding-bottom:8px;">
+          Chaque projet est traité avec la rigueur d'un broadcast international. Voici les principes qui guident chaque session.
+        </p>
+      </div>
+
+      <div class="grid-responsive-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--line);">
+        {[
+          {
+            num: "01",
+            icon: "mic",
+            title: "Qualité broadcast",
+            body: "Chaîne de signal Neumann / Universal Audio, monitoring Genelec, isolation acoustique certifiée. Nos livrables respectent les normes EBU R128 et Dolby Atmos sans surcoût."
+          },
+          {
+            num: "02",
+            icon: "globe",
+            title: "Agilité internationale",
+            body: "Trilingue (arabe · français · anglais), délais courts, disponibilité 7 j/7. Nous livrons au même rythme qu'un studio européen, avec la flexibilité du Maroc."
+          },
+          {
+            num: "03",
+            icon: "users",
+            title: "Casting sur mesure",
+            body: "Plus de 150 comédiens référencés — natifs, professionnels, disponibles. Nous sélectionnons la voix juste pour chaque rôle, chaque ton, chaque cible."
+          },
+        ].map(v => (
+          <div class="card" style="border-radius:0;border:none;padding:48px 40px;background:var(--bg);">
+            <div style="width:52px;height:52px;border-radius:12px;border:1px solid var(--line-2);display:grid;place-items:center;color:var(--accent);margin-bottom:32px;">
+              <Icon name={v.icon} size={22} stroke={1.5} />
+            </div>
+            <div class="mono" style="margin-bottom:12px;">{v.num}</div>
+            <h3 class="h-serif" style="font-size:26px;margin:0 0 16px;">{v.title}</h3>
+            <p class="text-dim" style="font-size:15px;line-height:1.65;margin:0;">{v.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CHRONOLOGIE ────────────────────────────────────────────── -->
+  <section style="padding:120px 0;">
+    <div class="container">
+      <div class="eyebrow" style="margin-bottom:40px;">(02) Histoire</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:flex-start;" class="grid-responsive-2">
+        <h2 class="h-display" style="font-size:clamp(48px,6vw,88px);margin:0;line-height:0.9;">
+          De Casablanca<br/><em style="font-style:italic;color:var(--accent);">au monde</em>.
+        </h2>
+        <div style="display:flex;flex-direction:column;gap:0;">
+          {[
+            { year: "2016", title: "Fondation", desc: "Ouverture du premier studio à Casablanca. Premiers projets de doublage pour le marché francophone maghrébin." },
+            { year: "2018", title: "Expansion voix", desc: "Lancement du département voice-over et casting. Constitution de la banque de 150+ comédiens référencés." },
+            { year: "2020", title: "Post-production", desc: "Intégration de la post-production audio complète : sound design, mixage 5.1 / Dolby Atmos, mastering broadcast." },
+            { year: "2022", title: "Clients premium", desc: "Partenariats avec Netflix MENA, Canal+ Afrique et plusieurs studios de production US et européens." },
+            { year: "2025", title: "Aujourd'hui", desc: "4 studios, 200+ heures livrées, 100+ projets, présence dans 15+ pays. L'aventure continue." },
+          ].map((e, i) => (
+            <div style={`display:grid;grid-template-columns:80px 1fr;gap:24px;padding:28px 0;border-bottom:1px solid var(--line);`}>
+              <span class="h-display" style="font-size:28px;color:var(--accent);line-height:1;">{e.year}</span>
+              <div>
+                <div style="font-weight:600;font-size:16px;margin-bottom:6px;">{e.title}</div>
+                <p class="text-dim" style="font-size:14px;line-height:1.6;margin:0;">{e.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ÉQUIPEMENT ─────────────────────────────────────────────── -->
+  <section style="padding:100px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-elev);">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 2fr;gap:80px;align-items:flex-start;" class="grid-responsive-2">
+        <div>
+          <div class="eyebrow" style="margin-bottom:24px;">(03) Équipement</div>
+          <h2 class="h-display" style="font-size:clamp(40px,5vw,72px);margin:0 0 24px;line-height:0.95;">
+            Matériel<br/><em style="font-style:italic;color:var(--accent);">pro.</em>
+          </h2>
+          <p class="text-dim" style="font-size:15px;line-height:1.65;margin:0;">
+            Investis dans la qualité sonore depuis le premier jour. Chaque maillon de notre chaîne est pensé pour livrer un résultat broadcast.
+          </p>
+          <a href="/studios" class="btn btn-ghost btn-arrow" style="margin-top:28px;">Visiter nos studios</a>
+        </div>
+        <div class="equip-inner" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          {[
+            { cat: "Microphones", items: ["Neumann TLM 103", "AKG C414 XLS", "Sennheiser MKH 416"] },
+            { cat: "Interfaces", items: ["Universal Audio Apollo X8", "UA Apollo Twin X", "Focusrite Scarlett"] },
+            { cat: "DAW / Plugins", items: ["Pro Tools Ultimate", "Waves Complete", "iZotope RX 11"] },
+            { cat: "Monitoring", items: ["Genelec 8040B", "Yamaha HS8", "Beyerdynamic DT 990"] },
+          ].map(g => (
+            <div style="border:1px solid var(--line);border-radius:16px;padding:24px;">
+              <div class="mono" style="margin-bottom:16px;font-size:10px;">{g.cat}</div>
+              <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;">
+                {g.items.map(item => (
+                  <li style="font-size:14px;color:var(--fg-dim);display:flex;align-items:center;gap:8px;">
+                    <span style="width:4px;height:4px;border-radius:50%;background:var(--accent);flex-shrink:0;"></span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ────────────────────────────────────────────────────── -->
+  <section style="padding:120px 0;text-align:center;">
+    <div class="container">
+      <div class="eyebrow" style="margin-bottom:28px;justify-content:center;">(04) Travailler ensemble</div>
+      <h2 class="h-display" style="font-size:clamp(52px,8vw,120px);margin:0 auto 40px;max-width:900px;line-height:0.9;">
+        Votre prochain projet<br/><em style="font-style:italic;color:var(--accent);">mérite le meilleur</em>.
+      </h2>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+        <a href="/contact" class="btn btn-primary btn-arrow">Demander un devis gratuit</a>
+        <a href="/services" class="btn btn-ghost btn-arrow">Voir nos services</a>
+      </div>
+    </div>
+  </section>
+
 </Base>
+
+<style>
+  /* Equipment grid: keep 2 cols down to small phones */
+  @media (max-width: 480px) {
+    .equip-inner { grid-template-columns: 1fr !important; }
+  }
+  /* Timeline year column */
+  @media (max-width: 500px) {
+    .timeline-row { grid-template-columns: 60px 1fr !important; }
+  }
+</style>

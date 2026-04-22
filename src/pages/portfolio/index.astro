@@ -19,12 +19,12 @@ const projects = (await getCollection("projects")).sort((a, b) => b.data.year - 
       <ul style="list-style:none;padding:0;margin:0;border-top:1px solid var(--line);">
         {projects.map(p => (
           <li>
-            <a href={`/portfolio/${p.data.id}`} style="display:grid;grid-template-columns:80px 2fr 1fr 1fr 1fr auto;gap:24px;align-items:center;padding:32px 0;border-bottom:1px solid var(--line);color:var(--fg);text-decoration:none;">
-              <span class="mono" style="font-size:11px;">{p.data.year}</span>
-              <span class="h-serif" style="font-size:32px;letter-spacing:-0.02em;">{p.data.title}</span>
-              <span class="mono">{p.data.kind}</span>
-              <span class="mono">{p.data.lang}</span>
-              <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <a href={`/portfolio/${p.data.id}`} class="port-row" style="display:grid;grid-template-columns:80px 2fr 1fr 1fr 1fr auto;gap:24px;align-items:center;padding:32px 0;border-bottom:1px solid var(--line);color:var(--fg);text-decoration:none;transition:background 0.25s var(--ease);">
+              <span class="port-year mono" style="font-size:11px;">{p.data.year}</span>
+              <span class="h-serif" style="font-size:clamp(20px,3vw,32px);letter-spacing:-0.02em;">{p.data.title}</span>
+              <span class="port-kind mono">{p.data.kind}</span>
+              <span class="port-lang mono">{p.data.lang}</span>
+              <div class="port-tags" style="display:flex;gap:6px;flex-wrap:wrap;">
                 {p.data.tags.map(t => <span class="chip">{t}</span>)}
               </div>
               <span style="font-size:18px;">↗</span>

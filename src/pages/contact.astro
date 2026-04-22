@@ -2,60 +2,130 @@
 import Base from "../layouts/Base.astro";
 import Icon from "../components/Icon.jsx";
 import site from "../data/site.json";
+const whatsapp = site.contact.phone.replace(/\s+/g, "").replace("+", "");
 ---
 <Base title="Contact">
-  <section style="padding:160px 0 80px;">
+  <section style="padding:160px 0 100px;">
     <div class="container">
-      <div class="eyebrow" style="margin-bottom:28px;">Contact</div>
-      <h1 class="h-display" style="font-size:clamp(64px,11vw,180px);margin:0 0 40px;">
-        <em style="font-style:italic;color:var(--accent);">Parlons</em> projet.
+      <div class="eyebrow" style="margin-bottom:28px;">Contact · Devis gratuit</div>
+      <h1 class="h-display" style="font-size:clamp(56px,10vw,160px);margin:0 0 80px;line-height:0.9;">
+        <em style="font-style:italic;color:var(--accent);">Parlons</em><br/>projet.
       </h1>
 
-      <div class="grid-responsive-2" style="display:grid;grid-template-columns:2fr 1fr;gap:80px;align-items:flex-start;margin-top:80px;">
+      <div class="grid-responsive-2" style="display:grid;grid-template-columns:3fr 2fr;gap:80px;align-items:flex-start;">
+
+        <!-- Form -->
         <form name="contact" method="POST" data-netlify="true" style="display:grid;gap:32px;">
           <input type="hidden" name="form-name" value="contact" />
+
           <div class="grid-responsive-2" style="display:grid;grid-template-columns:1fr 1fr;gap:32px;">
             <div class="field">
               <label>Nom</label>
-              <input name="name" type="text" required />
+              <input name="name" type="text" placeholder="Votre nom" required />
             </div>
             <div class="field">
               <label>Email</label>
-              <input name="email" type="email" required />
+              <input name="email" type="email" placeholder="email@exemple.com" required />
             </div>
           </div>
-          <div class="field">
-            <label>Type de projet</label>
-            <select name="type">
-              <option>Doublage</option>
-              <option>Voice-Over</option>
-              <option>Post-Production</option>
-              <option>Spot publicitaire</option>
-              <option>Corporate</option>
-              <option>Autre</option>
-            </select>
+
+          <div class="grid-responsive-2" style="display:grid;grid-template-columns:1fr 1fr;gap:32px;">
+            <div class="field">
+              <label>Téléphone (optionnel)</label>
+              <input name="phone" type="tel" placeholder="+212 …" />
+            </div>
+            <div class="field">
+              <label>Type de projet</label>
+              <select name="type">
+                <option>Doublage</option>
+                <option>Voice-Over</option>
+                <option>Post-Production</option>
+                <option>Spot publicitaire</option>
+                <option>Corporate / E-learning</option>
+                <option>Mixage / Sound design</option>
+                <option>Autre</option>
+              </select>
+            </div>
           </div>
+
           <div class="field">
-            <label>Message</label>
-            <textarea name="message" rows={6} required></textarea>
+            <label>Message / Brief</label>
+            <textarea name="message" rows={5} placeholder="Décrivez votre projet : format, langue(s), délai, volume…" required></textarea>
           </div>
-          <button type="submit" class="btn btn-primary btn-arrow" style="justify-self:flex-start;">Envoyer le brief</button>
+
+          <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+            <button type="submit" class="btn btn-primary btn-arrow">Envoyer le brief</button>
+            <span class="mono" style="font-size:10px;">Réponse sous 24 h ouvrées</span>
+          </div>
         </form>
 
-        <aside style="border:1px solid var(--line);border-radius:20px;padding:32px;background:var(--bg-elev);">
-          <div class="mono" style="margin-bottom:20px;">Coordonnées</div>
-          <div style="display:grid;gap:20px;">
-            <div style="display:flex;gap:12px;align-items:flex-start;">
-              <Icon name="mapPin" size={18} stroke={1.5} style={{ color: "var(--accent)", marginTop: 2 }} />
-              <div>{site.contact.address}</div>
+        <!-- Sidebar -->
+        <aside style="display:flex;flex-direction:column;gap:16px;position:sticky;top:100px;">
+
+          <!-- Coordonnées -->
+          <div style="border:1px solid var(--line);border-radius:20px;padding:32px;background:var(--bg-elev);">
+            <div class="mono" style="margin-bottom:20px;">Coordonnées</div>
+            <div style="display:grid;gap:18px;">
+              <div style="display:flex;gap:12px;align-items:flex-start;">
+                <Icon name="mapPin" size={18} stroke={1.5} style={{ color: "var(--accent)", marginTop: 2, flexShrink: 0 }} />
+                <div style="font-size:15px;">{site.contact.address}</div>
+              </div>
+              <a href={`mailto:${site.contact.email}`} style="display:flex;gap:12px;align-items:center;color:var(--fg);text-decoration:none;">
+                <Icon name="mail" size={18} stroke={1.5} style={{ color: "var(--accent)", flexShrink: 0 }} />
+                <span style="font-size:15px;">{site.contact.email}</span>
+              </a>
+              <a href={`tel:${site.contact.phone}`} style="display:flex;gap:12px;align-items:center;color:var(--fg);text-decoration:none;">
+                <Icon name="phone" size={18} stroke={1.5} style={{ color: "var(--accent)", flexShrink: 0 }} />
+                <span style="font-size:15px;">{site.contact.phone}</span>
+              </a>
             </div>
-            <div style="display:flex;gap:12px;align-items:center;">
-              <Icon name="mail" size={18} stroke={1.5} style={{ color: "var(--accent)" }} />
-              <a href={`mailto:${site.contact.email}`} style="color:var(--fg);text-decoration:none;">{site.contact.email}</a>
+          </div>
+
+          <!-- WhatsApp -->
+          <a
+            href={`https://wa.me/${whatsapp}?text=Bonjour%20dB%20PROD%2C%20je%20souhaite%20un%20devis.`}
+            target="_blank"
+            rel="noopener"
+            class="btn btn-ghost"
+            style="justify-content:center;gap:10px;border-color:var(--line-2);font-size:14px;"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+            </svg>
+            Écrire sur WhatsApp
+          </a>
+
+          <!-- Réseaux sociaux -->
+          <div style="border:1px solid var(--line);border-radius:20px;padding:24px;background:var(--bg-elev);">
+            <div class="mono" style="margin-bottom:16px;">Réseaux sociaux</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              {site.social.map(s => (
+                <a
+                  href={s.u}
+                  target="_blank"
+                  rel="noopener"
+                  style="width:42px;height:42px;border-radius:10px;border:1px solid var(--line-2);display:grid;place-items:center;color:var(--fg-dim);transition:border-color 0.25s,color 0.25s;text-decoration:none;"
+                >
+                  <Icon name={s.n} size={18} stroke={1.5} />
+                </a>
+              ))}
             </div>
-            <div style="display:flex;gap:12px;align-items:center;">
-              <Icon name="phone" size={18} stroke={1.5} style={{ color: "var(--accent)" }} />
-              <a href={`tel:${site.contact.phone}`} style="color:var(--fg);text-decoration:none;">{site.contact.phone}</a>
+          </div>
+
+          <!-- Horaires -->
+          <div style="border:1px solid var(--line);border-radius:20px;padding:24px;background:var(--bg-elev);">
+            <div class="mono" style="margin-bottom:16px;">Disponibilités</div>
+            <div style="display:grid;gap:8px;">
+              {[
+                { j: "Lun — Ven", h: "09:00 — 19:00" },
+                { j: "Samedi", h: "10:00 — 16:00" },
+                { j: "Dimanche", h: "Sur rdv" },
+              ].map(r => (
+                <div style="display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px solid var(--line);">
+                  <span style="color:var(--fg-dim);">{r.j}</span>
+                  <span style="font-weight:500;">{r.h}</span>
+                </div>
+              ))}
             </div>
           </div>
         </aside>

@@ -172,11 +172,58 @@ function makeArc(from, to, steps = 80) {
   return pts;
 }
 
+// ── Fallback land approximation (geographic bounding-box model) ──────────────
+function isApproxLand(lat, lng) {
+  if (lat <= -60) return true; // Antarctica
+  // Africa
+  if (lat > -36 && lat < 38 && lng > -18 && lng < 52) {
+    if (lat > 30 && lng < -5) return false;
+    return true;
+  }
+  if (lat > 12 && lat < 32 && lng > 34 && lng < 60) return true; // Arabia
+  // Europe (incl. Türkiye)
+  if (lat > 35 && lat < 72 && lng > -12 && lng < 45) {
+    if (lat > 63 && lng < 0) return false;
+    return true;
+  }
+  if (lat > 63 && lat < 67 && lng > -25 && lng < -13) return true; // Iceland
+  if (lat > 59 && lat < 84 && lng > -74 && lng < -17) return true; // Greenland
+  // Russia + North Asia
+  if (lat > 45 && lat < 78 && lng > 30 && lng < 170) return true;
+  // Central / South / East Asia
+  if (lat > 5 && lat < 45 && lng > 60 && lng < 125) return true;
+  if (lat > 30 && lat < 46 && lng > 124 && lng < 148) return true; // Japan + Korea
+  // SE Asia (mainland + islands)
+  if (lat > -10 && lat < 28 && lng > 95 && lng < 142) return true;
+  if (lat > 5 && lat < 20 && lng > 117 && lng < 127) return true; // Philippines
+  // Oceania
+  if (lat > -45 && lat < -10 && lng > 112 && lng < 155) return true; // Australia
+  if (lat > -47 && lat < -33 && lng > 166 && lng < 178) return true; // New Zealand
+  if (lat > -26 && lat < -11 && lng > 43 && lng < 51) return true; // Madagascar
+  // North America (excl. Hudson Bay)
+  if (lat > 24 && lat < 74 && lng > -170 && lng < -52) {
+    if (lat > 51 && lat < 66 && lng > -98 && lng < -78) return false;
+    return true;
+  }
+  if (lat > 8 && lat < 24 && lng > -118 && lng < -77) return true; // Mexico / C.Am
+  if (lat > -56 && lat < 13 && lng > -82 && lng < -34) return true; // South America
+  if (lat > 49 && lat < 61 && lng > -9 && lng < 3) return true; // British Isles
+  return false;
+}
+
+function buildFallbackDots(step = 3) {
+  const dots = [];
+  for (let lat = -87; lat <= 87; lat += step)
+    for (let lng = -180; lng < 180; lng += step)
+      if (isApproxLand(lat, lng)) dots.push([lat, lng]);
+  return dots;
+}
+
 // ── Load land data from world-atlas (Natural Earth 110m) ─────────────────────
 async function loadLandDots() {
   try {
-    const cached = sessionStorage.getItem("globe-land-v4");
-    if (cached) return JSON.parse(cached);
+    const cached = sessionStorage.getItem("globe-land-v5");
+    if (cached) { const d = JSON.parse(cached); if (d.length > 100) return d; }
 
     const topo = await fetch(
       "https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json"
@@ -200,11 +247,13 @@ async function loadLandDots() {
     cx.fillStyle = "#fff";
 
     // Draw a polygon (array of rings — outer + optional holes)
-    // All rings in one beginPath so evenodd rule handles holes correctly
+    // All rings in one beginPath so evenodd rule handles holes correctly.
+    // prevPx guard prevents antimeridian crossings from spanning the whole canvas.
     const drawPolygon = (polygon) => {
       cx.beginPath();
       for (const ringArcs of polygon) {
         let first = true;
+        let prevPx = null;
         for (const idx of ringArcs) {
           const rev = idx < 0;
           const arc = arcs[rev ? ~idx : idx];
@@ -212,12 +261,17 @@ async function loadLandDots() {
           for (const [lng, lat] of pts) {
             const px = (lng + 180) * (W / 360);
             const py = (90 - lat) * (H / 180);
-            // moveTo only for the very first point of the whole polygon ring
-            first ? cx.moveTo(px, py) : cx.lineTo(px, py);
-            first = false;
+            // Break path if antimeridian crossing detected (|Δpx| > half width)
+            if (first || (prevPx !== null && Math.abs(px - prevPx) > W * 0.6)) {
+              cx.moveTo(px, py);
+              first = false;
+            } else {
+              cx.lineTo(px, py);
+            }
+            prevPx = px;
           }
         }
-        cx.closePath(); // close each ring separately within the same path
+        cx.closePath();
       }
       cx.fill("evenodd");
     };
@@ -245,12 +299,14 @@ async function loadLandDots() {
       }
     }
 
-    // v4 — bump version to clear old buggy cache
-    sessionStorage.setItem("globe-land-v4", JSON.stringify(dots));
+    if (dots.length < 300) throw new Error(`sparse result: only ${dots.length} dots`);
+    sessionStorage.setItem("globe-land-v5", JSON.stringify(dots));
     return dots;
   } catch (e) {
-    console.warn("Globe: failed to load land data", e);
-    return [];
+    console.warn("Globe: topojson approach failed, using geographic fallback:", e.message);
+    const fb = buildFallbackDots(2); // 2° resolution for good density
+    try { sessionStorage.setItem("globe-land-v5", JSON.stringify(fb)); } catch {}
+    return fb;
   }
 }
 
@@ -360,9 +416,9 @@ export default function GlobeWidget({ clients = [] }) {
       for (const [lat, lng] of landRef.current) {
         const p = rotatePoint(toXYZ(lat, lng), rotY, rotX);
         if (p.z < 0) continue;
-        const alpha = Math.min(1, p.z * 2.2) * 0.65;
+        const alpha = Math.min(1, p.z * 2.2) * 0.7;
         ctx.beginPath();
-        ctx.arc(cx + p.x * R, cy - p.y * R, 1.6, 0, Math.PI * 2);
+        ctx.arc(cx + p.x * R, cy - p.y * R, 1.8, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${A},${alpha})`;
         ctx.fill();
       }
