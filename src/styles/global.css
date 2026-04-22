@@ -334,6 +334,15 @@ body {
   }
   .footer-grid { gap: 32px !important; }
 }
+/* Safety: on desktop cap the CTA at 160px and allow shrinking so it never
+   overflows the container during wrap transitions. */
+@media (min-width: 900px) {
+  .footer-cta-circle {
+    width: 160px !important; height: 160px !important;
+    max-width: 100%;
+    flex-shrink: 1;
+  }
+}
 
 /* ── Audio player tighter on mobile ─────────────────────────────────────── */
 @media (max-width: 600px) {

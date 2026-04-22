@@ -11,7 +11,7 @@ const { service } = Astro.props;
 const { Content } = await service.render();
 const d = service.data;
 ---
-<Base title={d.title}>
+<Base title={d.title} description={d.short}>
   <section style="padding:160px 0 80px;">
     <div class="container">
       <a href="/services" class="link-arrow" style="margin-bottom:40px;display:inline-flex;">← Retour aux services</a>

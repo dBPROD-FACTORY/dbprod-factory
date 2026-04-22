@@ -12,8 +12,12 @@ export async function getStaticPaths() {
 const { project } = Astro.props;
 const d = project.data;
 const { Content } = await project.render();
+
+// Dedup: if markdown body exists, rely on it as the only prose; keep d.desc
+// as the SEO / meta description only (not rendered visibly).
+const hasBody = (project.body || "").trim().length > 0;
 ---
-<Base title={d.title}>
+<Base title={d.title} description={d.desc}>
   <section style="padding:160px 0 80px;">
     <div class="container">
       <a href="/portfolio" class="link-arrow" style="margin-bottom:40px;display:inline-flex;">← Portfolio</a>
@@ -25,7 +29,9 @@ const { Content } = await project.render();
         {d.dur && <span class="chip">{d.dur}</span>}
       </div>
       <h1 class="h-display" style="font-size:clamp(64px,12vw,180px);margin:0 0 32px;">{d.title}</h1>
-      <p class="text-dim" style="font-size:20px;max-width:760px;line-height:1.5;margin-bottom:48px;">{d.desc}</p>
+      {!hasBody && d.desc && (
+        <p class="text-dim" style="font-size:20px;max-width:760px;line-height:1.5;margin-bottom:48px;">{d.desc}</p>
+      )}
 
       {d.video_url ? (
         <div style="border-radius:24px;overflow:hidden;border:1px solid var(--line);background:#000;aspect-ratio:16/9;margin-bottom:60px;">

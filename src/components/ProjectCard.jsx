@@ -5,7 +5,9 @@ import { HoverVideo } from "./VideoPlayer.jsx";
 
 export default function ProjectCard({ project, size = "sm" }) {
   const [hover, setHover] = useState(false);
-  const h = size === "lg" ? 520 : 360;
+  // Aspect-ratio instead of fixed height so cards scale uniformly with column
+  // width. `size` now only controls interior typography / play button / title.
+  const aspect = "16/10";
 
   const fallback = (
     <>
@@ -34,7 +36,7 @@ export default function ProjectCard({ project, size = "sm" }) {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      <div className="media-ph" data-label={`${(project.kind || "").toUpperCase()} · SHOWREEL`} style={{ height: h, position: "relative" }}>
+      <div className="media-ph" data-label={`${(project.kind || "").toUpperCase()} · SHOWREEL`} style={{ aspectRatio: aspect, position: "relative" }}>
         <HoverVideo src={project.video_url} poster={project.poster} fallback={fallback} />
 
         <div style={{ position: "absolute", inset: 0, display: "grid", placeItems: "center", pointerEvents: "none" }}>

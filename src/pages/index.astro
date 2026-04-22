@@ -80,9 +80,9 @@ const featuredData = featured.map(p => p.data);
         <a href="/portfolio" class="btn btn-ghost btn-arrow">Tout le portfolio</a>
       </div>
 
-      <div class="grid-responsive-3 mobile-carousel" style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px;">
-        {featured.map((p, i) => (
-          <ProjectCard client:visible project={p.data} size={i === 0 ? "lg" : "sm"} />
+      <div class="grid-responsive-3 mobile-carousel" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch;">
+        {featured.map((p) => (
+          <ProjectCard client:visible project={p.data} size="lg" />
         ))}
       </div>
     </div>
