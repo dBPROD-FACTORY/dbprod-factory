@@ -26,7 +26,7 @@ const featuredData = featured.map(p => p.data);
       <div class="stats-grid" style="display:grid;grid-template-columns:repeat(6,1fr);gap:0;">
         {site.stats.map((s, i) => (
           <div style={`padding:20px 24px;border-left:${i === 0 ? "none" : "1px solid var(--line)"};`}>
-            <div class="h-display" style="font-size:clamp(36px,5.5vw,72px);margin-bottom:4px;">{s.v}</div>
+            <div class="h-display" style="font-size:clamp(28px,7.5vw,56px);margin-bottom:4px;">{s.v}</div>
             <div class="mono" style="font-size:10px;">{s.l}</div>
           </div>
         ))}
@@ -80,7 +80,7 @@ const featuredData = featured.map(p => p.data);
         <a href="/portfolio" class="btn btn-ghost btn-arrow">Tout le portfolio</a>
       </div>
 
-      <div class="grid-responsive-3" style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px;">
+      <div class="grid-responsive-3 mobile-carousel" style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px;">
         {featured.map((p, i) => (
           <ProjectCard client:visible project={p.data} size={i === 0 ? "lg" : "sm"} />
         ))}
@@ -134,7 +134,7 @@ const featuredData = featured.map(p => p.data);
   <section style="padding:100px 0;">
     <div class="container">
       <div class="eyebrow" style="margin-bottom:40px;">(05) Témoignages</div>
-      <div class="grid-responsive-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+      <div class="grid-responsive-3 mobile-carousel" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
         {site.testimonials.map(t => (
           <div class="card" style="padding:32px;">
             <div style="display:flex;gap:4px;margin-bottom:20px;color:var(--accent);">
@@ -166,7 +166,7 @@ const featuredData = featured.map(p => p.data);
         </div>
         <a href="/blog" class="btn btn-ghost btn-arrow">Tous les articles</a>
       </div>
-      <div class="grid-responsive-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+      <div class="grid-responsive-3 mobile-carousel" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
         {posts.slice(0, 3).map(p => (
           <PostCard post={p.data} />
         ))}

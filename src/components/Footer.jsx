@@ -20,6 +20,7 @@ export default function Footer({ site, contact, social, footerCta }) {
             </h2>
             <a
               href="/contact"
+              className="footer-cta-circle"
               style={{
                 width: 180, height: 180,
                 borderRadius: "50%",
@@ -40,7 +41,7 @@ export default function Footer({ site, contact, social, footerCta }) {
           </div>
         </div>
 
-        <div className="grid-responsive-3" style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: 48, alignItems: "flex-start", paddingBottom: 48 }}>
+        <div className="grid-responsive-3 footer-grid" style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: 48, alignItems: "flex-start", paddingBottom: 48 }}>
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
               <div style={{

@@ -107,11 +107,11 @@ const clients = defineCollection({
   schema: z.object({
     id: z.string(),
     name: z.string(),
-    city: z.string().optional(),
-    country: z.string().optional(),
-    logo: z.string().optional(),
-    website: z.string().optional(),
-    order: z.number().optional(),
+    city: z.string().nullish(),
+    country: z.string().nullish(),
+    logo: z.string().nullish(),
+    website: z.string().nullish(),
+    order: z.number().nullish(),
   }),
 });
 

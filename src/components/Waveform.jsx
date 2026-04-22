@@ -137,7 +137,7 @@ export function AudioPlayer({ title, artist, duration = 180, seed = 1, compact =
   const bars = 80;
 
   return (
-    <div style={{
+    <div className="audio-player" style={{
       display: "flex", alignItems: "center", gap: 16,
       padding: compact ? "10px 14px" : "16px 20px",
       background: "var(--bg-elev)",

@@ -44,7 +44,7 @@ export default function HeroHome({ hero, projects }) {
         <motion.h1
           initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           className="h-display"
-          style={{ fontSize: "clamp(72px, 13vw, 220px)", margin: 0, marginBottom: 40, textAlign: "left" }}>
+          style={{ fontSize: "clamp(48px, 13vw, 220px)", margin: 0, marginBottom: 40, textAlign: "left", wordBreak: "break-word", hyphens: "auto" }}>
           {headline[0]}<br/>
           <em style={{ fontStyle: "italic", color: "var(--accent)" }}>{italic}</em><br/>
           {headline[2] || ""}<span style={{ color: "var(--accent)" }}>.</span>
@@ -57,7 +57,7 @@ export default function HeroHome({ hero, projects }) {
           <p className="text-dim" style={{ fontSize: 17, maxWidth: 480, lineHeight: 1.5 }}>
             {hero?.intro || "dB PROD·FACTORY délivre des œuvres de doublage, voice-over et post-production audio depuis 2016."}
           </p>
-          <div style={{ display: "flex", gap: 12, justifySelf: "end", alignItems: "center", flexWrap: "wrap" }}>
+          <div className="hero-cta-row" style={{ display: "flex", gap: 12, justifySelf: "end", alignItems: "center", flexWrap: "wrap" }}>
             <a href="/contact" className="btn btn-primary btn-arrow">{hero?.cta1 || "Demander un devis"}</a>
             <a href="/portfolio" className="btn btn-ghost btn-arrow">{hero?.cta2 || "Voir nos œuvres"}</a>
           </div>
@@ -67,11 +67,11 @@ export default function HeroHome({ hero, projects }) {
       {projects && projects.length > 0 && (
         <div style={{ position: "relative", zIndex: 2, marginTop: 100, borderTop: "1px solid var(--line)", borderBottom: "1px solid var(--line)", background: "color-mix(in oklab, var(--bg) 80%, transparent)" }}>
           <div style={{ display: "flex", alignItems: "stretch", height: 80 }}>
-            <div style={{ flex: "0 0 auto", padding: "0 32px", display: "flex", alignItems: "center", gap: 14, borderRight: "1px solid var(--line)" }}>
+            <div className="hero-showreel-left" style={{ flex: "0 0 auto", padding: "0 32px", display: "flex", alignItems: "center", gap: 14, borderRight: "1px solid var(--line)" }}>
               <BarPulse count={5} color="var(--accent)" height={18} />
               <span className="mono">Showreel {new Date().getFullYear()}</span>
             </div>
-            <div style={{ flex: 1, display: "flex", alignItems: "center", overflow: "hidden", padding: "0 24px", position: "relative" }}>
+            <div className="hero-showreel-marquee" style={{ flex: 1, display: "flex", alignItems: "center", overflow: "hidden", padding: "0 24px", position: "relative" }}>
               <div className="marquee">
                 {[...projects, ...projects].map((p, i) => (
                   <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: 14, fontFamily: "var(--f-title)", fontSize: 28, letterSpacing: "-0.02em", fontStyle: i % 3 === 0 ? "italic" : "normal" }}>
@@ -81,7 +81,7 @@ export default function HeroHome({ hero, projects }) {
                 ))}
               </div>
             </div>
-            <div style={{ flex: "0 0 auto", padding: "0 32px", display: "flex", alignItems: "center", gap: 10, borderLeft: "1px solid var(--line)" }}>
+            <div className="hero-showreel-right" style={{ flex: "0 0 auto", padding: "0 32px", display: "flex", alignItems: "center", gap: 10, borderLeft: "1px solid var(--line)" }}>
               <span className="mono">00:00 — 02:34</span>
               <div style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--accent)", display: "grid", placeItems: "center", color: "#0A0A0F", cursor: "pointer" }}>
                 <Icon name="play" size={14} stroke={2} />

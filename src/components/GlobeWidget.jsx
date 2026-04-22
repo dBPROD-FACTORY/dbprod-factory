@@ -140,10 +140,17 @@ function geocode(city, country) {
 }
 
 // ── 3D math ──────────────────────────────────────────────────────────────────
+// Natural convention: east = +x (right), north = +y (up), Greenwich = +z (front).
+// rotY=0 puts the prime meridian facing the viewer; +rotY rotates the globe
+// such that eastern longitudes come into view on the right.
 function toXYZ(lat, lng) {
   const la = (lat * Math.PI) / 180;
   const lo = (lng * Math.PI) / 180;
-  return { x: Math.cos(la) * Math.cos(lo), y: Math.sin(la), z: Math.cos(la) * Math.sin(lo) };
+  return {
+    x: Math.cos(la) * Math.sin(lo),   // east  → +x (right)
+    y: Math.sin(la),                   // north → +y (up)
+    z: Math.cos(la) * Math.cos(lo),   // Greenwich → +z (facing viewer)
+  };
 }
 
 function rotatePoint(p, rY, rX) {
@@ -153,9 +160,7 @@ function rotatePoint(p, rY, rX) {
   // X-axis (tilt)
   const y2 = p.y * Math.cos(rX) - z1 * Math.sin(rX);
   const z2 = p.y * Math.sin(rX) + z1 * Math.cos(rX);
-  // Flip x so east appears on the right (standard map orientation) —
-  // this un-mirrors the globe so continents face the correct way.
-  return { x: -x1, y: y2, z: z2 };
+  return { x: x1, y: y2, z: z2 };
 }
 
 function slerp(a, b, t) {
@@ -247,7 +252,7 @@ function buildFallbackDots(step = 2) {
 // ── Load land data from world-atlas (Natural Earth 110m) ─────────────────────
 async function loadLandDots() {
   try {
-    const cached = sessionStorage.getItem("globe-land-v7");
+    const cached = sessionStorage.getItem("globe-land-v8");
     if (cached) { const d = JSON.parse(cached); if (d.length > 100) return d; }
 
     const topo = await fetch(
@@ -325,12 +330,12 @@ async function loadLandDots() {
     }
 
     if (dots.length < 300) throw new Error(`sparse result: only ${dots.length} dots`);
-    sessionStorage.setItem("globe-land-v7", JSON.stringify(dots));
+    sessionStorage.setItem("globe-land-v8", JSON.stringify(dots));
     return dots;
   } catch (e) {
     console.warn("Globe: topojson approach failed, using geographic fallback:", e.message);
     const fb = buildFallbackDots(2); // 2° resolution for good density
-    try { sessionStorage.setItem("globe-land-v7", JSON.stringify(fb)); } catch {}
+    try { sessionStorage.setItem("globe-land-v8", JSON.stringify(fb)); } catch {}
     return fb;
   }
 }
@@ -342,7 +347,7 @@ export default function GlobeWidget({ clients = [] }) {
   const [loaded, setLoaded] = useState(false);
 
   const state = useRef({
-    rotY: -1.44, rotX: 0,         // centers Casablanca; rotX=0 → horizontal equator
+    rotY: -0.133, rotX: 0,        // centers Casablanca (lng=-7.59); rotX=0 → horizontal equator
     autoRotate: true,
     mouseDown: false, dragged: false,
     lastMouse: { x: 0, y: 0 },
@@ -555,7 +560,7 @@ export default function GlobeWidget({ clients = [] }) {
 
     function loop() {
       if (state.current.autoRotate && !state.current.mouseDown) {
-        state.current.rotY += 0.004;
+        state.current.rotY -= 0.004;   // surface drifts right (matches drag-right feel)
       }
       state.current.phase += 0.022;
       draw();
@@ -589,9 +594,9 @@ export default function GlobeWidget({ clients = [] }) {
       const dx = e.clientX - state.current.lastMouse.x;
       const dy = e.clientY - state.current.lastMouse.y;
       if (Math.hypot(dx, dy) > 3) state.current.dragged = true;
-      // Horizontal: drag right → surface moves right (grab-and-drag convention, x is mirrored)
-      // Vertical:   drag down  → see more of the south (kept as user confirmed correct)
-      state.current.rotY += dx * 0.007;
+      // Horizontal: drag right → surface moves right (grab-and-drag feel)
+      // Vertical:   drag down  → see more of the south (user confirmed correct)
+      state.current.rotY -= dx * 0.007;
       state.current.rotX = Math.max(-0.65, Math.min(0.65, state.current.rotX - dy * 0.005));
       state.current.lastMouse = { x: e.clientX, y: e.clientY };
     }
@@ -610,7 +615,7 @@ export default function GlobeWidget({ clients = [] }) {
     function onTouchMove(e) {
       if (!state.current.mouseDown) return;
       const t = e.touches[0];
-      state.current.rotY += (t.clientX - state.current.lastMouse.x) * 0.007;
+      state.current.rotY -= (t.clientX - state.current.lastMouse.x) * 0.007;
       state.current.rotX = Math.max(-0.65, Math.min(0.65, state.current.rotX - (t.clientY - state.current.lastMouse.y) * 0.005));
       state.current.lastMouse = { x: t.clientX, y: t.clientY };
       state.current.dragged = true;

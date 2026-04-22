@@ -276,6 +276,73 @@ body {
   }
 }
 
+/* ── Mobile carousel (testimonials / blog / featured projects) ─────────── */
+@media (max-width: 700px) {
+  .mobile-carousel {
+    display: flex !important;
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 14px !important;
+    padding: 4px 20px 14px !important;
+    margin: 0 -20px !important;
+    grid-template-columns: unset !important;
+    scrollbar-width: none;
+  }
+  .mobile-carousel::-webkit-scrollbar { display: none; }
+  .mobile-carousel > * {
+    flex: 0 0 86%;
+    scroll-snap-align: center;
+    min-width: 0;
+  }
+}
+
+/* ── Stats tighter on mobile ────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .stats-grid > div { padding: 16px 14px !important; }
+}
+
+/* ── Clients marquee smaller on mobile ──────────────────────────────────── */
+@media (max-width: 600px) {
+  .marquee { gap: 32px !important; }
+  .marquee > * { font-size: clamp(26px, 7vw, 36px) !important; }
+}
+
+/* ── Hero CTAs full-width side-by-side on mobile ────────────────────────── */
+@media (max-width: 600px) {
+  .hero-cta-row { width: 100%; justify-self: start !important; }
+  .hero-cta-row .btn { flex: 1 1 140px; justify-content: center; }
+}
+
+/* ── Hero showreel compact on mobile ────────────────────────────────────── */
+@media (max-width: 600px) {
+  .hero-showreel-left { display: none !important; }
+  .hero-showreel-right { padding: 0 14px !important; }
+  .hero-showreel-right .mono { font-size: 9px !important; }
+  .hero-showreel-marquee { padding: 0 14px !important; }
+  .hero-showreel-marquee span { font-size: 20px !important; }
+}
+
+/* ── Footer: smaller CTA circle + tighter grid on mobile ────────────────── */
+@media (max-width: 600px) {
+  .footer-cta-circle {
+    width: 120px !important; height: 120px !important;
+    font-size: 13px !important;
+  }
+  .footer-grid { gap: 32px !important; }
+}
+
+/* ── Audio player tighter on mobile ─────────────────────────────────────── */
+@media (max-width: 600px) {
+  .audio-player { padding: 12px 14px !important; gap: 12px !important; }
+}
+
+/* ── Display headings — soft-wrap long words on narrow screens ─────────── */
+@media (max-width: 600px) {
+  .h-display { word-break: break-word; hyphens: auto; }
+}
+
 /* ── Services / Portfolio row hover ─────────────────────────────────────── */
 .svc-row:hover { background: var(--bg-elev-2) !important; }
 .port-row:hover { background: var(--bg-elev) !important; }
