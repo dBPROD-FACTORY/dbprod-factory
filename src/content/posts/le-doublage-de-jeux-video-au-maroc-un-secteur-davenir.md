@@ -1,6 +1,6 @@
 ---
 id: "le-doublage-de-jeux-video-au-maroc-un-secteur-davenir"
-tag: "Blog"
+tag: "Jeu vidéo"
 title: "Le doublage de jeux vidéo au Maroc : Un secteur d’avenir ?"
 date: "7 février 2025"
 excerpt: "Le marché des jeux vidéo connaît une croissance exponentielle au niveau mondial, et le Maroc n’y échappe pas. L’industrie du doublage des jeux vidéo, en particulier, présente un potentiel considérable pour les talents…"

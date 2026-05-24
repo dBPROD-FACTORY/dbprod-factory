@@ -74,6 +74,27 @@ function frenchDate(iso) {
   return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
 }
 
+// Classify FR posts by keywords in slug+title since WP only tags them "Blog"
+function inferTag(s) {
+  const t = s.toLowerCase();
+  const rules = [
+    [/\b(drone|photo[- ]?immobil|photographie|appartement|meuble|360)/, 'Photo & Drone'],
+    [/\b(svi|ivr|service[- ]client)/, 'SVI'],
+    [/\b(spot|publicit|radio)/, 'Publicité'],
+    [/\b(traduction|transcription|sous[- ]?titre|localisation|adaptation)/, 'Localisation'],
+    [/\b(ia|intelligence artificielle|ai)\b/, 'Technologie'],
+    [/\b(formation|exercice|apprendre)/, 'Formation'],
+    [/\b(jeu[x]?[- ]?vid[eé]o|gaming|game)/, 'Jeu vidéo'],
+    [/\b(documentaire|film[- ]institutionnel)/, 'Documentaire'],
+    [/\b(microphone|micro|insonori|acoust|son|foley|conception[- ]sonore|mixage|etalonnage|égaliseur|egaliseur|norme[s]? audio|directivit|daw|pro[- ]?tools|ableton|fl[- ]?studio)/, 'Audio'],
+    [/\b(corporate|institutionnel|entreprise|windows|mac|pc[- ]de[- ]montage)/, 'Corporate'],
+    [/\b(montage|video|vidéo|tournage|cinema|cinéma|éclairage|eclairage|post[- ]?production)/, 'Vidéo'],
+    [/\b(doublage|voix[- ]off|voice[- ]over|voix|casting|audiodescription|labiale|série|series|anime|telenovela)/, 'Doublage'],
+  ];
+  for (const [re, label] of rules) if (re.test(t)) return label;
+  return 'Studio';
+}
+
 function readingTime(text) {
   const words = text.split(/\s+/).filter(Boolean).length;
   return `${Math.max(1, Math.round(words / 220))} min`;
@@ -105,7 +126,7 @@ async function downloadImage(url, slug) {
     const safeExt = ['.jpg', '.jpeg', '.png', '.webp', '.gif', '.avif'].includes(ext) ? ext : '.jpg';
     const filename = `${slug}${safeExt}`;
     const outPath = join(IMG_DIR, filename);
-    if (existsSync(outPath)) return `/images/blog/${filename}`;
+    if (existsSync(outPath) && !process.env.WP_FORCE_IMG) return `/images/blog/${filename}`;
     const r = await fetch(url);
     if (!r.ok) {
       console.warn(`  ! image fetch failed (${r.status}): ${url}`);
@@ -170,9 +191,13 @@ async function getMedia(id) {
   if (!id) return null;
   if (mediaCache.has(id)) return mediaCache.get(id);
   try {
-    const r = await fetch(`${BASE}/media/${id}?_fields=source_url,alt_text`);
+    const r = await fetch(`${BASE}/media/${id}?_fields=source_url,alt_text,media_details`);
     if (!r.ok) { mediaCache.set(id, null); return null; }
     const j = await r.json();
+    // Prefer a reasonably-sized variant to keep public/ light
+    const sizes = j?.media_details?.sizes || {};
+    const pick = sizes.large || sizes.medium_large || sizes.medium || null;
+    if (pick?.source_url) j.source_url = pick.source_url;
     mediaCache.set(id, j);
     return j;
   } catch { return null; }
@@ -200,7 +225,9 @@ for (const p of allPosts) {
   const excerptRaw = decodeEntities((p.excerpt?.rendered || '').replace(/<[^>]+>/g, ''));
   const excerpt = excerptRaw.length > 220 ? excerptRaw.slice(0, 217) + '…' : excerptRaw;
 
-  const primaryCatName = (p.categories || []).map(id => catMap.get(id)).find(n => n && n !== 'Blog') || 'Blog';
+  // Smart tag inference (WP only has generic "Blog" cat on FR posts)
+  const wpCat = (p.categories || []).map(id => catMap.get(id)).find(n => n && n !== 'Blog');
+  const primaryCatName = wpCat || inferTag(slug + ' ' + title);
 
   let cover = null;
   if (p.featured_media) {
@@ -214,6 +241,8 @@ for (const p of allPosts) {
   let md = td.turndown(html).trim();
   // Collapse 3+ newlines
   md = md.replace(/\n{3,}/g, '\n\n');
+  // Unescape numeric-period (Turndown over-escapes "1." → "1\.") anywhere in line-start position
+  md = md.replace(/(^|[\s*_])(\d+)\\\./gm, '$1$2.');
 
   const date = frenchDate(p.date);
   const read = readingTime(md);

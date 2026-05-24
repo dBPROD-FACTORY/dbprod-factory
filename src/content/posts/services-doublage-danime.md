@@ -1,6 +1,6 @@
 ---
 id: "services-doublage-danime"
-tag: "Blog"
+tag: "Doublage"
 title: "L’art des services de doublage d’anime"
 date: "29 avril 2024"
 excerpt: "Bienvenue dans notre guide complet sur les services de doublage d’anime. En tant qu’équipe de professionnels chevronnés dans l’univers de l’ anime , nous comprenons l’importance cruciale d’un doublage de qualité pour …"

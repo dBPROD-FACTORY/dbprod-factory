@@ -1,6 +1,6 @@
 ---
 id: "l-importance-d-un-systeme-svi-efficace-dans-le-domaine-du-service-client"
-tag: "Blog"
+tag: "SVI"
 title: "Quel est le rôle d’un SVI et quelles sont les étapes clés dans le domaine du service client ?"
 date: "19 septembre 2023"
 excerpt: "Dans le monde des affaires d’aujourd’hui en constante évolution, le service client est plus crucial que jamais. Pour répondre aux attentes grandissantes des consommateurs, les entreprises doivent s’assurer que leurs c…"
@@ -21,7 +21,7 @@ Cependant, la création d’un système SVI efficace nécessite une planificatio
 Depuis la conception du flux d’appels jusqu’à la sélection des messages-guides, chaque étape du processus est essentielle pour garantir le succès du système.  
 Dans cet article de blog, nous aborderons l’importance d’un système SVI.
 
-## 1\. Le SVI améliore l’expérience de l’appelant.
+## 1. Le SVI améliore l’expérience de l’appelant.
 
 Le serveur vocal interactif (SVI) est un élément essentiel des centres d’appels modernes.  
 Les SVI sont des systèmes automatisés qui interagissent avec les appelants en utilisant des messages vocaux préenregistrés et des claviers tactiles pour diriger les appels vers la bonne destination sans intervention humaine.  
@@ -30,7 +30,7 @@ En offrant aux appelants une interface conviviale et la possibilité de se servi
 De plus, un SVI peut aider à diminuer la frustration et augmenter la satisfaction des clients en leur permettant d’accéder rapidement aux informations ou aux services dont ils ont besoin.  
 En conclusion, la mise en place d’un SVI efficace est une étape essentielle pour les centres d’appels qui souhaitent améliorer leur service client et leur efficacité.
 
-## 2\. Concevoir le SVI en tenant compte du point de vue du client.
+## 2. Concevoir le SVI en tenant compte du point de vue du client.
 
 La création d’un système vocal interactif (SVI) pour un centre d’appel est crucial pour offrir un service client de qualité.  
 L’une des étapes essentielles dans la conception d’un SVI efficace est de prendre en compte le point de vue du client.  
@@ -39,7 +39,7 @@ Le SVI doit être facile à utiliser, avec des options claires et concises.
 De plus, il est essentiel d’offrir la possibilité au client de parler à un agent en direct si nécessaire, cela permet d’atténuer la frustration et d’améliorer la satisfaction globale du client.  
 En concevant le SVI avec le client à l’esprit, les centres d’appel peuvent offrir une expérience positive, favorisant ainsi la fidélité et la croissance de l’entreprise.
 
-## 3\. Optimiser pour une efficacité maximale.
+## 3. Optimiser pour une efficacité maximale.
 
 Il est primordial d’optimiser l’efficacité lors de la conception d’un système vocal interactif (SVI) pour un centre d’appels.  
 Un SVI bien conçu peut aider à réduire les temps d’attente, améliorer la satisfaction des clients et accroître la productivité des agents.  

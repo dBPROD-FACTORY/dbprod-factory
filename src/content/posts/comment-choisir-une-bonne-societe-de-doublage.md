@@ -1,6 +1,6 @@
 ---
 id: "comment-choisir-une-bonne-societe-de-doublage"
-tag: "Blog"
+tag: "Doublage"
 title: "Comment choisir une bonne société de doublage ?"
 date: "24 février 2025"
 excerpt: "Le choix d’une société de doublage est une étape cruciale pour garantir la qualité et l’impact de vos productions audiovisuelles. Que vous soyez un réalisateur, un producteur ou un créateur de contenu, s’entourer des …"

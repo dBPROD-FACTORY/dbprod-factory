@@ -1,6 +1,6 @@
 ---
 id: "jeux-video-effets-sonores-de-foley-et-conception-sonore"
-tag: "Blog"
+tag: "Jeu vidéo"
 title: "Jeux vidéo, effets sonores de Foley et conception sonore"
 date: "8 décembre 2024"
 excerpt: "Dans l’univers captivant du développement de jeux vidéo se trouve un aspect souvent négligé mais fondamental : la création sonore et plus spécifiquement le foley sonore. En tant que experts du domaine audio, nous comp…"

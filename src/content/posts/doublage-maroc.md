@@ -1,6 +1,6 @@
 ---
 id: "doublage-maroc"
-tag: "Blog"
+tag: "Doublage"
 title: "L’art du doublage au Maroc : un regard sur l’industrie"
 date: "30 avril 2024"
 excerpt: "En explorant le monde du doublage vocal au Maroc, on découvre une industrie en pleine croissance souvent méconnue. Forts de plus de dix ans d’expérience dans ce domaine, mon équipe et moi-même avons été témoins de son…"

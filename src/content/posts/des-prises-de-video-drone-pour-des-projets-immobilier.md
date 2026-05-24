@@ -1,6 +1,6 @@
 ---
 id: "des-prises-de-video-drone-pour-des-projets-immobilier"
-tag: "Blog"
+tag: "Photo & Drone"
 title: "Des prises de vidéo drone pour des projets immobilier"
 date: "10 février 2025"
 excerpt: "Dans un monde où l’innovation technologique transforme chaque secteur, le domaine de l’immobilier n’échappe pas à cette règle. L’utilisation de la vidéo par drone s’impose comme un outil essentiel pour présenter des p…"

@@ -1,6 +1,6 @@
 ---
 id: "doublage-audiodescription-et-voice-over"
-tag: "Blog"
+tag: "Doublage"
 title: "Quelle est la différence entre le doublage, l’audio-description et le voice-over ?"
 date: "18 septembre 2023"
 excerpt: "Le contenu audiovisuel joue un rôle essentiel dans notre monde globalisé.Cependant, la langue peut souvent devenir un obstacle à son accès.C’est ici que le doublage, l’audio-description et le voice-over entrent en jeu…"
@@ -28,7 +28,7 @@ Elle rend ce dernier accessible aux personnes atteintes de déficiences visuelle
 Enfin, parlons du voice-over.  
 Cette méthode implique l’ajout d’une narration ou d’une traduction au contenu audio original.
 
-## 1\. Comprendre le doublage, l’audio-description et le voice-over
+## 1. Comprendre le doublage, l’audio-description et le voice-over
 
 Les techniques de doublage, d’audio-description et de voice-over sont couramment utilisées dans le cinéma, la télévision et les médias.  
 Leur but est d’améliorer l’expérience visuelle des spectateurs.
@@ -48,7 +48,7 @@ Ce savoir leur permet de créer des contenus inclusifs et accessibles à une plu
 Enfin, la classification correcte de ces techniques est indispensable.  
 Elle aide à déterminer le public cible et la répartition du contenu sur diverses plateformes.
 
-## 2\. Faire la différence entre les trois
+## 2. Faire la différence entre les trois
 
 Dans l’industrie des médias, trois techniques essentielles sont utilisées : le doublage, l’audio-description et le voice-over.  
 Chaque technique a une fonction spécifique.
@@ -66,7 +66,7 @@ Elle peut être utilisée pour traduire un dialogue étranger ou offrir un comme
 Il est crucial de comprendre ces distinctions.  
 Elles orientent le choix de la technique selon le résultat escompté.
 
-## 3\. Exemples d’utilisation
+## 3. Exemples d’utilisation
 
 Dans le monde du cinéma et de la vidéo, divers outils et techniques favorisent une expérience de visionnage plus inclusive.  
 Ils permettent de toucher un public plus vaste.  

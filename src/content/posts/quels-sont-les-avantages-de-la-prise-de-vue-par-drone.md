@@ -1,6 +1,6 @@
 ---
 id: "quels-sont-les-avantages-de-la-prise-de-vue-par-drone"
-tag: "Blog"
+tag: "Photo & Drone"
 title: "Quels sont les avantages de la prise de vue par drone ?"
 date: "24 février 2025"
 excerpt: "Dans un monde où la technologie évolue à un rythme effréné, la prise de vue par drone s’impose comme une révolution dans le domaine de la photographie et de la vidéographie. Ces dispositifs aériens, autrefois réservés…"

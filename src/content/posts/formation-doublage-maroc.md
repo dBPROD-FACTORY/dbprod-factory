@@ -1,6 +1,6 @@
 ---
 id: "formation-doublage-maroc"
-tag: "Blog"
+tag: "Formation"
 title: "Netflix et le doublage au Maroc: Quelles opportunités pour les talents locaux ?"
 date: "25 octobre 2024"
 excerpt: "Avec l’essor des plateformes de streaming comme Netflix, l’industrie du doublage au Maroc connaît un développement sans précédent. Les opportunités pour les talents locaux, qu’il s’agisse de studios de doublage, d’act…"

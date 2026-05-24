@@ -1,6 +1,6 @@
 ---
 id: "les-secrets-du-doublage-et-de-ladaptation-culturelle-des-series-chinoises-pour-le-public-francais"
-tag: "Blog"
+tag: "Localisation"
 title: "Les secrets du doublage et de l’adaptation culturelle des séries chinoises pour le public français"
 date: "19 juin 2025"
 excerpt: "Les séries chinoises gagnent en popularité mondiale grâce à une adaptation culturelle astucieuse, bien au-delà de la simple qualité de leurs productions. Cet article explore les stratégies de doublage et de narration …"

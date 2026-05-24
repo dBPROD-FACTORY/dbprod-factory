@@ -1,6 +1,6 @@
 ---
 id: "voix-off-maroc"
-tag: "Blog"
+tag: "Doublage"
 title: "L’impact de Voix Off Maroc sur la messagerie de marque et l’engagement du public"
 date: "30 avril 2024"
 excerpt: "Nous sommes de plus en plus exposés à la publicité au quotidien, que ce soit à travers les médias traditionnels ou les plateformes numériques. Dans cet environnement saturé, les marques cherchent constamment des moyen…"

@@ -1,6 +1,6 @@
 ---
 id: "10-exercices-pour-ameliorer-son-jeu-en-doublage"
-tag: "Blog"
+tag: "Formation"
 title: "10 Exercices pour Améliorer son Jeu en Doublage"
 date: "14 juillet 2025"
 excerpt: "Le doublage est un art complexe qui nécessite une maîtrise fine de la voix, de l’intonation et de l’émotion pour donner vie aux personnages d’un film ou d’une série. Pour les aspirants doubleurs, il est essentiel d’af…"

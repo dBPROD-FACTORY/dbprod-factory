@@ -1,6 +1,6 @@
 ---
 id: "comment-photographier-un-appartement-vide-pour-la-vente"
-tag: "Blog"
+tag: "Photo & Drone"
 title: "Comment Photographier un Appartement Vide pour une Vente Rapide ?"
 date: "10 mars 2025"
 excerpt: "Photographier un appartement vide en préparation de sa vente est déterminant, car cela peut influencer la perception des acheteurs potentiels. Dans un marché immobilier compétitif, il est crucial de mettre en valeur l…"
