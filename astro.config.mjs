@@ -5,7 +5,13 @@ import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
   site: "https://dbprod-factory.pages.dev",
-  integrations: [react(), mdx(), sitemap()],
+  integrations: [
+    react(),
+    mdx(),
+    sitemap({
+      filter: (page) => !page.includes("/upload"),
+    }),
+  ],
   output: "static",
   vite: {
     ssr: {

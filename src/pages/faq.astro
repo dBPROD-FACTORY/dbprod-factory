@@ -3,8 +3,18 @@ import Base from "../layouts/Base.astro";
 import { getCollection } from "astro:content";
 import FAQAccordion from "../components/FAQAccordion.jsx";
 const groups = (await getCollection("faq")).sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0)).map(g => g.data);
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: groups.flatMap(g => g.items).map(item => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
 ---
-<Base title="FAQ">
+<Base title="FAQ" description="Toutes les réponses sur notre service de doublage en français (French dubbing services) : délais, tarifs, langues, format de livraison et process de production.">
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <section style="padding:160px 0 80px;">
     <div class="container-narrow">
       <div class="eyebrow" style="margin-bottom:28px;">FAQ</div>

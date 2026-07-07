@@ -6,7 +6,7 @@ const posts = (await getCollection("posts"))
   .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
 const postsData = posts.map(p => p.data);
 ---
-<Base title="Journal">
+<Base title="Journal" description="Techniques, coulisses et guides sur le service de doublage en français (French dubbing services), la post-production et les métiers de la voix.">
   <section style="padding:140px 0 100px;">
     <div class="container">
 

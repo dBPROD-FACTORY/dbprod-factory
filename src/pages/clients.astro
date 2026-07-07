@@ -7,7 +7,7 @@ const allClients = (await getCollection("clients"))
   .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
 const clientsData = allClients.map(c => c.data);
 ---
-<Base title="Nos Clients">
+<Base title="Nos Clients" description="Ils nous font confiance pour leur service de doublage en français (French dubbing services) : diffuseurs, studios de production et plateformes en France, au Maghreb et à l'international.">
   <section style="padding:140px 0 0;">
     <div class="container">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-bottom:80px;align-items:flex-end;" class="grid-responsive-2">

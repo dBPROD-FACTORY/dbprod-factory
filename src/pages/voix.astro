@@ -5,7 +5,7 @@ import VoicesList from "../components/VoicesList.jsx";
 const voices = (await getCollection("voices")).sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
 const voicesData = voices.map(v => v.data);
 ---
-<Base title="Banque de voix">
+<Base title="Banque de voix" description="150+ voix castées pour votre service de doublage en français (French dubbing services) : écoutez nos comédiens, filtrez par langue, genre et registre.">
   <section style="padding:160px 0 80px;">
     <div class="container">
       <div class="eyebrow" style="margin-bottom:28px;">Casting · Banque de voix</div>
