@@ -6,7 +6,7 @@ date: "19 juin 2025"
 excerpt: "Les séries chinoises gagnent en popularité mondiale grâce à une adaptation culturelle astucieuse, bien au-delà de la simple qualité de leurs productions. Cet article explore les stratégies de doublage et de narration …"
 read: "7 min"
 featured: true
-cover: "/images/blog/les-secrets-du-doublage-et-de-ladaptation-culturelle-des-series-chinoises-pour-le-public-francais.png"
+cover: "/images/blog/les-secrets-du-doublage-et-de-ladaptation-culturelle-des-series-chinoises-pour-le-public-francais.webp"
 order: 2
 ---
 

@@ -6,7 +6,7 @@ date: "26 mars 2023"
 excerpt: "Le sous-titrage des films documentaires et des séries télévisées revêt une importance croissante dans le paysage médiatique. Avec l’émergence des plateformes vidéo numériques, les téléspectateurs peuvent désormais acc…"
 read: "4 min"
 featured: false
-cover: "/images/blog/surmonter-les-barrieres-linguistiques-l-impact-des-sous-titres.png"
+cover: "/images/blog/surmonter-les-barrieres-linguistiques-l-impact-des-sous-titres.webp"
 order: 35
 ---
 

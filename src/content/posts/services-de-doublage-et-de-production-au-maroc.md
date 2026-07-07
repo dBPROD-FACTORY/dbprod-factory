@@ -6,7 +6,7 @@ date: "20 janvier 2023"
 excerpt: "Le contenu pour le marché français et l’arabe doit toujours être de haute qualité et précis. Cela nécessite une compréhension détaillée des nuances des deux langues, ainsi qu’un niveau d’expertise dans la compréhensio…"
 read: "4 min"
 featured: false
-cover: "/images/blog/services-de-doublage-et-de-production-au-maroc.png"
+cover: "/images/blog/services-de-doublage-et-de-production-au-maroc.webp"
 order: 50
 ---
 

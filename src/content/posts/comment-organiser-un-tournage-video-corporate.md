@@ -6,7 +6,7 @@ date: "24 février 2025"
 excerpt: "Organiser un tournage vidéo corporate est une étape cruciale pour toute entreprise désireuse de renforcer sa communication interne ou externe. Une vidéo bien réalisée peut non seulement valoriser l’image de marque, ma…"
 read: "5 min"
 featured: false
-cover: "/images/blog/comment-organiser-un-tournage-video-corporate.png"
+cover: "/images/blog/comment-organiser-un-tournage-video-corporate.webp"
 order: 8
 ---
 

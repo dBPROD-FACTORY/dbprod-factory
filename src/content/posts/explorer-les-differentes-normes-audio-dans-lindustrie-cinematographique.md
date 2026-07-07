@@ -6,7 +6,7 @@ date: "26 mars 2023"
 excerpt: "L’industrie cinématographique garantit la qualité de ses produits, de la production à la post-production, grâce à des normes audio. Compte tenu de la demande croissante de qualité audio et de la diversité des besoins …"
 read: "6 min"
 featured: false
-cover: "/images/blog/explorer-les-differentes-normes-audio-dans-lindustrie-cinematographique.png"
+cover: "/images/blog/explorer-les-differentes-normes-audio-dans-lindustrie-cinematographique.webp"
 order: 34
 ---
 

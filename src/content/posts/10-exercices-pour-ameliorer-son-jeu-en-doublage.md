@@ -6,7 +6,7 @@ date: "14 juillet 2025"
 excerpt: "Le doublage est un art complexe qui nécessite une maîtrise fine de la voix, de l’intonation et de l’émotion pour donner vie aux personnages d’un film ou d’une série. Pour les aspirants doubleurs, il est essentiel d’af…"
 read: "9 min"
 featured: true
-cover: "/images/blog/10-exercices-pour-ameliorer-son-jeu-en-doublage.png"
+cover: "/images/blog/10-exercices-pour-ameliorer-son-jeu-en-doublage.webp"
 order: 1
 ---
 

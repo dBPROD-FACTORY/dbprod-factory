@@ -6,7 +6,7 @@ date: "3 février 2023"
 excerpt: "Le montage vidéo d’un film est un travail important qui exige de solides connaissances techniques et un œil créatif. C’est le travail du monteur de donner vie à la vision d’un réalisateur, et il doit faire preuve d’un…"
 read: "4 min"
 featured: false
-cover: "/images/blog/comprendre-les-differentes-etapes-de-la-production-audiovisuelle.png"
+cover: "/images/blog/comprendre-les-differentes-etapes-de-la-production-audiovisuelle.webp"
 order: 43
 ---
 

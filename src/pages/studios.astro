@@ -32,7 +32,7 @@ function cardThumb(s: typeof studios[0]) {
           <a href={`/studios/${s.data.id.toLowerCase()}`} class="card" style="padding:0;overflow:hidden;text-decoration:none;color:var(--fg);display:block;">
             <div style="position:relative;height:320px;overflow:hidden;background:#0A0A0F;">
               {cardThumb(s) ? (
-                <img src={cardThumb(s)!} alt={s.data.name} style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;opacity:0.85;" />
+                <img src={cardThumb(s)!} alt={s.data.name} loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;opacity:0.85;" />
               ) : (
                 <div class="media-ph" data-label={`STUDIO ${s.data.id} · ${s.data.surface || ""}`} style="position:absolute;inset:0;">
                   <div style={`position:absolute;inset:0;background:linear-gradient(145deg, color-mix(in oklab, var(--accent) ${8 + i * 4}%, transparent), transparent 60%);`}></div>

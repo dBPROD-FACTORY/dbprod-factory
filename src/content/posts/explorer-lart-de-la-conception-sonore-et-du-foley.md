@@ -6,7 +6,7 @@ date: "9 février 2023"
 excerpt: "La conception sonore et le foley sont deux aspects distincts mais liés de la production audio pour le cinéma, la télévision et les jeux vidéo. La conception sonore est l’art de créer, de manipuler et d’enregistrer le …"
 read: "4 min"
 featured: false
-cover: "/images/blog/explorer-lart-de-la-conception-sonore-et-du-foley.png"
+cover: "/images/blog/explorer-lart-de-la-conception-sonore-et-du-foley.webp"
 order: 40
 ---
 

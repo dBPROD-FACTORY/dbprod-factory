@@ -6,7 +6,7 @@ date: "26 janvier 2023"
 excerpt: "Lors du doublage d’un film, il est essentiel de ne pas négliger le repérage, la transcription et les traductions. En effet, ces trois éléments sont cruciaux pour obtenir un produit fini de doublage à la fois précis et…"
 read: "6 min"
 featured: false
-cover: "/images/blog/localisation-transcription-et-traduction.png"
+cover: "/images/blog/localisation-transcription-et-traduction.webp"
 order: 47
 ---
 

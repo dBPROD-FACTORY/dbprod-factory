@@ -6,7 +6,7 @@ date: "26 mars 2023"
 excerpt: "L’ombre et la lumière jouent un rôle crucial dans tout média de diffusion, du film à la publicité en passant par les clips musicaux. Elles peuvent ajouter de la profondeur, créer une ambiance et aider à raconter une h…"
 read: "5 min"
 featured: false
-cover: "/images/blog/utilisation-strategique-de-leclairage-dans-les-medias-audiovisuels.png"
+cover: "/images/blog/utilisation-strategique-de-leclairage-dans-les-medias-audiovisuels.webp"
 order: 33
 ---
 

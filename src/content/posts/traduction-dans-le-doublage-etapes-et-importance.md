@@ -6,7 +6,7 @@ date: "20 septembre 2023"
 excerpt: "Dans le contexte actuel de mondialisation, la demande de doublage a considérablement augmenté. Le doublage consiste à remplacer le dialogue original d’un film ou d’une série télévisée par une version traduite dans la …"
 read: "4 min"
 featured: false
-cover: "/images/blog/traduction-dans-le-doublage-etapes-et-importance.png"
+cover: "/images/blog/traduction-dans-le-doublage-etapes-et-importance.webp"
 order: 21
 ---
 

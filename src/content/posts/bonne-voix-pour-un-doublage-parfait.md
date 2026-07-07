@@ -6,7 +6,7 @@ date: "27 janvier 2023"
 excerpt: "Le processus de doublage est une étape cruciale dans la production de tout film ou série, car il permet de s’assurer que le film ou la série peut atteindre un public plus large. Il est essentiel de choisir la bonne vo…"
 read: "4 min"
 featured: false
-cover: "/images/blog/bonne-voix-pour-un-doublage-parfait.png"
+cover: "/images/blog/bonne-voix-pour-un-doublage-parfait.webp"
 order: 46
 ---
 

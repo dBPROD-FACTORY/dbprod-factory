@@ -6,7 +6,7 @@ date: "20 février 2023"
 excerpt: "Les acousticiens disposent d’un large éventail de matériaux pour créer un environnement acoustique optimal.Ils choisissent les matériaux en fonction de leurs propriétés dans certaines plages de fréquences, ainsi que d…"
 read: "5 min"
 featured: false
-cover: "/images/blog/devoiler-les-secrets-de-linsonorisation.png"
+cover: "/images/blog/devoiler-les-secrets-de-linsonorisation.webp"
 order: 37
 ---
 

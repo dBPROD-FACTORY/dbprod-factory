@@ -6,7 +6,7 @@ date: "6 février 2023"
 excerpt: "Lorsqu’il s’agit de réaliser un projet cinématographique réussi, il est essentiel que l’équipe créative ait accès aux outils qui lui permettront d’obtenir les meilleurs résultats possibles. L’un de ces outils est l’ét…"
 read: "5 min"
 featured: false
-cover: "/images/blog/l-etalonnage-video-pour-les-projets-de-cinema.png"
+cover: "/images/blog/l-etalonnage-video-pour-les-projets-de-cinema.webp"
 order: 42
 ---
 

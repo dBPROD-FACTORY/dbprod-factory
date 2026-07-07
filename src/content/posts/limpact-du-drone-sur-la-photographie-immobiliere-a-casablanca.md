@@ -6,7 +6,7 @@ date: "10 mars 2025"
 excerpt: "Dans un marché où l’immobilier à Casablanca est de plus en plus concurrentiel, la présentation visuelle des propriétés joue un rôle primordial dans l’attraction des acheteurs potentiels. L’utilisation de drones en pho…"
 read: "6 min"
 featured: false
-cover: "/images/blog/limpact-du-drone-sur-la-photographie-immobiliere-a-casablanca.png"
+cover: "/images/blog/limpact-du-drone-sur-la-photographie-immobiliere-a-casablanca.webp"
 order: 6
 ---
 

@@ -6,7 +6,7 @@ date: "24 février 2025"
 excerpt: "Dans un monde où la technologie évolue à un rythme effréné, la prise de vue par drone s’impose comme une révolution dans le domaine de la photographie et de la vidéographie. Ces dispositifs aériens, autrefois réservés…"
 read: "5 min"
 featured: false
-cover: "/images/blog/quels-sont-les-avantages-de-la-prise-de-vue-par-drone.png"
+cover: "/images/blog/quels-sont-les-avantages-de-la-prise-de-vue-par-drone.webp"
 order: 9
 ---
 

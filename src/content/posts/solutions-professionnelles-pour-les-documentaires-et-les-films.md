@@ -6,7 +6,7 @@ date: "25 janvier 2023"
 excerpt: "Chez dB PROD-FACTORY à Casablanca au Maroc, nous comprenons l’importance de la production audiovisuelle dans l’industrie du documentaire et du cinéma. Qu’il s’agisse d’un documentaire ou d’un long métrage, une bonne v…"
 read: "5 min"
 featured: false
-cover: "/images/blog/solutions-professionnelles-pour-les-documentaires-et-les-films.png"
+cover: "/images/blog/solutions-professionnelles-pour-les-documentaires-et-les-films.webp"
 order: 48
 ---
 

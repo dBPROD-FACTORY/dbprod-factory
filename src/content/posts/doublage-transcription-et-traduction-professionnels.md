@@ -6,7 +6,7 @@ date: "24 janvier 2023"
 excerpt: "dB PROD-FACTORY, votre partenaire de confiance pour le doublage, la traduction et la transcription de productions françaises et arabes. 1. Un contrôle qualité rigoureux Grâce aux technologies les plus récentes, dB PRO…"
 read: "3 min"
 featured: false
-cover: "/images/blog/doublage-transcription-et-traduction-professionnels.png"
+cover: "/images/blog/doublage-transcription-et-traduction-professionnels.webp"
 order: 49
 ---
 

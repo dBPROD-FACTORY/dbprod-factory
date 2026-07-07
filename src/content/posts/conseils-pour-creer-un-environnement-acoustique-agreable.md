@@ -6,7 +6,7 @@ date: "7 février 2023"
 excerpt: "On ne saurait trop insister sur l’importance de créer un bon environnement acoustique pour une écoute propre. Il est important de s’assurer que l’environnement est exempt de tout bruit extérieur susceptible d’interfér…"
 read: "4 min"
 featured: false
-cover: "/images/blog/conseils-pour-creer-un-environnement-acoustique-agreable.png"
+cover: "/images/blog/conseils-pour-creer-un-environnement-acoustique-agreable.webp"
 order: 41
 ---
 

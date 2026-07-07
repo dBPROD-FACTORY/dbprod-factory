@@ -6,7 +6,7 @@ date: "10 mars 2025"
 excerpt: "Photographier un appartement vide en préparation de sa vente est déterminant, car cela peut influencer la perception des acheteurs potentiels. Dans un marché immobilier compétitif, il est crucial de mettre en valeur l…"
 read: "6 min"
 featured: false
-cover: "/images/blog/comment-photographier-un-appartement-vide-pour-la-vente.png"
+cover: "/images/blog/comment-photographier-un-appartement-vide-pour-la-vente.webp"
 order: 4
 ---
 

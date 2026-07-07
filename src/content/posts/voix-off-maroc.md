@@ -6,7 +6,7 @@ date: "30 avril 2024"
 excerpt: "Nous sommes de plus en plus exposés à la publicité au quotidien, que ce soit à travers les médias traditionnels ou les plateformes numériques. Dans cet environnement saturé, les marques cherchent constamment des moyen…"
 read: "7 min"
 featured: false
-cover: "/images/blog/voix-off-maroc.png"
+cover: "/images/blog/voix-off-maroc.webp"
 order: 16
 ---
 

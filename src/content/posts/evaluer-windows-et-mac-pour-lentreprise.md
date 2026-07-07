@@ -6,7 +6,7 @@ date: "24 avril 2023"
 excerpt: "Dans le monde numérique d’aujourd’hui, qui évolue rapidement, la technologie joue un rôle essentiel dans la réussite de toute entreprise. Les systèmes d’exploitation tels que Windows et Mac dominent le marché depuis d…"
 read: "6 min"
 featured: false
-cover: "/images/blog/evaluer-windows-et-mac-pour-lentreprise.png"
+cover: "/images/blog/evaluer-windows-et-mac-pour-lentreprise.webp"
 order: 29
 ---
 

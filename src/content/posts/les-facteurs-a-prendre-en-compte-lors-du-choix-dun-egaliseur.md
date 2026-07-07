@@ -6,7 +6,7 @@ date: "26 juin 2023"
 excerpt: "En tant qu’ingénieurs du son, nous savons tous que la qualité du son est importante. Nous pouvons faire toute la différence dans la façon dont nous percevons la musique ou d’autres contenus audio en trouvant le bon éq…"
 read: "5 min"
 featured: false
-cover: "/images/blog/les-facteurs-a-prendre-en-compte-lors-du-choix-dun-egaliseur.png"
+cover: "/images/blog/les-facteurs-a-prendre-en-compte-lors-du-choix-dun-egaliseur.webp"
 order: 27
 ---
 

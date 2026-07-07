@@ -6,7 +6,7 @@ date: "2 octobre 2023"
 excerpt: "La technologie ne cesse de progresser, tout comme le monde de la production musicale. Avec une pléthore de logiciels disponibles, il peut être difficile de déterminer lequel est le mieux adapté à vos besoins en matièr…"
 read: "4 min"
 featured: false
-cover: "/images/blog/comparaison-logiciels-daw.png"
+cover: "/images/blog/comparaison-logiciels-daw.webp"
 order: 18
 ---
 

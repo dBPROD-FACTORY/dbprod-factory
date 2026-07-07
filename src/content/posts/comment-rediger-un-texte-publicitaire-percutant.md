@@ -6,7 +6,7 @@ date: "1 février 2023"
 excerpt: "Lorsqu’il s’agit de rédiger un texte publicitaire ou un scénario de film d’entreprise efficace, il y a quelques étapes clés à suivre pour en assurer le succès. Un texte publicitaire ou un film d’entreprise efficace do…"
 read: "4 min"
 featured: false
-cover: "/images/blog/comment-rediger-un-texte-publicitaire-percutant.png"
+cover: "/images/blog/comment-rediger-un-texte-publicitaire-percutant.webp"
 order: 44
 ---
 

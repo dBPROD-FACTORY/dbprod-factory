@@ -6,7 +6,7 @@ date: "2 octobre 2023"
 excerpt: "L’utilisation de la technologie de l’IA est devenue plus importante dans divers secteurs, dont celui de l’audiovisuel. Avec l’essor de la technologie vocale de l’IA, de nombreux professionnels envisagent de la mettre …"
 read: "10 min"
 featured: false
-cover: "/images/blog/ia-ou-voix-humaine.png"
+cover: "/images/blog/ia-ou-voix-humaine.webp"
 order: 19
 ---
 

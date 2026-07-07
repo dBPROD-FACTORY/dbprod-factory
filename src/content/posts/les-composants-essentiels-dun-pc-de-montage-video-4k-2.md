@@ -6,7 +6,7 @@ date: "27 février 2023"
 excerpt: "Le montage de vidéos en résolution 4K nécessite un ordinateur puissant capable de gérer la charge de travail intensive. Les exigences relatives à un ordinateur de montage vidéo 4K varient en fonction du programme et d…"
 read: "4 min"
 featured: false
-cover: "/images/blog/les-composants-essentiels-dun-pc-de-montage-video-4k-2.png"
+cover: "/images/blog/les-composants-essentiels-dun-pc-de-montage-video-4k-2.webp"
 order: 36
 ---
 

@@ -6,7 +6,7 @@ date: "10 mars 2025"
 excerpt: "Dans le design d’intérieur, mettre en valeur un meuble en photo est crucial pour refléter son esthétique et sa fonctionnalité. Que ce soit pour un catalogue, un site web ou les réseaux sociaux, une présentation visuel…"
 read: "5 min"
 featured: false
-cover: "/images/blog/comment-mettre-en-valeur-le-design-dun-meuble-en-photo.png"
+cover: "/images/blog/comment-mettre-en-valeur-le-design-dun-meuble-en-photo.webp"
 order: 5
 ---
 

@@ -35,6 +35,8 @@ export default function PostCard({ post, size = "normal" }) {
           <img
             src={post.cover}
             alt={post.title}
+            loading="lazy"
+            decoding="async"
             style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
           />
         )}

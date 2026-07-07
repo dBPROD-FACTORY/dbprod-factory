@@ -6,7 +6,7 @@ date: "18 septembre 2023"
 excerpt: "Le contenu audiovisuel joue un rôle essentiel dans notre monde globalisé.Cependant, la langue peut souvent devenir un obstacle à son accès.C’est ici que le doublage, l’audio-description et le voice-over entrent en jeu…"
 read: "3 min"
 featured: false
-cover: "/images/blog/doublage-audiodescription-et-voice-over.png"
+cover: "/images/blog/doublage-audiodescription-et-voice-over.webp"
 order: 23
 ---
 

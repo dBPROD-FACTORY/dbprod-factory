@@ -6,7 +6,7 @@ date: "30 janvier 2023"
 excerpt: "Le doublage audio est une partie essentielle de la post-production dans l’industrie du divertissement. Il s’agit de remplacer les dialogues, la musique, les effets sonores et les autres éléments audio d’une séquence p…"
 read: "4 min"
 featured: false
-cover: "/images/blog/un-ingredient-essentiel-pour-un-doublage-de-qualite.png"
+cover: "/images/blog/un-ingredient-essentiel-pour-un-doublage-de-qualite.webp"
 order: 45
 ---
 

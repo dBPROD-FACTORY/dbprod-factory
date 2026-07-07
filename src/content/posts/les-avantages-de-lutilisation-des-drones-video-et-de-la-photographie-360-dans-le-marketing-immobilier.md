@@ -6,7 +6,7 @@ date: "13 mai 2025"
 excerpt: "Dans le paysage immobilier concurrentiel d’aujourd’hui, mettre en valeur efficacement les biens est primordial pour attirer les acheteurs potentiels. L’intégration de technologies visuelles avancées, telles que les dr…"
 read: "11 min"
 featured: true
-cover: "/images/blog/les-avantages-de-lutilisation-des-drones-video-et-de-la-photographie-360-dans-le-marketing-immobilier.jpeg"
+cover: "/images/blog/les-avantages-de-lutilisation-des-drones-video-et-de-la-photographie-360-dans-le-marketing-immobilier.webp"
 order: 3
 ---
 

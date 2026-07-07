@@ -6,7 +6,7 @@ date: "17 février 2023"
 excerpt: "Comprendre les Directivités des Microphones"
 read: "5 min"
 featured: false
-cover: "/images/blog/comprendre-les-directivites-des-microphones.png"
+cover: "/images/blog/comprendre-les-directivites-des-microphones.webp"
 order: 38
 ---
 

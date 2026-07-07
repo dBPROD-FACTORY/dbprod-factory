@@ -6,7 +6,7 @@ date: "21 septembre 2023"
 excerpt: "Le doublage est essentiel dans l’industrie du divertissement, surtout dans les pays où la langue pose des obstacles.Le Maroc, en Afrique, en est un exemple où le doublage est crucial pour toucher un public plus large.…"
 read: "4 min"
 featured: false
-cover: "/images/blog/une-solution-strategique-pour-vos-doublages-au-maroc-en-afrique.png"
+cover: "/images/blog/une-solution-strategique-pour-vos-doublages-au-maroc-en-afrique.webp"
 order: 20
 ---
 

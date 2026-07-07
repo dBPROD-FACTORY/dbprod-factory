@@ -6,7 +6,7 @@ date: "25 octobre 2024"
 excerpt: "Avec l’essor des plateformes de streaming comme Netflix, l’industrie du doublage au Maroc connaît un développement sans précédent. Les opportunités pour les talents locaux, qu’il s’agisse de studios de doublage, d’act…"
 read: "3 min"
 featured: false
-cover: "/images/blog/formation-doublage-maroc.png"
+cover: "/images/blog/formation-doublage-maroc.webp"
 order: 14
 ---
 

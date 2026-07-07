@@ -6,7 +6,7 @@ date: "18 décembre 2024"
 excerpt: "Dans le paysage en évolution rapide de la production médiatique, l’importance de services de doublage de haute qualité n’a jamais été aussi prononcée. Alors que les créateurs de contenu cherchent à atteindre un public…"
 read: "5 min"
 featured: false
-cover: "/images/blog/services-de-doublage-2024.png"
+cover: "/images/blog/services-de-doublage-2024.webp"
 order: 12
 ---
 

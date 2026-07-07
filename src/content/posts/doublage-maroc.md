@@ -6,7 +6,7 @@ date: "30 avril 2024"
 excerpt: "En explorant le monde du doublage vocal au Maroc, on découvre une industrie en pleine croissance souvent méconnue. Forts de plus de dix ans d’expérience dans ce domaine, mon équipe et moi-même avons été témoins de son…"
 read: "6 min"
 featured: false
-cover: "/images/blog/doublage-maroc.png"
+cover: "/images/blog/doublage-maroc.webp"
 order: 15
 ---
 

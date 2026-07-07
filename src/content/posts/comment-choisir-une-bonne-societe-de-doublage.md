@@ -6,7 +6,7 @@ date: "24 février 2025"
 excerpt: "Le choix d’une société de doublage est une étape cruciale pour garantir la qualité et l’impact de vos productions audiovisuelles. Que vous soyez un réalisateur, un producteur ou un créateur de contenu, s’entourer des …"
 read: "5 min"
 featured: false
-cover: "/images/blog/comment-choisir-une-bonne-societe-de-doublage.png"
+cover: "/images/blog/comment-choisir-une-bonne-societe-de-doublage.webp"
 order: 7
 ---
 

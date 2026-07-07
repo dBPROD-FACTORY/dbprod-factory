@@ -6,7 +6,7 @@ date: "13 février 2023"
 excerpt: "Le son est très important lorsqu’il s’agit de créer l’atmosphère, l’ambiance et l’émotion appropriées dans les films. Si la conception sonore est bâclée, les spectateurs peuvent se désintéresser totalement du film. Le…"
 read: "7 min"
 featured: false
-cover: "/images/blog/decouvrir-limpact-du-son-au-cinema.png"
+cover: "/images/blog/decouvrir-limpact-du-son-au-cinema.webp"
 order: 39
 ---
 

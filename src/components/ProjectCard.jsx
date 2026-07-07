@@ -13,7 +13,7 @@ export default function ProjectCard({ project, size = "sm" }) {
     <>
       <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg, color-mix(in oklab, var(--accent) ${10 + (project.seed || 10)}%, transparent), transparent 60%)` }}/>
       {project.poster && (
-        <img src={project.poster} alt={project.title} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.9 }} />
+        <img src={project.poster} alt={project.title} loading="lazy" decoding="async" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.9 }} />
       )}
     </>
   );

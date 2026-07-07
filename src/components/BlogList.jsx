@@ -72,7 +72,7 @@ export default function BlogList({ posts }) {
             style={{ minHeight: 400, position: "relative", overflow: "hidden" }}
           >
             {featured.cover && (
-              <img src={featured.cover} alt={featured.title} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+              <img src={featured.cover} alt={featured.title} decoding="async" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
             )}
             <div style={{
               position: "absolute", inset: 0,
