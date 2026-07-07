@@ -19,6 +19,8 @@ const {
 } = Astro.props;
 const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 const canonicalURL = new URL(path, Astro.site);
+const isStagingDomain = Astro.site?.hostname.endsWith(".pages.dev") ?? false;
+const shouldNoindex = noindex || isStagingDomain;
 const ogImageURL = new URL(image, Astro.site);
 const pageTitle = title === "dB PROD·FACTORY"
   ? "dB PROD·FACTORY — Studio de doublage français & French Dubbing Services · Casablanca"
@@ -61,7 +63,7 @@ const organizationSchema = {
   <title>{pageTitle}</title>
   <meta name="description" content={description} />
   <meta name="keywords" content="doublage, french dubbing, service de doublage en français, voice-over, voix off, sous-titrage, studio de doublage Casablanca, dubbing studio Morocco" />
-  {noindex && <meta name="robots" content="noindex,nofollow" />}
+  {shouldNoindex && <meta name="robots" content="noindex,nofollow" />}
   <link rel="canonical" href={canonicalURL} />
 
   <meta property="og:type" content="website" />
