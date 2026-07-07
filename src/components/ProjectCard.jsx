@@ -3,11 +3,31 @@ import Icon from "./Icon.jsx";
 import { StaticWave } from "./Waveform.jsx";
 import { HoverVideo } from "./VideoPlayer.jsx";
 
-export default function ProjectCard({ project, size = "sm" }) {
+const KIND_EN = {
+  "Film": "Film",
+  "Série": "Series",
+  "Série animée": "Animated series",
+  "Film d'animation": "Animated film",
+  "Projet": "Project",
+  "Corporate": "Corporate",
+};
+
+const TAG_EN = {
+  "Doublage": "Dubbing",
+  "Comédie": "Comedy",
+  "Horreur": "Horror",
+  "Traduction": "Translation",
+  "Localisation": "Localization",
+  "Drame": "Drama",
+};
+
+export default function ProjectCard({ project, size = "sm", locale = "fr" }) {
   const [hover, setHover] = useState(false);
   // Aspect-ratio instead of fixed height so cards scale uniformly with column
   // width. `size` now only controls interior typography / play button / title.
   const aspect = "16/10";
+  const kindLabel = locale === "en" ? (KIND_EN[project.kind] || project.kind) : project.kind;
+  const viewLabel = locale === "en" ? "↗ View project" : "↗ Voir le projet";
 
   const fallback = (
     <>
@@ -36,7 +56,7 @@ export default function ProjectCard({ project, size = "sm" }) {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      <div className="media-ph" data-label={`${(project.kind || "").toUpperCase()} · SHOWREEL`} style={{ aspectRatio: aspect, position: "relative" }}>
+      <div className="media-ph" data-label={`${(kindLabel || "").toUpperCase()} · SHOWREEL`} style={{ aspectRatio: aspect, position: "relative" }}>
         <HoverVideo src={project.video_url} poster={project.poster} fallback={fallback} />
 
         <div style={{ position: "absolute", inset: 0, display: "grid", placeItems: "center", pointerEvents: "none" }}>
@@ -65,20 +85,20 @@ export default function ProjectCard({ project, size = "sm" }) {
         </span>
         {project.dur && (
           <span className="chip" style={{ position: "absolute", top: 16, right: 16, background: "color-mix(in oklab, var(--bg) 70%, transparent)", backdropFilter: "blur(8px)" }}>
-            {project.dur}
+            {locale === "en" ? (KIND_EN[project.dur] || project.dur) : project.dur}
           </span>
         )}
       </div>
       <div style={{ padding: 24 }}>
         <div style={{ display: "flex", gap: 8, marginBottom: 12, flexWrap: "wrap" }}>
-          {(project.tags || []).map(t => <span key={t} className="chip">{t}</span>)}
+          {(project.tags || []).map(t => <span key={t} className="chip">{locale === "en" ? (TAG_EN[t] || t) : t}</span>)}
         </div>
         <h3 className="h-serif" style={{ fontSize: size === "lg" ? 36 : 22, margin: 0, marginBottom: 8 }}>
           {project.title}
         </h3>
         <div style={{ display: "flex", justifyContent: "space-between", color: "var(--fg-dim)", fontSize: 13 }}>
-          <span>{project.kind} · {project.lang}</span>
-          <span className="mono" style={{ fontSize: 10 }}>↗ Voir le projet</span>
+          <span>{kindLabel} · {project.lang}</span>
+          <span className="mono" style={{ fontSize: 10 }}>{viewLabel}</span>
         </div>
       </div>
     </a>

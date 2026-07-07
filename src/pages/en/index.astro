@@ -122,7 +122,7 @@ const testimonial = { q: "Very professional and fun experience.", n: "Wafae Taki
 
       <div class="grid-responsive-3 mobile-carousel" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch;">
         {featured.map((p) => (
-          <ProjectCard client:visible project={p} size="lg" />
+          <ProjectCard client:visible project={p} size="lg" locale="en" />
         ))}
       </div>
     </div>
@@ -176,7 +176,7 @@ const testimonial = { q: "Very professional and fun experience.", n: "Wafae Taki
         </div>
         <div class="grid-responsive-3 mobile-carousel" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
           {enPosts.map(p => (
-            <PostCard post={p} />
+            <PostCard post={p} locale="en" />
           ))}
         </div>
       </div>

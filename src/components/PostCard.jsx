@@ -1,7 +1,15 @@
 import React from "react";
 
-export default function PostCard({ post, size = "normal" }) {
+const TAG_EN = {
+  "Doublage": "Dubbing",
+  "Jeu vidéo": "Gaming",
+  "Localisation": "Localization",
+};
+
+export default function PostCard({ post, size = "normal", locale = "fr" }) {
   const isLarge = size === "large";
+  const readLabel = locale === "en" ? "Read →" : "Lire →";
+  const tagLabel = locale === "en" ? (TAG_EN[post.tag] || post.tag) : post.tag;
   return (
     <a
       href={`/blog/${post.id}`}
@@ -23,7 +31,7 @@ export default function PostCard({ post, size = "normal" }) {
       {/* Cover image */}
       <div
         className="media-ph"
-        data-label={post.tag?.toUpperCase()}
+        data-label={tagLabel?.toUpperCase()}
         style={{
           aspectRatio: isLarge ? "16/7" : "16/9",
           flexShrink: 0,
@@ -51,7 +59,7 @@ export default function PostCard({ post, size = "normal" }) {
       {/* Content */}
       <div style={{ padding: isLarge ? "28px 32px 32px" : "20px 24px 24px", display: "flex", flexDirection: "column", gap: 12, flex: 1 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <span className="chip chip-accent">{post.tag}</span>
+          <span className="chip chip-accent">{tagLabel}</span>
           <span className="mono" style={{ fontSize: 10, color: "var(--fg-mute)" }}>{post.read}</span>
         </div>
         <h3
@@ -65,7 +73,7 @@ export default function PostCard({ post, size = "normal" }) {
         </p>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: 16, borderTop: "1px solid var(--line)", marginTop: "auto" }}>
           <span className="mono" style={{ fontSize: 10 }}>{post.date}</span>
-          <span style={{ fontSize: 13, color: "var(--accent)", fontWeight: 500 }}>Lire →</span>
+          <span style={{ fontSize: 13, color: "var(--accent)", fontWeight: 500 }}>{readLabel}</span>
         </div>
       </div>
     </a>

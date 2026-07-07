@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Icon from "./Icon.jsx";
 
-export default function FAQAccordion({ groups }) {
+export default function FAQAccordion({ groups, locale = "fr" }) {
   const [open, setOpen] = useState(null);
   const [query, setQuery] = useState("");
 
@@ -21,7 +21,7 @@ export default function FAQAccordion({ groups }) {
         <Icon name="search" size={18} style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", color: "var(--fg-dim)" }} />
         <input
           type="text"
-          placeholder="Rechercher…"
+          placeholder={locale === "en" ? "Search…" : "Rechercher…"}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           style={{
