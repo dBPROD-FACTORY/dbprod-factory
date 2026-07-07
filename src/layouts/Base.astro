@@ -8,9 +8,44 @@ import site from "../data/site.json";
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
+  noindex?: boolean;
 }
-const { title = "dB PROD·FACTORY", description = site.description } = Astro.props;
+const {
+  title = "dB PROD·FACTORY",
+  description = site.description,
+  image = "/media/studios/studio-a-regie.jpg",
+  noindex = false,
+} = Astro.props;
 const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const canonicalURL = new URL(path, Astro.site);
+const ogImageURL = new URL(image, Astro.site);
+const pageTitle = title === "dB PROD·FACTORY"
+  ? "dB PROD·FACTORY — Studio de doublage français & French Dubbing Services · Casablanca"
+  : `${title} — Studio de doublage (French Dubbing) · Casablanca`;
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": `${Astro.site}#organization`,
+  name: "dB PROD·FACTORY",
+  alternateName: "dB PROD FACTORY French Dubbing Studio",
+  description: site.description,
+  url: Astro.site,
+  logo: new URL("/favicon.svg", Astro.site),
+  image: ogImageURL,
+  telephone: site.contact.phone,
+  email: site.contact.email,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: site.contact.address,
+    addressLocality: "Casablanca",
+    addressCountry: "MA",
+  },
+  sameAs: site.social.map(s => s.u),
+  areaServed: ["MA", "FR", "Worldwide"],
+  knowsLanguage: ["fr", "ar", "en"],
+};
 ---
 
 <!doctype html>
@@ -23,8 +58,28 @@ const path = Astro.url.pathname.replace(/\/$/, "") || "/";
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="dB PROD" />
   <meta name="mobile-web-app-capable" content="yes" />
-  <title>{title} — Studio de doublage & post-production · Casablanca</title>
+  <title>{pageTitle}</title>
   <meta name="description" content={description} />
+  <meta name="keywords" content="doublage, french dubbing, service de doublage en français, voice-over, voix off, sous-titrage, studio de doublage Casablanca, dubbing studio Morocco" />
+  {noindex && <meta name="robots" content="noindex,nofollow" />}
+  <link rel="canonical" href={canonicalURL} />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="dB PROD·FACTORY" />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:image" content={ogImageURL} />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:locale:alternate" content="en_US" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImageURL} />
+
+  <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

@@ -19,7 +19,7 @@ const fallback = allPosts
   .slice(0, 3 - related.length);
 const similarPosts = [...related, ...fallback].slice(0, 3);
 ---
-<Base title={d.title}>
+<Base title={d.title} description={d.excerpt} image={d.cover}>
   <article>
     <!-- Header -->
     <header style="padding: 140px 0 0;">

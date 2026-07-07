@@ -4,7 +4,7 @@ import { getCollection } from "astro:content";
 import Icon from "../../components/Icon.jsx";
 const services = (await getCollection("services")).sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
 ---
-<Base title="Services">
+<Base title="Services" description="Service de doublage en français (French dubbing services), voice-over, sous-titrage et post-production : 12 disciplines couvertes par des spécialistes natifs, depuis Casablanca.">
   <section style="padding:160px 0 80px;">
     <div class="container">
       <div class="eyebrow" style="margin-bottom:28px;">Services</div>
@@ -12,7 +12,7 @@ const services = (await getCollection("services")).sort((a, b) => (a.data.order 
         12 <em style="font-style:italic;color:var(--accent);">disciplines</em>.<br/>Une vision.
       </h1>
       <p class="text-dim" style="font-size:18px;max-width:680px;margin-bottom:80px;">
-        De la prise de voix à la livraison broadcast — chaque discipline est traitée par des spécialistes natifs, avec un contrôle qualité intégral.
+        De la prise de voix à la livraison broadcast — notre service de doublage en français (French dubbing services) et nos 11 autres disciplines sont traités par des spécialistes natifs, avec un contrôle qualité intégral.
       </p>
     </div>
     <div class="container">
