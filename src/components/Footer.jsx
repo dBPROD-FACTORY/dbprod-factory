@@ -2,13 +2,61 @@ import React from "react";
 import Icon from "./Icon.jsx";
 import { BarPulse } from "./Waveform.jsx";
 
-export default function Footer({ site, contact, social, footerCta }) {
-  const cta = footerCta || {
-    eyebrow: "Démarrons un projet",
-    title: "Parlons de votre prochaine production.",
-    italic: "Parlons",
-    buttonLabel: "Nous contacter",
-  };
+export default function Footer({ site, contact, social, footerCta, locale = "fr" }) {
+  const isEn = locale === "en";
+  const cta = footerCta || (isEn
+    ? {
+      eyebrow: "Let's start a project",
+      title: "Let's talk about your next production.",
+      italic: "Let's talk",
+      buttonLabel: "Get in Touch",
+    }
+    : {
+      eyebrow: "Démarrons un projet",
+      title: "Parlons de votre prochaine production.",
+      italic: "Parlons",
+      buttonLabel: "Nous contacter",
+    });
+  const contactHref = isEn ? "/en/contact" : "/contact";
+  const t = isEn
+    ? {
+      navTitle: "Navigation",
+      infoTitle: "Information",
+      contactTitle: "Contact",
+      about: "About",
+      faq: "FAQ",
+      contact: "Contact",
+      legalMentions: "Legal notice",
+      legalCgv: "Terms of sale",
+      legalPrivacy: "Privacy policy",
+      rights: "All rights reserved",
+    }
+    : {
+      navTitle: "Navigation",
+      infoTitle: "Informations",
+      contactTitle: "Contact",
+      about: "À propos",
+      faq: "FAQ",
+      contact: "Contact",
+      legalMentions: "Mentions légales",
+      legalCgv: "CGV",
+      legalPrivacy: "Confidentialité",
+      rights: "Tous droits réservés",
+    };
+  const navColumns = [
+    { t: t.navTitle, items: [
+      { l: "Services", p: isEn ? "/en/services" : "/services" },
+      { l: "Portfolio", p: "/portfolio" },
+      { l: "Studios", p: "/studios" },
+      { l: isEn ? "Blog" : "Journal", p: "/blog" },
+    ]},
+    { t: t.infoTitle, items: [
+      { l: t.about, p: isEn ? "/en/about" : "/about" },
+      { l: t.faq, p: isEn ? "/en/faq" : "/faq" },
+      { l: t.contact, p: contactHref },
+    ]},
+    { t: t.contactTitle, items: [] },
+  ];
   return (
     <footer style={{ borderTop: "1px solid var(--line)", marginTop: 120, paddingTop: 80, paddingBottom: 32 }}>
       <div className="container">
@@ -19,7 +67,7 @@ export default function Footer({ site, contact, social, footerCta }) {
               <em style={{ fontStyle: "italic" }}>{cta.italic}</em>{" "}{cta.title.replace(cta.italic, "")}
             </h2>
             <a
-              href="/contact"
+              href={contactHref}
               className="footer-cta-circle"
               style={{
                 width: 180, height: 180,
@@ -76,20 +124,7 @@ export default function Footer({ site, contact, social, footerCta }) {
             </div>
           </div>
 
-          {[
-            { t: "Navigation", items: [
-              { l: "Services", p: "/services" },
-              { l: "Portfolio", p: "/portfolio" },
-              { l: "Studios", p: "/studios" },
-              { l: "Journal", p: "/blog" },
-            ]},
-            { t: "Informations", items: [
-              { l: "À propos", p: "/about" },
-              { l: "FAQ", p: "/faq" },
-              { l: "Contact", p: "/contact" },
-            ]},
-            { t: "Contact", items: [] },
-          ].map((col, idx) => (
+          {navColumns.map((col, idx) => (
             <div key={idx}>
               <div className="mono" style={{ marginBottom: 16, fontSize: 10 }}>{col.t}</div>
               {col.items.length > 0 ? (
@@ -127,11 +162,11 @@ export default function Footer({ site, contact, social, footerCta }) {
           alignItems: "center",
           flexWrap: "wrap", gap: 16,
         }}>
-          <div className="mono" style={{ fontSize: 10 }}>© {new Date().getFullYear()} dB PROD·FACTORY — Tous droits réservés</div>
+          <div className="mono" style={{ fontSize: 10 }}>© {new Date().getFullYear()} dB PROD·FACTORY — {t.rights}</div>
           <div className="mono" style={{ fontSize: 10, display: "flex", gap: 24, alignItems: "center" }}>
-            <a href="#" style={{ color: "var(--fg-dim)", textDecoration: "none" }}>Mentions légales</a>
-            <a href="#" style={{ color: "var(--fg-dim)", textDecoration: "none" }}>CGV</a>
-            <a href="#" style={{ color: "var(--fg-dim)", textDecoration: "none" }}>Confidentialité</a>
+            <a href="#" style={{ color: "var(--fg-dim)", textDecoration: "none" }}>{t.legalMentions}</a>
+            <a href="#" style={{ color: "var(--fg-dim)", textDecoration: "none" }}>{t.legalCgv}</a>
+            <a href="#" style={{ color: "var(--fg-dim)", textDecoration: "none" }}>{t.legalPrivacy}</a>
             <a href="/upload" style={{ color: "var(--fg-mute)", textDecoration: "none", opacity: 0.4 }}>⬆ Upload</a>
             <span style={{ display: "inline-flex", gap: 6, alignItems: "center", color: "var(--fg-mute)" }}>
               <BarPulse count={3} color="var(--accent)" height={10} /> ON AIR

@@ -1,0 +1,68 @@
+---
+import Base from "../../layouts/Base.astro";
+import FAQAccordion from "../../components/FAQAccordion.jsx";
+
+const groups = [
+  {
+    title: "Dubbing",
+    items: [
+      { q: "What's the difference between dubbing and subtitling?", a: "Dubbing re-records dialogue in another language, giving audiences a fully immersive experience with no reading required. Subtitling displays a written translation at the bottom of the screen. Dubbing is the preferred choice for mass-market audiences and children's content." },
+      { q: "What dubbing services do you offer?", a: "We offer voice-over, subtitling, and lip-sync dubbing in French and Arabic, using the most advanced technology available in the industry." },
+      { q: "Which languages do you work in?", a: "We work primarily in French, Modern Standard Arabic (MSA), and dialectal Arabic (Moroccan, Levantine, Egyptian). We also take on projects in English, Spanish, and Portuguese." },
+      { q: "What are the steps in the dubbing process?", a: "1. Script identification and analysis — 2. Source-language transcription — 3. Translation and cultural adaptation — 4. Voice casting for characters — 5. Recording and synchronization — 6. Audio mixing and calibration — 7. Final editing and delivery." },
+      { q: "Which voice actors do you work with?", a: "We draw on a roster of over 150 professional voice actors, bilingual in French and Arabic, with hands-on experience dubbing films, series, and telenovelas." },
+      { q: "What are your turnaround times?", a: "For short projects (spots, clips): 24 to 48 hours. For a feature film: 2 to 4 weeks depending on complexity." },
+    ],
+  },
+  {
+    title: "Spots & Corporate Films",
+    items: [
+      { q: "What's the difference between a radio spot and a corporate film?", a: "A radio spot is a short audio message (30 seconds max) designed to promote a product or service. A corporate film is a longer video (typically 1 to 3 minutes) built to showcase a company's identity, values, or activities." },
+      { q: "What's the standard length of a spot?", a: "The standard length is 30 seconds maximum. We also produce 15-, 45-, and 60-second formats depending on broadcaster requirements." },
+      { q: "What's the recommended length for a corporate film?", a: "Generally between 1 and 3 minutes, depending on your communication goals and budget. A shorter format maximizes impact on social media." },
+      { q: "What does the production process look like?", a: "Concept development, scriptwriting, storyboarding, voice recording, editing and post-production, then delivery in the required formats." },
+    ],
+  },
+  {
+    title: "Translation",
+    items: [
+      { q: "What role does translation play in dubbing?", a: "Translation carries the dialogue from the source language into the target language while preserving meaning, tone, and lip-sync accuracy. It's the foundation of every successful dubbing project." },
+      { q: "What tools do you use?", a: "Our translators work with computer-assisted translation (CAT) tools to ensure consistency and efficiency across large-scale projects." },
+      { q: "What's the turnaround time?", a: "24 to 48 hours for most projects. For feature-length films, we set up a custom schedule." },
+      { q: "How do you ensure translation quality?", a: "Quality comes down to full command of both source and target languages, cultural understanding, and a systematic review by a second native-speaking linguist." },
+      { q: "Do you offer certified translation?", a: "Yes. We work with sworn translators for any legal or administrative document that requires official certification." },
+    ],
+  },
+  {
+    title: "Transcription",
+    items: [
+      { q: "What are the benefits of professional transcription?", a: "Professional transcription saves time and money, improves accuracy, keeps translations consistent, and makes later edits easier. It's carried out entirely by native-speaking linguists, with over 99% accuracy." },
+      { q: "What's the delivery time?", a: "24 to 48 hours depending on the complexity and length of the content. Express options are available for urgent projects." },
+      { q: "What file formats do you accept?", a: "We accept MP3, MP4, WAV, M4A, AVI, MOV, and many other audio and video formats. Deliverables are provided in SRT, VTT, TXT, or DOCX, based on your needs." },
+      { q: "Which languages are available?", a: "French, Arabic, English, Portuguese, and Spanish. Our team has mastered the dialectal and cultural nuances of each language." },
+    ],
+  },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: groups.flatMap(g => g.items).map(item => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+<Base title="FAQ" description="Everything you need to know about our French dubbing services: turnaround times, pricing, languages, delivery formats, and production process." lang="en" altHref="/faq">
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <section style="padding:160px 0 80px;">
+    <div class="container-narrow">
+      <div class="eyebrow" style="margin-bottom:28px;">FAQ</div>
+      <h1 class="h-display" style="font-size:clamp(56px,9vw,128px);margin:0 0 60px;">
+        The <em style="font-style:italic;color:var(--accent);">answers</em>.
+      </h1>
+      <FAQAccordion client:load groups={groups} />
+    </div>
+  </section>
+</Base>

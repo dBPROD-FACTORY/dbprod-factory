@@ -1,23 +1,46 @@
 ---
-import Base from "../layouts/Base.astro";
-import Icon from "../components/Icon.jsx";
-import site from "../data/site.json";
+import Base from "../../layouts/Base.astro";
+import Icon from "../../components/Icon.jsx";
+import site from "../../data/site.json";
+
+const statsEn = [
+  { v: "200+", l: "Hours of dubbing delivered" },
+  { v: "100+", l: "Projects completed" },
+  { v: "150+", l: "Voices cast" },
+  { v: "9+", l: "Years of experience" },
+  { v: "92%", l: "Positive feedback" },
+  { v: "4", l: "Fully equipped studios" },
+];
+
+const pillars = [
+  { num: "01", icon: "mic", title: "Broadcast quality", body: "Neumann / Universal Audio signal chain, Genelec monitoring, certified acoustic isolation. Our deliverables meet EBU R128 and Dolby Atmos standards at no extra cost." },
+  { num: "02", icon: "globe", title: "International agility", body: "Trilingual (Arabic · French · English), fast turnarounds, available seven days a week. We work at the pace of a European studio, with the flexibility of Morocco." },
+  { num: "03", icon: "users", title: "Tailored casting", body: "Over 150 listed voice actors — native, professional, available. We match the right voice to every role, every tone, every audience." },
+];
+
+const timeline = [
+  { year: "2016", title: "Founding", desc: "Our first studio opens in Casablanca, launching our earliest dubbing projects for the French-speaking Maghreb market." },
+  { year: "2018", title: "Voice expansion", desc: "Launch of our voice-over and casting department, and the start of our roster of 150+ listed voice actors." },
+  { year: "2020", title: "Post-production", desc: "Full audio post-production brought in-house: sound design, 5.1 / Dolby Atmos mixing, and broadcast mastering." },
+  { year: "2022", title: "Premium clients", desc: "Partnerships formed with Netflix MENA, Canal+ Afrique, and several US and European production studios." },
+  { year: "2025", title: "Today", desc: "4 studios, 200+ hours delivered, 100+ projects, and a presence in 15+ countries. The journey continues." },
+];
 ---
-<Base title="À propos" description="dB PROD·FACTORY : votre partenaire pour un service de doublage en français (French dubbing services) depuis Casablanca. Standards européens, agilité du Sud, depuis 2016." altHref="/en/about">
+<Base title="About" description="dB PROD·FACTORY: your partner for French dubbing services from Casablanca. European standards, the agility of the South, since 2016." lang="en" altHref="/about">
 
   <!-- ── HERO ───────────────────────────────────────────────────── -->
   <section style="padding:160px 0 80px;">
     <div class="container">
-      <div class="eyebrow" style="margin-bottom:28px;">À propos · Est. 2016</div>
+      <div class="eyebrow" style="margin-bottom:28px;">About · Est. 2016</div>
       <h1 class="h-display" style="font-size:clamp(56px,10vw,160px);margin:0 0 60px;max-width:1200px;line-height:0.9;">
-        Un studio <em style="font-style:italic;color:var(--accent);">intégré</em><br/>au carrefour des mondes.
+        An <em style="font-style:italic;color:var(--accent);">integrated</em> studio<br/>at the crossroads of worlds.
       </h1>
       <div class="grid-responsive-2" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:flex-start;">
         <p class="h-serif" style="font-size:22px;line-height:1.55;margin:0;">
-          Fondé en 2016 à Casablanca, dB PROD·FACTORY est né d'une conviction : produire un service de doublage en français (French dubbing services) de qualité broadcast depuis le Maroc, avec des standards européens et l'agilité du Sud.
+          Founded in Casablanca in 2016, dB PROD·FACTORY was built on a simple conviction: deliver broadcast-quality French dubbing services from Morocco, blending European standards with the agility of the South.
         </p>
         <p class="text-dim" style="font-size:16px;line-height:1.7;margin:0;">
-          Dix ans plus tard, nous avons livré plus de 200 heures de production — doublage, voice-over, post-production — pour des clients en France, au Maghreb, au Moyen-Orient et aux États-Unis. Notre équipe combine comédiens, ingénieurs du son, adaptateurs et directeurs artistiques, tous sélectionnés pour leur exigence.
+          Ten years on, we've delivered over 200 hours of production — dubbing, voice-over, and post-production — for clients across France, the Maghreb, the Middle East, and the United States. Our team brings together voice actors, sound engineers, adapters, and artistic directors, each chosen for their exacting standards.
         </p>
       </div>
     </div>
@@ -27,7 +50,7 @@ import site from "../data/site.json";
   <section style="border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
     <div class="container">
       <div class="stats-grid" style="display:grid;grid-template-columns:repeat(6,1fr);gap:0;">
-        {site.stats.map((s, i) => (
+        {statsEn.map((s, i) => (
           <div style={`padding:40px 24px;border-left:${i === 0 ? "none" : "1px solid var(--line)"};`}>
             <div class="h-display" style="font-size:clamp(40px,4.5vw,64px);margin-bottom:8px;">{s.v}</div>
             <div class="mono" style="font-size:10px;">{s.l}</div>
@@ -37,42 +60,23 @@ import site from "../data/site.json";
     </div>
   </section>
 
-  <!-- ── NOTRE ADN (VALEURS) ────────────────────────────────────── -->
+  <!-- ── PILLARS ────────────────────────────────────────────────── -->
   <section style="padding:120px 0;background:var(--bg-elev);">
     <div class="container">
       <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:80px;flex-wrap:wrap;gap:32px;">
         <div>
-          <div class="eyebrow" style="margin-bottom:24px;">(01) Notre ADN</div>
+          <div class="eyebrow" style="margin-bottom:24px;">(01) Our DNA</div>
           <h2 class="h-display" style="font-size:clamp(48px,6vw,96px);margin:0;">
-            Trois piliers,<br/><em style="font-style:italic;color:var(--accent);">une exigence</em>.
+            Three pillars,<br/><em style="font-style:italic;color:var(--accent);">one</em> standard.
           </h2>
         </div>
         <p class="text-dim" style="font-size:16px;max-width:400px;line-height:1.65;margin:0;padding-bottom:8px;">
-          Chaque projet est traité avec la rigueur d'un broadcast international. Voici les principes qui guident chaque session.
+          Every project is handled with the rigor of international broadcast. These are the principles that guide every session.
         </p>
       </div>
 
       <div class="grid-responsive-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--line);">
-        {[
-          {
-            num: "01",
-            icon: "mic",
-            title: "Qualité broadcast",
-            body: "Chaîne de signal Neumann / Universal Audio, monitoring Genelec, isolation acoustique certifiée. Nos livrables respectent les normes EBU R128 et Dolby Atmos sans surcoût."
-          },
-          {
-            num: "02",
-            icon: "globe",
-            title: "Agilité internationale",
-            body: "Trilingue (arabe · français · anglais), délais courts, disponibilité 7 j/7. Nous livrons au même rythme qu'un studio européen, avec la flexibilité du Maroc."
-          },
-          {
-            num: "03",
-            icon: "users",
-            title: "Casting sur mesure",
-            body: "Plus de 150 comédiens référencés — natifs, professionnels, disponibles. Nous sélectionnons la voix juste pour chaque rôle, chaque ton, chaque cible."
-          },
-        ].map(v => (
+        {pillars.map(v => (
           <div class="card" style="border-radius:0;border:none;padding:48px 40px;background:var(--bg);">
             <div style="width:52px;height:52px;border-radius:12px;border:1px solid var(--line-2);display:grid;place-items:center;color:var(--accent);margin-bottom:32px;">
               <Icon name={v.icon} size={22} stroke={1.5} />
@@ -86,23 +90,17 @@ import site from "../data/site.json";
     </div>
   </section>
 
-  <!-- ── CHRONOLOGIE ────────────────────────────────────────────── -->
+  <!-- ── TIMELINE ───────────────────────────────────────────────── -->
   <section style="padding:120px 0;">
     <div class="container">
-      <div class="eyebrow" style="margin-bottom:40px;">(02) Histoire</div>
+      <div class="eyebrow" style="margin-bottom:40px;">(02) History</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:flex-start;" class="grid-responsive-2">
         <h2 class="h-display" style="font-size:clamp(48px,6vw,88px);margin:0;line-height:0.9;">
-          De Casablanca<br/><em style="font-style:italic;color:var(--accent);">au monde</em>.
+          From Casablanca<br/><em style="font-style:italic;color:var(--accent);">to the</em> world.
         </h2>
         <div style="display:flex;flex-direction:column;gap:0;">
-          {[
-            { year: "2016", title: "Fondation", desc: "Ouverture du premier studio à Casablanca. Premiers projets de doublage pour le marché francophone maghrébin." },
-            { year: "2018", title: "Expansion voix", desc: "Lancement du département voice-over et casting. Constitution de la banque de 150+ comédiens référencés." },
-            { year: "2020", title: "Post-production", desc: "Intégration de la post-production audio complète : sound design, mixage 5.1 / Dolby Atmos, mastering broadcast." },
-            { year: "2022", title: "Clients premium", desc: "Partenariats avec Netflix MENA, Canal+ Afrique et plusieurs studios de production US et européens." },
-            { year: "2025", title: "Aujourd'hui", desc: "4 studios, 200+ heures livrées, 100+ projets, présence dans 15+ pays. L'aventure continue." },
-          ].map((e, i) => (
-            <div style={`display:grid;grid-template-columns:80px 1fr;gap:24px;padding:28px 0;border-bottom:1px solid var(--line);`}>
+          {timeline.map((e) => (
+            <div style="display:grid;grid-template-columns:80px 1fr;gap:24px;padding:28px 0;border-bottom:1px solid var(--line);">
               <span class="h-display" style="font-size:28px;color:var(--accent);line-height:1;">{e.year}</span>
               <div>
                 <div style="font-weight:600;font-size:16px;margin-bottom:6px;">{e.title}</div>
@@ -115,19 +113,19 @@ import site from "../data/site.json";
     </div>
   </section>
 
-  <!-- ── ÉQUIPEMENT ─────────────────────────────────────────────── -->
+  <!-- ── EQUIPMENT ──────────────────────────────────────────────── -->
   <section style="padding:100px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-elev);">
     <div class="container">
       <div style="display:grid;grid-template-columns:1fr 2fr;gap:80px;align-items:flex-start;" class="grid-responsive-2">
         <div>
-          <div class="eyebrow" style="margin-bottom:24px;">(03) Équipement</div>
+          <div class="eyebrow" style="margin-bottom:24px;">(03) Equipment</div>
           <h2 class="h-display" style="font-size:clamp(40px,5vw,72px);margin:0 0 24px;line-height:0.95;">
-            Matériel<br/><em style="font-style:italic;color:var(--accent);">pro.</em>
+            Pro<br/><em style="font-style:italic;color:var(--accent);">gear.</em>
           </h2>
           <p class="text-dim" style="font-size:15px;line-height:1.65;margin:0;">
-            Investis dans la qualité sonore depuis le premier jour. Chaque maillon de notre chaîne est pensé pour livrer un résultat broadcast.
+            We've invested in sound quality from day one. Every link in our chain is built to deliver a broadcast-ready result.
           </p>
-          <a href="/studios" class="btn btn-ghost btn-arrow" style="margin-top:28px;">Visiter nos studios</a>
+          <a href="/studios" class="btn btn-ghost btn-arrow" style="margin-top:28px;">Visit our studios</a>
         </div>
         <div class="equip-inner" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
           {[
@@ -156,13 +154,13 @@ import site from "../data/site.json";
   <!-- ── CTA ────────────────────────────────────────────────────── -->
   <section style="padding:120px 0;text-align:center;">
     <div class="container">
-      <div class="eyebrow" style="margin-bottom:28px;justify-content:center;">(04) Travailler ensemble</div>
+      <div class="eyebrow" style="margin-bottom:28px;justify-content:center;">(04) Working together</div>
       <h2 class="h-display" style="font-size:clamp(52px,8vw,120px);margin:0 auto 40px;max-width:900px;line-height:0.9;">
-        Votre prochain projet<br/><em style="font-style:italic;color:var(--accent);">mérite le meilleur</em>.
+        Your next project<br/><em style="font-style:italic;color:var(--accent);">deserves the best</em>.
       </h2>
       <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-        <a href="/contact" class="btn btn-primary btn-arrow">Demander un devis gratuit</a>
-        <a href="/services" class="btn btn-ghost btn-arrow">Voir nos services</a>
+        <a href="/en/contact" class="btn btn-primary btn-arrow">Request a free quote</a>
+        <a href="/en/services" class="btn btn-ghost btn-arrow">See our services</a>
       </div>
     </div>
   </section>
@@ -170,12 +168,7 @@ import site from "../data/site.json";
 </Base>
 
 <style>
-  /* Equipment grid: keep 2 cols down to small phones */
   @media (max-width: 480px) {
     .equip-inner { grid-template-columns: 1fr !important; }
-  }
-  /* Timeline year column */
-  @media (max-width: 500px) {
-    .timeline-row { grid-template-columns: 60px 1fr !important; }
   }
 </style>

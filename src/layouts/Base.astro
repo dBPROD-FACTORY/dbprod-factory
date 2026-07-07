@@ -10,21 +10,31 @@ interface Props {
   description?: string;
   image?: string;
   noindex?: boolean;
+  lang?: "fr" | "en";
+  altHref?: string;
 }
 const {
   title = "dB PROD·FACTORY",
   description = site.description,
   image = "/media/studios/studio-a-regie.webp",
   noindex = false,
+  lang = "fr",
+  altHref,
 } = Astro.props;
 const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 const canonicalURL = new URL(path, Astro.site);
 const isStagingDomain = Astro.site?.hostname.endsWith(".pages.dev") ?? false;
 const shouldNoindex = noindex || isStagingDomain;
 const ogImageURL = new URL(image, Astro.site);
+const titleSuffix = lang === "en"
+  ? "French Dubbing Studio · Casablanca"
+  : "Studio de doublage (French Dubbing) · Casablanca";
 const pageTitle = title === "dB PROD·FACTORY"
   ? "dB PROD·FACTORY — Studio de doublage français & French Dubbing Services · Casablanca"
-  : `${title} — Studio de doublage (French Dubbing) · Casablanca`;
+  : `${title} — ${titleSuffix}`;
+
+const frURL = lang === "en" ? (altHref ? new URL(altHref, Astro.site) : null) : canonicalURL;
+const enURL = lang === "en" ? canonicalURL : (altHref ? new URL(altHref, Astro.site) : null);
 
 const organizationSchema = {
   "@context": "https://schema.org",
@@ -51,7 +61,7 @@ const organizationSchema = {
 ---
 
 <!doctype html>
-<html lang="fr" data-theme="dark" data-typo="serif">
+<html lang={lang} data-theme="dark" data-typo="serif">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -65,6 +75,13 @@ const organizationSchema = {
   <meta name="keywords" content="doublage, french dubbing, service de doublage en français, voice-over, voix off, sous-titrage, studio de doublage Casablanca, dubbing studio Morocco" />
   {shouldNoindex && <meta name="robots" content="noindex,nofollow" />}
   <link rel="canonical" href={canonicalURL} />
+  {frURL && enURL && (
+    <>
+      <link rel="alternate" hreflang="fr" href={frURL} />
+      <link rel="alternate" hreflang="en" href={enURL} />
+      <link rel="alternate" hreflang="x-default" href={frURL} />
+    </>
+  )}
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="dB PROD·FACTORY" />
@@ -72,8 +89,8 @@ const organizationSchema = {
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonicalURL} />
   <meta property="og:image" content={ogImageURL} />
-  <meta property="og:locale" content="fr_FR" />
-  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:locale" content={lang === "en" ? "en_US" : "fr_FR"} />
+  <meta property="og:locale:alternate" content={lang === "en" ? "fr_FR" : "en_US"} />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={pageTitle} />
@@ -96,13 +113,13 @@ const organizationSchema = {
   </script>
 </head>
 <body class="noise">
-  <Nav client:load currentPath={path} brand={{ name: site.brand, subline: site.subline }} />
+  <Nav client:load currentPath={path} brand={{ name: site.brand, subline: site.subline }} locale={lang} altHref={altHref} />
 
   <main class="page-enter">
     <slot />
   </main>
 
-  <Footer client:visible site={site} contact={site.contact} social={site.social} />
+  <Footer client:visible site={site} contact={site.contact} social={site.social} locale={lang} />
   <ThemeToggle client:load />
 </body>
 </html>

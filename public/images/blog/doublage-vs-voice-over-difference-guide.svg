@@ -1,0 +1,40 @@
+<svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Doublage vs voice-over : quelle différence et comment choisir ?">
+  <defs>
+    <linearGradient id="accentGrad" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#5FCC22"/>
+      <stop offset="100%" stop-color="#A6FF4D"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#A6FF4D" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#A6FF4D" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="900" fill="#08080C"/>
+  <rect width="1600" height="900" fill="url(#glow)"/>
+
+  <rect x="8.2" y="806.7" width="20.0" height="53.3" rx="3" fill="#1E1E28"/>
+  <rect x="44.5" y="797.5" width="20.0" height="62.5" rx="3" fill="#1E1E28"/>
+  <rect x="80.9" y="786.3" width="20.0" height="73.7" rx="3" fill="#1E1E28"/>
+  <rect x="117.3" y="776.4" width="20.0" height="83.6" rx="3" fill="url(#accentGrad)"/>
+  <rect x="153.6" y="769.9" width="20.0" height="90.1" rx="3" fill="#1E1E28"/>
+  <rect x="1208.2" y="807.8" width="20.0" height="52.2" rx="3" fill="#1E1E28"/>
+  <rect x="1244.5" y="804.6" width="20.0" height="55.4" rx="3" fill="#1E1E28"/>
+  <rect x="1280.9" y="776.1" width="20.0" height="83.9" rx="3" fill="#1E1E28"/>
+  <rect x="1317.3" y="733.9" width="20.0" height="126.1" rx="3" fill="#1E1E28"/>
+  <rect x="1353.6" y="693.3" width="20.0" height="166.7" rx="3" fill="#1E1E28"/>
+  <rect x="1390.0" y="667.6" width="20.0" height="192.4" rx="3" fill="url(#accentGrad)"/>
+  <rect x="1426.4" y="664.3" width="20.0" height="195.7" rx="3" fill="#1E1E28"/>
+  <rect x="1462.7" y="683.1" width="20.0" height="176.9" rx="3" fill="#1E1E28"/>
+  <rect x="1499.1" y="716.8" width="20.0" height="143.2" rx="3" fill="#1E1E28"/>
+  <rect x="1535.5" y="754.8" width="20.0" height="105.2" rx="3" fill="#1E1E28"/>
+  <rect x="1571.8" y="786.6" width="20.0" height="73.4" rx="3" fill="#1E1E28"/>
+
+  <circle cx="30" cy="60" r="4" fill="#A6FF4D"/>
+  <text x="48" y="66" font-family="'JetBrains Mono', monospace" font-size="15" letter-spacing="2" fill="#9B9BA8">STUDIO · CASABLANCA — GUIDE</text>
+
+  <text x="80" y="320" font-family="Georgia, 'Fraunces', serif" font-size="80" fill="#FAFAFA">Doublage vs</text>
+  <text x="80" y="420" font-family="Georgia, 'Fraunces', serif" font-size="80" font-style="italic" fill="#A6FF4D">voice-over</text>
+  <text x="80" y="510" font-family="Georgia, 'Fraunces', serif" font-size="56" fill="#FAFAFA">Quelle différence ?</text>
+
+  <text x="80" y="820" font-family="'JetBrains Mono', monospace" font-size="16" letter-spacing="1.5" fill="#6B6B78">dB PROD·FACTORY</text>
+</svg>

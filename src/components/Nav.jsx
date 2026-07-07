@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-export default function Nav({ currentPath = "/", brand = { name: "PROD·FACTORY", subline: "CASABLANCA · MA" } }) {
+export default function Nav({ currentPath = "/", brand = { name: "PROD·FACTORY", subline: "CASABLANCA · MA" }, locale = "fr", altHref }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -16,15 +16,34 @@ export default function Nav({ currentPath = "/", brand = { name: "PROD·FACTORY"
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
-  const items = [
-    { href: "/services", label: "Services" },
-    { href: "/portfolio", label: "Portfolio" },
-    { href: "/voix", label: "Voix" },
-    { href: "/studios", label: "Studios" },
-    { href: "/clients", label: "Clients" },
-    { href: "/blog", label: "Journal" },
-    { href: "/faq", label: "FAQ" },
-  ];
+  const isEn = locale === "en";
+  const homeHref = isEn ? "/en" : "/";
+
+  const items = isEn
+    ? [
+      { href: "/en/services", label: "Services" },
+      { href: "/portfolio", label: "Portfolio" },
+      { href: "/voix", label: "Voice Talent" },
+      { href: "/studios", label: "Studios" },
+      { href: "/clients", label: "Clients" },
+      { href: "/blog", label: "Blog" },
+      { href: "/en/faq", label: "FAQ" },
+    ]
+    : [
+      { href: "/services", label: "Services" },
+      { href: "/portfolio", label: "Portfolio" },
+      { href: "/voix", label: "Voix" },
+      { href: "/studios", label: "Studios" },
+      { href: "/clients", label: "Clients" },
+      { href: "/blog", label: "Journal" },
+      { href: "/faq", label: "FAQ" },
+    ];
+
+  const t = isEn
+    ? { cta: "Get a Quote", mobileCta: "Request a free quote", ariaOpen: "Open menu", ariaClose: "Close menu", langLabel: "FR" }
+    : { cta: "Devis gratuit", mobileCta: "Demander un devis gratuit", ariaOpen: "Ouvrir le menu", ariaClose: "Fermer le menu", langLabel: "EN" };
+
+  const contactHref = isEn ? "/en/contact" : "/contact";
 
   const isActive = (href) => currentPath === href || currentPath.startsWith(href + "/");
 
@@ -42,7 +61,7 @@ export default function Nav({ currentPath = "/", brand = { name: "PROD·FACTORY"
         <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
 
           {/* Logo */}
-          <a href="/" onClick={() => setOpen(false)} style={{
+          <a href={homeHref} onClick={() => setOpen(false)} style={{
             textDecoration: "none", color: "var(--fg)",
             display: "flex", alignItems: "center", gap: 10, flexShrink: 0,
           }}>
@@ -74,14 +93,23 @@ export default function Nav({ currentPath = "/", brand = { name: "PROD·FACTORY"
 
           {/* Right */}
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <a href="/contact" className="btn btn-primary btn-arrow desktop-nav" style={{ padding: "10px 18px" }}>
-              Devis gratuit
+            {altHref && (
+              <a href={altHref} className="desktop-nav" style={{
+                width: 32, height: 32, borderRadius: "50%", display: "grid", placeItems: "center",
+                border: "1px solid var(--line-2)", color: "var(--fg-dim)", textDecoration: "none",
+                fontFamily: "var(--f-mono)", fontSize: 10, fontWeight: 600, flexShrink: 0,
+              }} aria-label={isEn ? "Voir en français" : "View in English"}>
+                {t.langLabel}
+              </a>
+            )}
+            <a href={contactHref} className="btn btn-primary btn-arrow desktop-nav" style={{ padding: "10px 18px" }}>
+              {t.cta}
             </a>
 
             {/* Hamburger — mobile only */}
             <button
               onClick={() => setOpen(o => !o)}
-              aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+              aria-label={open ? t.ariaClose : t.ariaOpen}
               aria-expanded={open}
               className="hamburger-btn"
             >
@@ -135,13 +163,23 @@ export default function Nav({ currentPath = "/", brand = { name: "PROD·FACTORY"
         </nav>
 
         <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 12 }}>
+          {altHref && (
+            <a
+              href={altHref}
+              onClick={() => setOpen(false)}
+              className="btn btn-ghost"
+              style={{ textAlign: "center", justifyContent: "center", fontSize: 14, padding: "12px 24px", borderRadius: 999 }}
+            >
+              {isEn ? "Voir en français" : "View in English"}
+            </a>
+          )}
           <a
-            href="/contact"
+            href={contactHref}
             onClick={() => setOpen(false)}
             className="btn btn-primary"
             style={{ textAlign: "center", justifyContent: "center", fontSize: 16, padding: "16px 24px", borderRadius: 999 }}
           >
-            Demander un devis gratuit
+            {t.mobileCta}
           </a>
           <div className="mono" style={{ textAlign: "center", fontSize: 10, color: "var(--fg-mute)" }}>
             +212 669 809 234 · contact@dbprod-factory.com

@@ -10,8 +10,9 @@ export async function getStaticPaths() {
 const { service } = Astro.props;
 const { Content } = await service.render();
 const d = service.data;
+const altHref = d.id === "doublage" ? "/en/services/doublage" : undefined;
 ---
-<Base title={d.title} description={d.short}>
+<Base title={d.title} description={d.short} altHref={altHref}>
   <section style="padding:160px 0 80px;">
     <div class="container">
       <a href="/services" class="link-arrow" style="margin-bottom:40px;display:inline-flex;">← Retour aux services</a>

@@ -4,7 +4,7 @@ import { getCollection } from "astro:content";
 import Icon from "../../components/Icon.jsx";
 const services = (await getCollection("services")).sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
 ---
-<Base title="Services" description="Service de doublage en français (French dubbing services), voice-over, sous-titrage et post-production : 12 disciplines couvertes par des spécialistes natifs, depuis Casablanca.">
+<Base title="Services" description="Service de doublage en français (French dubbing services), voice-over, sous-titrage et post-production : 12 disciplines couvertes par des spécialistes natifs, depuis Casablanca." altHref="/en/services">
   <section style="padding:160px 0 80px;">
     <div class="container">
       <div class="eyebrow" style="margin-bottom:28px;">Services</div>
