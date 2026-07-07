@@ -1,0 +1,65 @@
+---
+import Base from "../../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+import VideoPlayer from "../../../components/VideoPlayer.jsx";
+import { StaticWave, AudioPlayer } from "../../../components/Waveform.jsx";
+import Icon from "../../../components/Icon.jsx";
+import { KIND_EN, TAG_EN } from "../../../components/ProjectCard.jsx";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.filter(p => p.data.desc_en).map(p => ({ params: { id: p.data.id }, props: { project: p } }));
+}
+const { project } = Astro.props;
+const d = project.data;
+const desc = d.desc_en || d.desc;
+const kind = KIND_EN[d.kind] || d.kind;
+const dur = KIND_EN[d.dur] || d.dur;
+---
+<Base title={d.title} description={desc} lang="en" altHref={`/portfolio/${d.id}`}>
+  <section style="padding:160px 0 80px;">
+    <div class="container">
+      <a href="/en/portfolio" class="link-arrow" style="margin-bottom:40px;display:inline-flex;">← Portfolio</a>
+      <div style="display:flex;gap:8px;margin-top:32px;margin-bottom:24px;flex-wrap:wrap;">
+        {d.tags.map(t => <span class="chip chip-accent">{TAG_EN[t] || t}</span>)}
+        <span class="chip">{kind}</span>
+        <span class="chip">{d.year}</span>
+        <span class="chip">{d.lang}</span>
+        {dur && <span class="chip">{dur}</span>}
+      </div>
+      <h1 class="h-display" style="font-size:clamp(64px,12vw,180px);margin:0 0 32px;">{d.title}</h1>
+      {desc && (
+        <p class="text-dim" style="font-size:20px;max-width:760px;line-height:1.5;margin-bottom:48px;">{desc}</p>
+      )}
+
+      {d.video_url ? (
+        <div style="border-radius:24px;overflow:hidden;border:1px solid var(--line);background:#000;aspect-ratio:16/9;margin-bottom:60px;">
+          <VideoPlayer client:load src={d.video_url} poster={d.poster} controls={true} />
+        </div>
+      ) : (
+        <div class="media-ph" data-label={`${kind.toUpperCase()} · ${dur || ""}`} style="height:560px;border-radius:24px;position:relative;margin-bottom:60px;">
+          <div style={`position:absolute;inset:0;background:linear-gradient(135deg, color-mix(in oklab, var(--accent) ${15 + d.seed}%, transparent), transparent 60%);`}></div>
+          <div style="position:absolute;inset:0;display:grid;place-items:center;">
+            <div style="width:120px;height:120px;border-radius:50%;background:var(--accent);color:#0A0A0F;display:grid;place-items:center;">
+              <Icon name="play" size={36} stroke={2} />
+            </div>
+          </div>
+          <div style="position:absolute;left:24px;right:24px;bottom:24px;opacity:0.7;">
+            <StaticWave seed={d.seed} bars={60} height={44} color="var(--accent)" />
+          </div>
+        </div>
+      )}
+
+      {d.samples && d.samples.length > 0 && (
+        <div style="margin-bottom:60px;">
+          <div class="eyebrow" style="margin-bottom:24px;">Audio samples</div>
+          <div style="display:grid;gap:12px;max-width:860px;">
+            {d.samples.map(s => (
+              <AudioPlayer client:visible title={s.title} artist={s.artist} duration={s.duration} seed={s.seed} url={s.url} />
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  </section>
+</Base>

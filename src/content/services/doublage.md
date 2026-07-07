@@ -15,6 +15,18 @@ facts:
     v: "92% de retours positifs"
   - k: "Devis"
     v: "Gratuit & personnalisé"
+title_en: "Dubbing"
+short_en: "Our French dubbing services let your audience enjoy content in their native language, with no subtitles required."
+long_en: "Dubbing is the art of replacing a film or series' original dialogue with a new-language version. As a studio specialized in French dubbing services, we orchestrate every step — from artistic direction to final mix — with 150+ professional voice actors, bilingual in French and Arabic, experienced in film and telenovelas."
+facts_en:
+  - k: "Languages"
+    v: "FR · AR (MSA & dialectal) · EN"
+  - k: "Turnaround"
+    v: "24-48h for short projects"
+  - k: "Quality"
+    v: "92% positive feedback"
+  - k: "Quote"
+    v: "Free & tailored"
 order: 1
 ---
 

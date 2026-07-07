@@ -7,6 +7,7 @@ lang: "AR"
 tags:
   - "Doublage"
 desc: "Comédie romantique, doublage FR."
+desc_en: "Romantic comedy, French dubbing."
 seed: 3
 dur: "1h 38m"
 order: 5

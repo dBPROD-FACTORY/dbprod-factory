@@ -7,6 +7,7 @@ lang: FR
 tags:
   - Doublage
 desc: Programme TV religieux, saison 4.
+desc_en: Religious TV series, season 4.
 seed: 9
 dur: 24 × 60m
 featured: false

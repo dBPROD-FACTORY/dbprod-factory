@@ -15,6 +15,18 @@ facts:
   - k: "Multi"
     v: "Tous supports"
 order: 8
+title_en: "Corporate Films"
+short_en: "Corporate communications."
+long_en: "Corporate films, annual reports, internal videos, sales presentations."
+facts_en:
+  - k: "Formats"
+    v: "1 to 15 min"
+  - k: "Services"
+    v: "Writing · production · post"
+  - k: "Resolution"
+    v: "Up to 4K HDR"
+  - k: "Multi"
+    v: "All platforms"
 ---
 
 Films d'entreprise, rapports annuels, vidéos internes, présentations commerciales.

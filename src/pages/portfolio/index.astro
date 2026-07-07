@@ -4,7 +4,7 @@ import { getCollection } from "astro:content";
 import ProjectCard from "../../components/ProjectCard.jsx";
 const projects = (await getCollection("projects")).sort((a, b) => b.data.year - a.data.year);
 ---
-<Base title="Portfolio" description="Films, séries et projets corporate livrés par notre service de doublage en français (French dubbing services) — tous genres, toutes langues.">
+<Base title="Portfolio" description="Films, séries et projets corporate livrés par notre service de doublage en français (French dubbing services) — tous genres, toutes langues." altHref="/en/portfolio">
   <section style="padding:160px 0 80px;">
     <div class="container">
       <div class="eyebrow" style="margin-bottom:28px;">Portfolio</div>

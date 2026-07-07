@@ -8,6 +8,7 @@ tags:
   - "Doublage"
   - "Voice-Over"
 desc: "Projet multi-épisodes."
+desc_en: "A multi-episode dubbing project."
 seed: 25
 dur: "12 × 30m"
 order: 11

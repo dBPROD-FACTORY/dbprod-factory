@@ -7,6 +7,7 @@ lang: "EN/FR"
 tags:
   - "Doublage"
 desc: "Drame sportif jeune public."
+desc_en: "A sports drama for young audiences."
 seed: 28
 dur: "1h 28m"
 order: 7

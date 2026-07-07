@@ -13,7 +13,7 @@ const views = (d.panoramas && d.panoramas.length > 0)
   ? d.panoramas
   : (d.panorama ? [{ label: "Vue principale", url: d.panorama }] : []);
 ---
-<Base title={d.name} description={d.spec}>
+<Base title={d.name} description={d.spec} altHref={`/en/studios/${d.id.toLowerCase()}`}>
   <section style="padding:160px 0 40px;">
     <div class="container">
       <a href="/studios" class="link-arrow" style="margin-bottom:40px;display:inline-flex;">← Tous les studios</a>

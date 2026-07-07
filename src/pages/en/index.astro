@@ -8,26 +8,14 @@ import Icon from "../../components/Icon.jsx";
 import { AudioPlayer } from "../../components/Waveform.jsx";
 import site from "../../data/site.json";
 
-const EN_SERVICES = [
-  { id: "doublage", title: "Dubbing", short: "Our French dubbing services let your audience enjoy content in their native language, no subtitles required." },
-  { id: "voice-over", title: "Voice-Over", short: "Off-screen narration that enriches and adds context to your video or documentary content." },
-  { id: "audio-description", title: "Audio Description", short: "Making content accessible to visually impaired audiences." },
-  { id: "transcription", title: "Transcription", short: "Converting spoken language into accurate written text." },
-  { id: "traduction", title: "Translation", short: "Adapting your content from one language to another." },
-  { id: "sous-titrage", title: "Subtitling", short: "Multilingual, broadcast-ready subtitles." },
-  { id: "spots", title: "Ad Spots", short: "Radio and video spot production." },
-  { id: "corporate", title: "Corporate Films", short: "Institutional and corporate communication." },
-];
-
 const services = (await getCollection("services")).sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
-const servicesEn = services.slice(0, 8).map(s => ({ ...s.data, ...EN_SERVICES.find(e => e.id === s.data.id) }));
+const servicesEn = services.slice(0, 8).map(s => s.data);
 
 const projects = (await getCollection("projects")).sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
 const featured = projects.filter(p => p.data.featured).slice(0, 3).map(p => p.data);
 
-const allPosts = await getCollection("posts");
-const EN_POST_IDS = ["french-dubbing-services-complete-guide", "french-dubbing-vs-subtitling"];
-const enPosts = EN_POST_IDS.map(id => allPosts.find(p => p.data.id === id)?.data).filter(Boolean);
+const posts = (await getCollection("postsEn")).sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+const enPosts = posts.slice(0, 3).map(p => p.data);
 
 const hero = {
   eyebrow: "Studio · Casablanca — 33.5731°N / 7.5898°W",
@@ -58,7 +46,7 @@ const testimonial = { q: "Very professional and fun experience.", n: "Wafae Taki
 ---
 
 <Base title="dB PROD·FACTORY" description="dB PROD·FACTORY delivers French dubbing services, voice-over, subtitling and audio description from Casablanca, Morocco — 200+ hours of production for broadcast, film and streaming platforms worldwide." lang="en" altHref="/">
-  <HeroHome client:load hero={hero} projects={featured} />
+  <HeroHome client:load hero={hero} projects={featured} locale="en" />
 
   {/* STATS */}
   <section style="padding:80px 0;border-bottom:1px solid var(--line);">
@@ -89,16 +77,16 @@ const testimonial = { q: "Very professional and fun experience.", n: "Wafae Taki
 
       <div style="border:1px solid var(--line);border-radius:24px;overflow:hidden;background:var(--bg-elev);">
         {servicesEn.map((s, i) => (
-          <a href={s.id === "doublage" ? "/en/services/doublage" : `/services/${s.id}`} class="svc-row"
+          <a href={`/en/services/${s.id}`} class="svc-row"
              style={`display:grid;grid-template-columns:80px 1fr 2fr 1fr auto;gap:24px;align-items:center;padding:28px 32px;border-top:${i === 0 ? "none" : "1px solid var(--line)"};color:var(--fg);text-decoration:none;transition:background 0.3s var(--ease);position:relative;overflow:hidden;`}>
             <span class="svc-num mono" style="font-size:12px;">{s.num}</span>
             <div style="display:flex;align-items:center;gap:16px;">
               <div style="width:44px;height:44px;border-radius:10px;border:1px solid var(--line-2);display:grid;place-items:center;color:var(--accent);flex-shrink:0;">
                 <Icon name={s.icon} size={20} stroke={1.5} />
               </div>
-              <span class="h-serif" style="font-size:clamp(18px,2.5vw,28px);">{s.title}</span>
+              <span class="h-serif" style="font-size:clamp(18px,2.5vw,28px);">{s.title_en || s.title}</span>
             </div>
-            <span class="svc-desc text-dim" style="font-size:14px;">{s.short}</span>
+            <span class="svc-desc text-dim" style="font-size:14px;">{s.short_en || s.short}</span>
             <div class="svc-tag">{s.tag && <span class="chip chip-accent">{s.tag}</span>}</div>
             <Icon name="arrowUpRight" size={20} stroke={1.5} />
           </a>
@@ -117,7 +105,7 @@ const testimonial = { q: "Very professional and fun experience.", n: "Wafae Taki
             Recent <em style="font-style:italic;color:var(--accent);">work</em>.
           </h2>
         </div>
-        <a href="/portfolio" class="btn btn-ghost btn-arrow">Full portfolio</a>
+        <a href="/en/portfolio" class="btn btn-ghost btn-arrow">Full portfolio</a>
       </div>
 
       <div class="grid-responsive-3 mobile-carousel" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch;">
@@ -172,7 +160,7 @@ const testimonial = { q: "Very professional and fun experience.", n: "Wafae Taki
             <div class="eyebrow" style="margin-bottom:28px;">(05) Blog</div>
             <h2 class="h-display" style="font-size:clamp(52px,6vw,88px);margin:0;">Latest articles</h2>
           </div>
-          <a href="/blog" class="btn btn-ghost btn-arrow">All articles</a>
+          <a href="/en/blog" class="btn btn-ghost btn-arrow">All articles</a>
         </div>
         <div class="grid-responsive-3 mobile-carousel" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
           {enPosts.map(p => (

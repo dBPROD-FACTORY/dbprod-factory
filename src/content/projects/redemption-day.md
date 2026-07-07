@@ -9,6 +9,7 @@ tags:
   - Lip-sync
 desc: Film d'action américain doublé en arabe. Un ancien militaire part en
   mission au Maroc pour sauver sa femme kidnappée.
+desc_en: An American action film dubbed into Arabic, following a former soldier on a mission in Morocco to rescue his kidnapped wife.
 seed: 4
 dur: 1h 35m
 featured: true

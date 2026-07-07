@@ -8,6 +8,7 @@ tags:
   - Doublage
   - Post-Production
 desc: Film d'action / thriller doublé en français.
+desc_en: 'An action-thriller dubbed into French.'
 seed: 12
 dur: 1h 42m
 featured: true

@@ -13,4 +13,6 @@ rt60: 0.24s
 thumbnail: /media/studios/studio-b-cabine.webp
 panorama: /media/studios/studio-b-cabine.webp
 order: 2
+name_en: Studio B — Vocal Booth
+spec_en: Open studio for simultaneous multi-actor dubbing sessions.
 ---

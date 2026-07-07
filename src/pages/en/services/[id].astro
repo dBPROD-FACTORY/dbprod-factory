@@ -3,23 +3,18 @@ import Base from "../../../layouts/Base.astro";
 import { getCollection } from "astro:content";
 import Icon from "../../../components/Icon.jsx";
 
-const services = await getCollection("services");
-const d = services.find(s => s.data.id === "doublage").data;
-
-const en = {
-  title: "Dubbing",
-  short: "Our French dubbing services let your audience enjoy content in their native language, with no subtitles required.",
-  long: "Dubbing is the art of replacing a film or series' original dialogue with a new-language version. As a studio specialized in French dubbing services, we oversee every stage — from artistic direction to final mixing — with a roster of 150+ professional voice actors, bilingual in French and Arabic, experienced in film and telenovelas.",
-  facts: [
-    { k: "Languages", v: "FR · AR (MSA & dialectal) · EN" },
-    { k: "Turnaround", v: "24-48h for short projects" },
-    { k: "Quality", v: "92% positive feedback" },
-    { k: "Quote", v: "Free & tailored" },
-  ],
-  body_paragraph: "Our French dubbing services cover the complete replacement of original dialogue. Recognized internationally for our French dubbing services, we oversee every stage — from artistic direction to final mixing — with 150+ native professional voice actors.",
-};
+export async function getStaticPaths() {
+  const services = await getCollection("services");
+  return services.filter(s => s.data.title_en).map(s => ({ params: { id: s.data.id }, props: { service: s } }));
+}
+const { service } = Astro.props;
+const d = service.data;
+const title = d.title_en || d.title;
+const short = d.short_en || d.short;
+const long = d.long_en || d.long;
+const facts = d.facts_en || d.facts;
 ---
-<Base title={en.title} description={en.short} lang="en" altHref="/services/doublage">
+<Base title={title} description={short} lang="en" altHref={`/services/${d.id}`}>
   <section style="padding:160px 0 80px;">
     <div class="container">
       <a href="/en/services" class="link-arrow" style="margin-bottom:40px;display:inline-flex;">← Back to services</a>
@@ -29,20 +24,19 @@ const en = {
         </div>
         <div>
           <div class="mono" style="margin-bottom:8px;">Service · {d.num}</div>
-          <h1 class="h-display" style="font-size:clamp(56px,9vw,128px);margin:0;">{en.title}</h1>
+          <h1 class="h-display" style="font-size:clamp(56px,9vw,128px);margin:0;">{title}</h1>
         </div>
       </div>
-      <p class="text-dim" style="font-size:20px;max-width:760px;line-height:1.5;margin-bottom:80px;">{en.short}</p>
+      <p class="text-dim" style="font-size:20px;max-width:760px;line-height:1.5;margin-bottom:80px;">{short}</p>
 
       <div class="grid-responsive-2" style="display:grid;grid-template-columns:2fr 1fr;gap:60px;align-items:flex-start;">
         <div class="h-serif" style="font-size:22px;line-height:1.5;">
-          <p>{en.long}</p>
-          <p>{en.body_paragraph}</p>
+          {long && <p>{long}</p>}
         </div>
         <aside style="border:1px solid var(--line);border-radius:20px;padding:28px;background:var(--bg-elev);">
           <div class="mono" style="margin-bottom:20px;">Fact sheet</div>
           <dl style="margin:0;display:grid;gap:16px;">
-            {en.facts.map(f => (
+            {(facts || []).map(f => (
               <div style="display:flex;justify-content:space-between;gap:16px;padding-bottom:12px;border-bottom:1px solid var(--line);">
                 <dt class="mono" style="font-size:10px;">{f.k}</dt>
                 <dd style="margin:0;font-size:13px;text-align:right;">{f.v}</dd>

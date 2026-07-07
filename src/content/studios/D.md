@@ -10,6 +10,8 @@ equip:
 surface: "28 m²"
 rt60: "0.22s"
 order: 4
+name_en: "Studio D — Post-Production"
+spec_en: "Open studio for mixing, editing and color grading."
 ---
 
 Studio ouvert pour mixage, montage et étalonnage.

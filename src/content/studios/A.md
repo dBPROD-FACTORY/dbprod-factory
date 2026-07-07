@@ -17,4 +17,6 @@ panoramas:
   - label: Cabine
     url: /media/studios/studio-a-cabine.webp
 order: 1
+name_en: Studio A — Vocal Booth
+spec_en: Closed vocal recording booth with full acoustic treatment.
 ---

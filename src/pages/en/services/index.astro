@@ -3,24 +3,8 @@ import Base from "../../../layouts/Base.astro";
 import { getCollection } from "astro:content";
 import Icon from "../../../components/Icon.jsx";
 
-const EN_SERVICES = [
-  { id: "doublage", title: "Dubbing", short: "Our French dubbing services let your audience enjoy content in their native language, no subtitles required." },
-  { id: "voice-over", title: "Voice-Over", short: "Off-screen narration that enriches and adds context to your video or documentary content." },
-  { id: "audio-description", title: "Audio Description", short: "Making content accessible to visually impaired audiences." },
-  { id: "transcription", title: "Transcription", short: "Converting spoken language into accurate written text." },
-  { id: "traduction", title: "Translation", short: "Adapting your content from one language to another." },
-  { id: "sous-titrage", title: "Subtitling", short: "Multilingual, broadcast-ready subtitles." },
-  { id: "spots", title: "Ad Spots", short: "Radio and video spot production." },
-  { id: "corporate", title: "Corporate Films", short: "Institutional and corporate communication." },
-  { id: "ivr", title: "IVR Voice Systems", short: "Interactive voice response systems." },
-  { id: "post-production", title: "Post-Production", short: "Audio and video assembly." },
-  { id: "export", title: "Digital Export", short: "International distribution." },
-  { id: "drone", title: "Drone", short: "Aerial footage capture." },
-];
-
 const services = (await getCollection("services"))
-  .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0))
-  .map(s => ({ ...s.data, ...EN_SERVICES.find(e => e.id === s.data.id) }));
+  .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
 ---
 <Base title="Services" description="French dubbing services, voice-over, subtitling and post-production: 12 disciplines handled by native specialists, from Casablanca." lang="en" altHref="/services">
   <section style="padding:160px 0 80px;">
@@ -36,16 +20,16 @@ const services = (await getCollection("services"))
     <div class="container">
       <div style="border:1px solid var(--line);border-radius:24px;overflow:hidden;background:var(--bg-elev);">
         {services.map((s, i) => (
-          <a href={s.id === "doublage" ? "/en/services/doublage" : `/services/${s.id}`} class="svc-row" style={`display:grid;grid-template-columns:80px 1fr 2fr 1fr auto;gap:24px;align-items:center;padding:28px 32px;border-top:${i === 0 ? "none" : "1px solid var(--line)"};color:var(--fg);text-decoration:none;transition:background 0.25s var(--ease);`}>
-            <span class="svc-num mono" style="font-size:12px;">{s.num}</span>
+          <a href={`/en/services/${s.data.id}`} class="svc-row" style={`display:grid;grid-template-columns:80px 1fr 2fr 1fr auto;gap:24px;align-items:center;padding:28px 32px;border-top:${i === 0 ? "none" : "1px solid var(--line)"};color:var(--fg);text-decoration:none;transition:background 0.25s var(--ease);`}>
+            <span class="svc-num mono" style="font-size:12px;">{s.data.num}</span>
             <div style="display:flex;align-items:center;gap:16px;">
               <div style="width:44px;height:44px;border-radius:10px;border:1px solid var(--line-2);display:grid;place-items:center;color:var(--accent);flex-shrink:0;">
-                <Icon name={s.icon} size={20} stroke={1.5} />
+                <Icon name={s.data.icon} size={20} stroke={1.5} />
               </div>
-              <span class="h-serif" style="font-size:clamp(18px,2.5vw,28px);">{s.title}</span>
+              <span class="h-serif" style="font-size:clamp(18px,2.5vw,28px);">{s.data.title_en || s.data.title}</span>
             </div>
-            <span class="svc-desc text-dim" style="font-size:14px;">{s.short}</span>
-            <div class="svc-tag">{s.tag && <span class="chip chip-accent">{s.tag}</span>}</div>
+            <span class="svc-desc text-dim" style="font-size:14px;">{s.data.short_en || s.data.short}</span>
+            <div class="svc-tag">{s.data.tag && <span class="chip chip-accent">{s.data.tag}</span>}</div>
             <Icon name="arrowUpRight" size={20} stroke={1.5} />
           </a>
         ))}

@@ -8,6 +8,7 @@ tags:
   - "Doublage"
   - "Comédie"
 desc: "Comédie africaine doublée en français et arabe. Une mère de famille ordinaire découvre des super-pouvoirs et doit sauver sa communauté."
+desc_en: "An African comedy dubbed in French and Arabic, following an ordinary mother who discovers superpowers and must save her community."
 seed: 6
 dur: "1h 45m"
 featured: true

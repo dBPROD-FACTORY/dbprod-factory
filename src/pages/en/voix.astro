@@ -1,0 +1,21 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+import VoicesList from "../../components/VoicesList.jsx";
+const voices = (await getCollection("voices")).sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+const voicesData = voices.map(v => v.data);
+---
+<Base title="Voice Talent" description="150+ voices cast for your French dubbing services: listen to our actors, filter by language, gender and tone." lang="en" altHref="/voix">
+  <section style="padding:160px 0 80px;">
+    <div class="container">
+      <div class="eyebrow" style="margin-bottom:28px;">Casting · Voice Talent</div>
+      <h1 class="h-display" style="font-size:clamp(64px,11vw,180px);margin:0 0 40px;">
+        150+ <em style="font-style:italic;color:var(--accent);">voices</em> cast.
+      </h1>
+      <p class="text-dim" style="font-size:18px;max-width:680px;margin-bottom:80px;">
+        Listen directly to our actors. Filter by language, gender or tone. Custom casting available on request.
+      </p>
+      <VoicesList client:load voices={voicesData} locale="en" />
+    </div>
+  </section>
+</Base>

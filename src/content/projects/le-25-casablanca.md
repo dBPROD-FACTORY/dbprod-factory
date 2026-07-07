@@ -8,6 +8,7 @@ tags:
   - "Production"
   - "Post-Production"
 desc: "Film institutionnel pour complexe résidentiel."
+desc_en: "Corporate film for a residential complex."
 seed: 19
 dur: "4m 12s"
 featured: true

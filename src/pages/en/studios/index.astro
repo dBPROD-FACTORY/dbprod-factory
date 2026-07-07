@@ -1,0 +1,77 @@
+---
+import Base from "../../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+import { StaticWave } from "../../../components/Waveform.jsx";
+const studios = (await getCollection("studios")).sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+function cardThumb(s: typeof studios[0]) {
+  return s.data.thumbnail
+    || s.data.panoramas?.[0]?.url
+    || s.data.panorama
+    || s.data.photo
+    || null;
+}
+---
+<Base title="Studios" description="Our French dubbing studios in Casablanca: treated vocal booths, fully equipped control rooms, built for broadcast-quality production." lang="en" altHref="/studios">
+  <section style="padding:160px 0 80px;">
+    <div class="container">
+      <div class="grid-responsive-2" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-bottom:80px;align-items:flex-end;">
+        <div>
+          <div class="eyebrow" style="margin-bottom:28px;">Facilities · Casablanca</div>
+          <h1 class="h-display" style="font-size:clamp(72px,12vw,180px);margin:0;line-height:0.9;">
+            4 <em style="font-style:italic;color:var(--accent);">studios</em>
+          </h1>
+        </div>
+        <p class="text-dim" style="font-size:16px;max-width:440px;">
+          Acoustically treated booths, Neumann / UAD / Pro Tools equipment. Each studio is built for a specific use — from an isolated vocal booth to a multi-actor recording floor.
+        </p>
+      </div>
+
+      <div class="grid-responsive-2" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        {studios.map((s, i) => (
+          <a href={`/en/studios/${s.data.id.toLowerCase()}`} class="card" style="padding:0;overflow:hidden;text-decoration:none;color:var(--fg);display:block;">
+            <div style="position:relative;height:320px;overflow:hidden;background:#0A0A0F;">
+              {cardThumb(s) ? (
+                <img src={cardThumb(s)!} alt={s.data.name_en || s.data.name} loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;opacity:0.85;" />
+              ) : (
+                <div class="media-ph" data-label={`STUDIO ${s.data.id} · ${s.data.surface || ""}`} style="position:absolute;inset:0;">
+                  <div style={`position:absolute;inset:0;background:linear-gradient(145deg, color-mix(in oklab, var(--accent) ${8 + i * 4}%, transparent), transparent 60%);`}></div>
+                </div>
+              )}
+              <div style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.6) 100%);pointer-events:none;"></div>
+              <span class="chip chip-accent" style="position:absolute;top:16px;right:16px;background:color-mix(in oklab, var(--bg) 70%, transparent);backdrop-filter:blur(8px);">360° · Tour available</span>
+              <div style="position:absolute;top:20px;left:20px;right:20px;display:flex;justify-content:space-between;pointer-events:none;">
+                <span class="h-display" style="font-size:100px;line-height:1;color:#fff;opacity:0.28;mix-blend-mode:difference;">{s.data.id}</span>
+                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
+                  <span class="chip" style="background:color-mix(in oklab, var(--bg) 70%, transparent);backdrop-filter:blur(8px);">
+                    <span style="width:6px;height:6px;border-radius:50%;background:var(--accent);"></span> Available
+                  </span>
+                  {s.data.rt60 && <span class="mono" style="background:color-mix(in oklab, var(--bg) 70%, transparent);backdrop-filter:blur(8px);padding:4px 10px;border-radius:999px;">{s.data.rt60} RT60</span>}
+                </div>
+              </div>
+              <div style="position:absolute;left:20px;right:20px;bottom:60px;display:flex;justify-content:space-between;align-items:flex-end;pointer-events:none;">
+                <div>
+                  <div class="mono" style="margin-bottom:4px;color:#fff;mix-blend-mode:difference;">Studio {s.data.id}</div>
+                  <div class="h-serif" style="font-size:22px;color:#fff;mix-blend-mode:difference;">{(s.data.name_en || s.data.name).split("—")[1]?.trim() || (s.data.name_en || s.data.name)}</div>
+                </div>
+                <div style="width:120px;">
+                  <StaticWave seed={i * 5 + 3} bars={24} height={32} color="var(--accent)" />
+                </div>
+              </div>
+            </div>
+            <div style="padding:28px;">
+              <p class="text-dim" style="font-size:14px;margin:0;margin-bottom:24px;">{s.data.spec_en || s.data.spec}</p>
+              <div class="mono" style="margin-bottom:12px;">Equipment</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                {s.data.equip.map(e => <span class="chip">{e}</span>)}
+              </div>
+              <div style="margin-top:20px;display:flex;justify-content:space-between;align-items:center;">
+                <span class="mono" style="font-size:10px;">Surface · {s.data.surface || "—"}</span>
+                <span class="link-arrow">360° tour →</span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

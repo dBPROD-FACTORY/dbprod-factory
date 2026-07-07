@@ -7,6 +7,7 @@ lang: "FR/AR"
 tags:
   - "Voice-Over"
 desc: "Scripts IVR bilingue."
+desc_en: "Bilingual IVR scripts."
 seed: 18
 dur: "Varié"
 order: 12

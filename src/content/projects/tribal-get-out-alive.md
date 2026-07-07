@@ -8,6 +8,7 @@ tags:
   - "Doublage"
   - "Action"
 desc: "Thriller d'action doublé en français et arabe. Un groupe de survivants tente d'échapper à une forêt peuplée de créatures."
+desc_en: "An action thriller dubbed in French and Arabic, following a group of survivors racing to escape a forest crawling with creatures."
 seed: 12
 dur: "1h 30m"
 featured: false

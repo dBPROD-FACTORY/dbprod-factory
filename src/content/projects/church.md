@@ -7,6 +7,7 @@ lang: FR
 tags:
   - Doublage
 desc: Drame historique.
+desc_en: Historical drama.
 seed: 14
 dur: 2h 08m
 featured: false

@@ -3,16 +3,17 @@ import Icon from "./Icon.jsx";
 import { StaticWave } from "./Waveform.jsx";
 import { HoverVideo } from "./VideoPlayer.jsx";
 
-const KIND_EN = {
+export const KIND_EN = {
   "Film": "Film",
   "Série": "Series",
   "Série animée": "Animated series",
   "Film d'animation": "Animated film",
   "Projet": "Project",
   "Corporate": "Corporate",
+  "Varié": "Varied",
 };
 
-const TAG_EN = {
+export const TAG_EN = {
   "Doublage": "Dubbing",
   "Comédie": "Comedy",
   "Horreur": "Horror",
@@ -28,6 +29,7 @@ export default function ProjectCard({ project, size = "sm", locale = "fr" }) {
   const aspect = "16/10";
   const kindLabel = locale === "en" ? (KIND_EN[project.kind] || project.kind) : project.kind;
   const viewLabel = locale === "en" ? "↗ View project" : "↗ Voir le projet";
+  const href = locale === "en" ? `/en/portfolio/${project.id}` : `/portfolio/${project.id}`;
 
   const fallback = (
     <>
@@ -40,7 +42,7 @@ export default function ProjectCard({ project, size = "sm", locale = "fr" }) {
 
   return (
     <a
-      href={`/portfolio/${project.id}`}
+      href={href}
       style={{
         position: "relative",
         display: "block",

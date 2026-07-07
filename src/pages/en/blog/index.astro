@@ -1,0 +1,44 @@
+---
+import Base from "../../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+import BlogList from "../../../components/BlogList.jsx";
+const posts = (await getCollection("postsEn"))
+  .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+const postsData = posts.map(p => p.data);
+---
+<Base title="Journal" description="Techniques, behind-the-scenes and guides on French dubbing services, post-production and voice careers." lang="en" altHref="/blog">
+  <section style="padding:140px 0 100px;">
+    <div class="container">
+
+      <!-- Header -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-bottom:72px;align-items:flex-end;" class="grid-responsive-2">
+        <div>
+          <div class="eyebrow" style="margin-bottom:24px;">Journal · Resources</div>
+          <h1 class="h-display" style="font-size:clamp(64px,10vw,160px);margin:0;line-height:0.9;">
+            The <em style="color:var(--accent);">journal</em>
+          </h1>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:20px;padding-bottom:8px;">
+          <p style="font-size:17px;color:var(--fg-dim);line-height:1.65;max-width:400px;margin:0;">
+            Techniques, behind-the-scenes, opinions. Our thinking on dubbing, post-production and voice careers.
+          </p>
+          <div style="display:flex;gap:20px;">
+            <div>
+              <div class="h-display" style="font-size:40px;margin:0;line-height:1;">{postsData.length}</div>
+              <div class="mono">Published articles</div>
+            </div>
+            <div style="width:1px;background:var(--line);"></div>
+            <div>
+              <div class="h-display" style="font-size:40px;margin:0;line-height:1;">{new Set(postsData.map(p => p.tag)).size}</div>
+              <div class="mono">Categories</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider" style="margin-bottom:48px;" />
+
+      <BlogList client:load posts={postsData} locale="en" />
+    </div>
+  </section>
+</Base>

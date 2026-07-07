@@ -1,0 +1,37 @@
+---
+import Base from "../../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+import { KIND_EN, TAG_EN } from "../../../components/ProjectCard.jsx";
+const projects = (await getCollection("projects")).sort((a, b) => b.data.year - a.data.year);
+---
+<Base title="Portfolio" description="Films, series and corporate projects delivered by our French dubbing services — every genre, every language." lang="en" altHref="/portfolio">
+  <section style="padding:160px 0 80px;">
+    <div class="container">
+      <div class="eyebrow" style="margin-bottom:28px;">Portfolio</div>
+      <h1 class="h-display" style="font-size:clamp(64px,10vw,160px);margin:0 0 40px;">
+        Our <em style="font-style:italic;color:var(--accent);">work</em>.
+      </h1>
+      <p class="text-dim" style="font-size:18px;max-width:680px;margin-bottom:80px;">
+        A selection of recent films, series and corporate projects — every genre, every language.
+      </p>
+    </div>
+    <div class="container">
+      <ul style="list-style:none;padding:0;margin:0;border-top:1px solid var(--line);">
+        {projects.map(p => (
+          <li>
+            <a href={`/en/portfolio/${p.data.id}`} class="port-row" style="display:grid;grid-template-columns:80px 2fr 1fr 1fr 1fr auto;gap:24px;align-items:center;padding:32px 0;border-bottom:1px solid var(--line);color:var(--fg);text-decoration:none;transition:background 0.25s var(--ease);">
+              <span class="port-year mono" style="font-size:11px;">{p.data.year}</span>
+              <span class="h-serif" style="font-size:clamp(20px,3vw,32px);letter-spacing:-0.02em;">{p.data.title}</span>
+              <span class="port-kind mono">{KIND_EN[p.data.kind] || p.data.kind}</span>
+              <span class="port-lang mono">{p.data.lang}</span>
+              <div class="port-tags" style="display:flex;gap:6px;flex-wrap:wrap;">
+                {p.data.tags.map(t => <span class="chip">{TAG_EN[t] || t}</span>)}
+              </div>
+              <span style="font-size:18px;">↗</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>

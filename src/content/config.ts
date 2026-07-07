@@ -12,6 +12,10 @@ const services = defineCollection({
     long: z.string().optional(),
     facts: z.array(z.object({ k: z.string(), v: z.string() })).optional(),
     order: z.number().optional(),
+    title_en: z.string().optional(),
+    short_en: z.string().optional(),
+    long_en: z.string().optional(),
+    facts_en: z.array(z.object({ k: z.string(), v: z.string() })).optional(),
   }),
 });
 
@@ -38,10 +42,26 @@ const projects = defineCollection({
       duration: z.number().default(30),
       seed: z.number().default(1),
     })).default([]),
+    desc_en: z.string().optional(),
   }),
 });
 
 const posts = defineCollection({
+  type: "content",
+  schema: z.object({
+    id: z.string(),
+    tag: z.string(),
+    title: z.string(),
+    date: z.string(),
+    excerpt: z.string(),
+    read: z.string(),
+    featured: z.boolean().default(false),
+    cover: z.string().optional(),
+    order: z.number().optional(),
+  }),
+});
+
+const postsEn = defineCollection({
   type: "content",
   schema: z.object({
     id: z.string(),
@@ -73,6 +93,8 @@ const studios = defineCollection({
     })).default([]),
     photo: z.string().optional(),
     order: z.number().optional(),
+    name_en: z.string().optional(),
+    spec_en: z.string().optional(),
   }),
 });
 
@@ -99,6 +121,8 @@ const voices = defineCollection({
     seed: z.number().default(1),
     photo: z.string().optional(),
     order: z.number().optional(),
+    register_en: z.string().optional(),
+    tags_en: z.array(z.string()).optional(),
   }),
 });
 
@@ -115,4 +139,4 @@ const clients = defineCollection({
   }),
 });
 
-export const collections = { services, projects, posts, studios, faq, voices, clients };
+export const collections = { services, projects, posts, postsEn, studios, faq, voices, clients };

@@ -7,6 +7,7 @@ lang: FR
 tags:
   - Doublage
 desc: Drame romantique.
+desc_en: "A romantic drama."
 seed: 15
 dur: 1h 55m
 featured: true

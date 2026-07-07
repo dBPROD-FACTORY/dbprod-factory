@@ -3,7 +3,9 @@ import { motion } from "framer-motion";
 import { Waveform, BarPulse } from "./Waveform.jsx";
 import Icon from "./Icon.jsx";
 
-export default function HeroHome({ hero, projects }) {
+export default function HeroHome({ hero, projects, locale = "fr" }) {
+  const contactHref = locale === "en" ? "/en/contact" : "/contact";
+  const portfolioHref = locale === "en" ? "/en/portfolio" : "/portfolio";
   const [mx, setMx] = useState(0.5);
   const [my, setMy] = useState(0.5);
   const [h, setH] = useState(700);
@@ -58,8 +60,8 @@ export default function HeroHome({ hero, projects }) {
             {hero?.intro || "dB PROD·FACTORY délivre des œuvres de doublage, voice-over et post-production audio depuis 2016."}
           </p>
           <div className="hero-cta-row" style={{ display: "flex", gap: 12, justifySelf: "end", alignItems: "center", flexWrap: "wrap" }}>
-            <a href="/contact" className="btn btn-primary btn-arrow">{hero?.cta1 || "Demander un devis"}</a>
-            <a href="/portfolio" className="btn btn-ghost btn-arrow">{hero?.cta2 || "Voir nos œuvres"}</a>
+            <a href={contactHref} className="btn btn-primary btn-arrow">{hero?.cta1 || "Demander un devis"}</a>
+            <a href={portfolioHref} className="btn btn-ghost btn-arrow">{hero?.cta2 || "Voir nos œuvres"}</a>
           </div>
         </motion.div>
       </div>

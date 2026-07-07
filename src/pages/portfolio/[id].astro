@@ -17,7 +17,7 @@ const { Content } = await project.render();
 // as the SEO / meta description only (not rendered visibly).
 const hasBody = (project.body || "").trim().length > 0;
 ---
-<Base title={d.title} description={d.desc}>
+<Base title={d.title} description={d.desc} altHref={`/en/portfolio/${d.id}`}>
   <section style="padding:160px 0 80px;">
     <div class="container">
       <a href="/portfolio" class="link-arrow" style="margin-bottom:40px;display:inline-flex;">← Portfolio</a>

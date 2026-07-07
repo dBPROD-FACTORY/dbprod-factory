@@ -9,6 +9,7 @@ tags:
   - Animation
 desc: Série animée africaine doublée en français et en arabe. Une comédie
   familiale pleine de couleurs et d'humour.
+desc_en: 'African animated series dubbed into French and Arabic, a family comedy bursting with color and humor.'
 seed: 8
 dur: Série
 featured: true

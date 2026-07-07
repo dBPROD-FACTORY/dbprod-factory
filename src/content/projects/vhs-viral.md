@@ -8,6 +8,7 @@ tags:
   - "Doublage"
   - "Horreur"
 desc: "Film d'horreur anthologique doublé en arabe. Une collection de récits terrifiants filmés en found footage."
+desc_en: "An anthology horror film dubbed into Arabic — a collection of terrifying found-footage tales."
 seed: 17
 dur: "1h 21m"
 featured: true

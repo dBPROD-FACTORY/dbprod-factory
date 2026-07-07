@@ -10,9 +10,10 @@ export default function PostCard({ post, size = "normal", locale = "fr" }) {
   const isLarge = size === "large";
   const readLabel = locale === "en" ? "Read →" : "Lire →";
   const tagLabel = locale === "en" ? (TAG_EN[post.tag] || post.tag) : post.tag;
+  const href = locale === "en" ? `/en/blog/${post.id}` : `/blog/${post.id}`;
   return (
     <a
-      href={`/blog/${post.id}`}
+      href={href}
       style={{
         display: "flex",
         flexDirection: "column",

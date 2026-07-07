@@ -2,12 +2,17 @@ import React, { useMemo, useState } from "react";
 import { AudioPlayer } from "./Waveform.jsx";
 import Icon from "./Icon.jsx";
 
-export default function VoicesList({ voices }) {
+export default function VoicesList({ voices, locale = "fr" }) {
+  const isEn = locale === "en";
   const [lang, setLang] = useState("all");
   const [gender, setGender] = useState("all");
   const [q, setQ] = useState("");
 
   const allLangs = useMemo(() => ["all", ...new Set(voices.flatMap(v => v.languages || []))], [voices]);
+
+  const t = isEn
+    ? { searchPlaceholder: "Search for a voice actor, a tone…", allLangs: "All languages", genders: [["all", "All"], ["F", "Female voices"], ["M", "Male voices"]], noResults: "No results" }
+    : { searchPlaceholder: "Rechercher un comédien, un registre…", allLangs: "Toutes langues", genders: [["all", "Tous"], ["F", "Voix féminines"], ["M", "Voix masculines"]], noResults: "Aucun résultat" };
 
   const filtered = voices.filter(v => {
     if (lang !== "all" && !(v.languages || []).includes(lang)) return false;
@@ -26,18 +31,18 @@ export default function VoicesList({ voices }) {
           <Icon name="search" size={16} style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "var(--fg-dim)" }} />
           <input
             value={q} onChange={(e) => setQ(e.target.value)}
-            placeholder="Rechercher un comédien, un registre…"
+            placeholder={t.searchPlaceholder}
             style={{ width: "100%", padding: "12px 14px 12px 40px", background: "var(--bg-elev)", border: "1px solid var(--line-2)", borderRadius: 999, color: "var(--fg)", fontSize: 14, outline: "none" }}
           />
         </div>
 
         <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
           {allLangs.map(l => (
-            <button key={l} onClick={() => setLang(l)} style={pill(lang === l)}>{l === "all" ? "Toutes langues" : l}</button>
+            <button key={l} onClick={() => setLang(l)} style={pill(lang === l)}>{l === "all" ? t.allLangs : l}</button>
           ))}
         </div>
         <div style={{ display: "flex", gap: 6 }}>
-          {[["all", "Tous"], ["F", "Voix féminines"], ["M", "Voix masculines"]].map(([k, lab]) => (
+          {t.genders.map(([k, lab]) => (
             <button key={k} onClick={() => setGender(k)} style={pill(gender === k)}>{lab}</button>
           ))}
         </div>
@@ -49,16 +54,16 @@ export default function VoicesList({ voices }) {
             <div>
               <div className="mono" style={{ marginBottom: 6, fontSize: 10 }}>{(v.languages || []).join(" · ")}</div>
               <h3 className="h-serif" style={{ fontSize: 26, margin: 0 }}>{v.name}</h3>
-              <div className="text-dim" style={{ fontSize: 13, marginTop: 4 }}>{v.register}</div>
+              <div className="text-dim" style={{ fontSize: 13, marginTop: 4 }}>{isEn ? (v.register_en || v.register) : v.register}</div>
             </div>
             <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-              {(v.tags || []).map(t => <span key={t} className="chip">{t}</span>)}
+              {(isEn ? (v.tags_en || v.tags) : (v.tags || [])).map(tg => <span key={tg} className="chip">{tg}</span>)}
             </div>
             <AudioPlayer title={v.name} artist={(v.languages || []).join("/")} duration={v.duration} seed={v.seed} url={v.sample_url} compact />
           </div>
         ))}
         {filtered.length === 0 && (
-          <div className="text-dim" style={{ padding: 60, textAlign: "center", border: "1px dashed var(--line-2)", borderRadius: 18 }}>Aucun résultat</div>
+          <div className="text-dim" style={{ padding: 60, textAlign: "center", border: "1px dashed var(--line-2)", borderRadius: 18 }}>{t.noResults}</div>
         )}
       </div>
     </div>

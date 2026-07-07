@@ -22,11 +22,11 @@ export default function Nav({ currentPath = "/", brand = { name: "PROD·FACTORY"
   const items = isEn
     ? [
       { href: "/en/services", label: "Services" },
-      { href: "/portfolio", label: "Portfolio" },
-      { href: "/voix", label: "Voice Talent" },
-      { href: "/studios", label: "Studios" },
-      { href: "/clients", label: "Clients" },
-      { href: "/blog", label: "Blog" },
+      { href: "/en/portfolio", label: "Portfolio" },
+      { href: "/en/voix", label: "Voice Talent" },
+      { href: "/en/studios", label: "Studios" },
+      { href: "/en/clients", label: "Clients" },
+      { href: "/en/blog", label: "Blog" },
       { href: "/en/faq", label: "FAQ" },
     ]
     : [

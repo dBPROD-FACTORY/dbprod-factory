@@ -7,6 +7,7 @@ lang: "FR"
 tags:
   - "Production"
 desc: "Communication groupe — 3 vidéos."
+desc_en: "Corporate communications — a 3-video series."
 seed: 22
 dur: "3 × 2m"
 order: 4

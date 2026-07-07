@@ -3,12 +3,17 @@ import PostCard from "./PostCard.jsx";
 
 const PAGE_SIZE = 9;
 
-export default function BlogList({ posts }) {
-  const tags = useMemo(() => ["Tous", ...new Set(posts.map(p => p.tag))], [posts]);
-  const [tag, setTag] = useState("Tous");
+export default function BlogList({ posts, locale = "fr" }) {
+  const isEn = locale === "en";
+  const allLabel = isEn ? "All" : "Tous";
+  const t = isEn
+    ? { featuredBadge: "Featured", featuredLabel: "FEATURED", readArticle: "Read article →", viewMore: (n) => `View more articles (${n} remaining)` }
+    : { featuredBadge: "À la une", featuredLabel: "À LA UNE", readArticle: "Lire l'article →", viewMore: (n) => `Voir plus d'articles (${n} restants)` };
+  const tags = useMemo(() => [allLabel, ...new Set(posts.map(p => p.tag))], [posts, allLabel]);
+  const [tag, setTag] = useState(allLabel);
   const [page, setPage] = useState(1);
 
-  const filtered = tag === "Tous" ? posts : posts.filter(p => p.tag === tag);
+  const filtered = tag === allLabel ? posts : posts.filter(p => p.tag === tag);
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
   const visible = filtered.slice(0, page * PAGE_SIZE);
   const hasMore = page < totalPages;
@@ -68,7 +73,7 @@ export default function BlogList({ posts }) {
         >
           <div
             className="media-ph"
-            data-label={`À LA UNE · ${featured.tag?.toUpperCase()}`}
+            data-label={`${t.featuredLabel} · ${featured.tag?.toUpperCase()}`}
             style={{ minHeight: 400, position: "relative", overflow: "hidden" }}
           >
             {featured.cover && (
@@ -82,7 +87,7 @@ export default function BlogList({ posts }) {
             }} />
             <div style={{ position: "absolute", top: 24, left: 24 }}>
               <span className="chip chip-accent" style={{ background: "color-mix(in oklab, var(--bg) 70%, transparent)", backdropFilter: "blur(8px)" }}>
-                À la une
+                {t.featuredBadge}
               </span>
             </div>
           </div>
@@ -99,7 +104,7 @@ export default function BlogList({ posts }) {
             </p>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "auto", paddingTop: 24, borderTop: "1px solid var(--line)" }}>
               <span className="mono">{featured.date}</span>
-              <span style={{ color: "var(--accent)", fontWeight: 500, fontSize: 14 }}>Lire l'article →</span>
+              <span style={{ color: "var(--accent)", fontWeight: 500, fontSize: 14 }}>{t.readArticle}</span>
             </div>
           </div>
         </a>
@@ -108,7 +113,7 @@ export default function BlogList({ posts }) {
       {/* Grid */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }} className="posts-grid">
         {rest.slice(0, (page * PAGE_SIZE) - 1).map(p => (
-          <PostCard key={p.id} post={p} />
+          <PostCard key={p.id} post={p} locale={locale} />
         ))}
       </div>
 
@@ -132,7 +137,7 @@ export default function BlogList({ posts }) {
             onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--fg)"; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--line-2)"; }}
           >
-            Voir plus d'articles ({filtered.length - visible.length} restants)
+            {t.viewMore(filtered.length - visible.length)}
           </button>
         </div>
       )}

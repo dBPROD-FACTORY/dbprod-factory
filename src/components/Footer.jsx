@@ -46,9 +46,9 @@ export default function Footer({ site, contact, social, footerCta, locale = "fr"
   const navColumns = [
     { t: t.navTitle, items: [
       { l: "Services", p: isEn ? "/en/services" : "/services" },
-      { l: "Portfolio", p: "/portfolio" },
-      { l: "Studios", p: "/studios" },
-      { l: isEn ? "Blog" : "Journal", p: "/blog" },
+      { l: "Portfolio", p: isEn ? "/en/portfolio" : "/portfolio" },
+      { l: "Studios", p: isEn ? "/en/studios" : "/studios" },
+      { l: isEn ? "Blog" : "Journal", p: isEn ? "/en/blog" : "/blog" },
     ]},
     { t: t.infoTitle, items: [
       { l: t.about, p: isEn ? "/en/about" : "/about" },
