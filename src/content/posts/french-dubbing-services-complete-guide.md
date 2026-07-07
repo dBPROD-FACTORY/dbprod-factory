@@ -6,6 +6,7 @@ date: "July 7, 2026"
 excerpt: "Looking for reliable french dubbing services for your film, series, or corporate content? Here's everything international producers need to know before choosing a studio."
 read: "7 min"
 featured: true
+cover: "/images/blog/french-dubbing-services-guide-casablanca.svg"
 order: -2
 ---
 

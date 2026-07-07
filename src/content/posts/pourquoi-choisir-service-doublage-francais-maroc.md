@@ -6,6 +6,7 @@ date: "7 juillet 2026"
 excerpt: "De la qualité des voix aux coûts de production, voici pourquoi de plus en plus de producteurs internationaux confient leur service de doublage en français à des studios marocains."
 read: "6 min"
 featured: false
+cover: "/images/blog/doublage-francais-maroc-casablanca.svg"
 order: -3
 ---
 

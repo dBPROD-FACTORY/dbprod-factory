@@ -6,6 +6,7 @@ date: "7 juillet 2026"
 excerpt: "Qu'est-ce qu'un bon service de doublage en français, quelles sont les étapes d'une production professionnelle, et comment choisir le bon studio ? Notre guide complet répond à toutes vos questions."
 read: "8 min"
 featured: true
+cover: "/images/blog/service-doublage-francais-guide-casablanca.svg"
 order: -1
 ---
 
